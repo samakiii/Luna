@@ -29,14 +29,10 @@ method serverLoop {
           eval {
              my $objClient = $self->getClientBySock($resSock);              
              my $strBuffer;
-             my $resReceived = $resSock->recv($strBuffer, 65536);
-             if (defined($resReceived)) {
-                 my @arrData = split(chr(0), $strBuffer);
-                 foreach (@arrData) {                         
-				                     $self->handleData($_, $objClient);    
-                 }
-             } else {
-                 $self->removeClient($resSock);
+             $resSock->sysread($strBuffer, 65536);
+             my @arrData = split(chr(0), $strBuffer);
+             foreach (@arrData) {                         
+				                 $self->handleData($_, $objClient);    
              }
           };
           if ($@) {
