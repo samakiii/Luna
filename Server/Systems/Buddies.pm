@@ -17,8 +17,11 @@ method handleGetBuddies($strData, $objClient) {
 }
 
 method handleFetchBuddies($objClient) {
-       my $strBuddies = join('%', map { $_ . '|' . $objClient->{buddies}->{$_} . '|' . $objClient->getOnline($_); } keys %{$objClient->{buddies}});
-       return $strBuddies . '%';
+       my $strBuddies = "";
+       while (my ($intBuddyID, $strBuddyName) = each(%{$objClient->{buddies}})) {
+              $strBuddies .= $intBuddyID . '|' . $strBuddyName . '%';
+       }
+       return $strBuddies;
 }
 
 method handleBuddyRequest($strData, $objClient) {
@@ -48,18 +51,23 @@ method handleBuddyAccept($strData, $objClient) {
 method handleBuddyRemove($strData, $objClient) {
        my @arrData = split('%', $strData);
        my $intBudID = $arrData[5];
-       return if (!int($intBudID) && !exists($objClient->{buddies}->{$intBudID}));
-       foreach my $objPlayer (values %{$self->{child}->{clients}}) {
-          if ($objPlayer->{ID} == $intBudID) {
-              delete($objClient->{buddies}->{$intBudID});
-              delete($objPlayer->{buddies}->{$intBudID});
-              my $strCBuddies = join(',', map { $_ . '|' . $objClient->{buddies}->{$_}; } keys %{$objClient->{buddies}});
-              my $strPBuddies = join(',', map { $_ . '|' . $objPlayer->{buddies}->{$_}; } keys %{$objPlayer->{buddies}});
-              $self->{child}->{modules}->{mysql}->updateTable('users', 'buddies', $strCBuddies, 'ID', $objClient->{ID});
-              $self->{child}->{modules}->{mysql}->updateTable('users', 'buddies', $strPBuddies, 'ID', $objPlayer->{ID});
-              $objPlayer->sendXT(['rb', '-1', $objClient->{ID}, $objClient->{username}]);
-          }
+       return if (!int($intBudID));
+       my $objPlayer = $objClient->getClientByID($intBudID);
+       delete($objClient->{buddies}->{$intBudID});
+       delete($objPlayer->{buddies}->{$intBudID});    
+       my $strCBuddies = "";
+       while (my ($intBuddyID, $strBuddyName) = each(%{$objClient->{buddies}})) {
+              $strCBuddies .= $intBuddyID . '|' . $strBuddyName . '%';
        }
+       my $strPBuddies = "";
+       while (my ($intBuddyID, $strBuddyName) = each(%{$objClient->{buddies}})) {
+              $strPBuddies .= $intBuddyID . '|' . $strBuddyName . '%';
+       }
+       $self->{child}->{modules}->{mysql}->updateTable('users', 'buddies', $strCBuddies, 'ID', $objClient->{ID});
+       $self->{child}->{modules}->{mysql}->updateTable('users', 'buddies', $strPBuddies, 'ID', $objPlayer->{ID});
+       $objClient->loadDetails;
+       $objPlayer->loadDetails;
+       $objPlayer->sendXT(['rb', '-1', $objClient->{ID}, $objClient->{username}]);
 }
 
 method handleBuddyFind($strData, $objClient) {
