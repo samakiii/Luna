@@ -45,6 +45,8 @@ method handleBuddyAccept($strData, $objClient) {
        my $strPBuddies = join(',', map { $_ . '|' . $objPlayer->{buddies}->{$_}; } keys %{$objPlayer->{buddies}});
        $self->{child}->{modules}->{mysql}->updateTable('users', 'buddies', $strCBuddies, 'ID', $objClient->{ID});
        $self->{child}->{modules}->{mysql}->updateTable('users', 'buddies', $strPBuddies, 'ID', $objPlayer->{ID});
+       $objClient->loadDetails;
+       $objPlayer->loadDetails;
        $objPlayer->sendXT(['ba', '-1', $objClient->{ID}, $objClient->{username}]);
 }
 
@@ -53,19 +55,13 @@ method handleBuddyRemove($strData, $objClient) {
        my $intBudID = $arrData[5];
        return if (!int($intBudID));
        my $objPlayer = $objClient->getClientByID($intBudID);
-       delete($objClient->{buddies}->{$intBudID});
-       delete($objPlayer->{buddies}->{$intBudID});    
-       my $strCBuddies = "";
-       while (my ($intBuddyID, $strBuddyName) = each(%{$objClient->{buddies}})) {
-              $strCBuddies .= $intBuddyID . '|' . $strBuddyName . '%';
-       }
-       my $strPBuddies = "";
-       while (my ($intBuddyID, $strBuddyName) = each(%{$objClient->{buddies}})) {
-              $strPBuddies .= $intBuddyID . '|' . $strBuddyName . '%';
-       }
+       delete($objClient->{buddies}->{$objPlayer->{ID}});
+       delete($objPlayer->{buddies}->{$objClient->{ID}});    
+       my $strCBuddies = join(',', map { $_ . '|' . $objClient->{buddies}->{$_}; } keys %{$objClient->{buddies}});
+       my $strPBuddies = join(',', map { $_ . '|' . $objPlayer->{buddies}->{$_}; } keys %{$objPlayer->{buddies}});
        $self->{child}->{modules}->{mysql}->updateTable('users', 'buddies', $strCBuddies, 'ID', $objClient->{ID});
        $self->{child}->{modules}->{mysql}->updateTable('users', 'buddies', $strPBuddies, 'ID', $objPlayer->{ID});
-       $objClient->loadDetails;
+       $objClient->loadDetails; # reload the details so old details dont get mixed up with new?
        $objPlayer->loadDetails;
        $objPlayer->sendXT(['rb', '-1', $objClient->{ID}, $objClient->{username}]);
 }
