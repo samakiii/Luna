@@ -45,7 +45,7 @@ method countRows($strSQL) {
 }
 
 method updateTable($table, $set, $setValue, $where, $whereValue) {
-       return if (!$table) && !$set && !$setValue && !$where && !$whereValue;
+       return if (!$table && !$set && !$setValue && !$where && !$whereValue);
        my $strQuery = $self->execQuery("UPDATE $table SET `$set` = '$setValue' WHERE `$where` = '$whereValue'");
        return $strQuery;
 }
