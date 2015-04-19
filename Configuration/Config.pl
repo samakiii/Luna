@@ -33,7 +33,8 @@ our $gameConfig = {
             botYPos => 100,
             botFrame => 12,
             botMember => 1, 
-            botRank => 999
+            botRank => 999,
+            botMood => 'The feelings are mutual'
     }
 };
 

@@ -123,7 +123,8 @@ method new($resConfig, $resDBConfig) {
                     'a#gt' => 'handleGetTable',
                     'a#ut' => 'handleUpdateTable',
                     'a#lt' => 'handleLeaveTable',
-                    'w#jx' => 'handleSendWaddle'
+                    'w#jx' => 'handleSendWaddle',
+                    'iCP#umo' => 'handleUpdateMood'
                   },
                   z => {
                      zo => 'handleGameOver',

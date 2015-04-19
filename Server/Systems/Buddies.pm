@@ -45,8 +45,6 @@ method handleBuddyAccept($strData, $objClient) {
        my $strPBuddies = join(',', map { $_ . '|' . $objPlayer->{buddies}->{$_}; } keys %{$objPlayer->{buddies}});
        $self->{child}->{modules}->{mysql}->updateTable('users', 'buddies', $strCBuddies, 'ID', $objClient->{ID});
        $self->{child}->{modules}->{mysql}->updateTable('users', 'buddies', $strPBuddies, 'ID', $objPlayer->{ID});
-       $objClient->loadDetails;
-       $objPlayer->loadDetails;
        $objPlayer->sendXT(['ba', '-1', $objClient->{ID}, $objClient->{username}]);
 }
 
@@ -61,8 +59,6 @@ method handleBuddyRemove($strData, $objClient) {
        my $strPBuddies = join(',', map { $_ . '|' . $objPlayer->{buddies}->{$_}; } keys %{$objPlayer->{buddies}});
        $self->{child}->{modules}->{mysql}->updateTable('users', 'buddies', $strCBuddies, 'ID', $objClient->{ID});
        $self->{child}->{modules}->{mysql}->updateTable('users', 'buddies', $strPBuddies, 'ID', $objPlayer->{ID});
-       $objClient->loadDetails; # reload the details so old details dont get mixed up with new?
-       $objPlayer->loadDetails;
        $objPlayer->sendXT(['rb', '-1', $objClient->{ID}, $objClient->{username}]);
 }
 

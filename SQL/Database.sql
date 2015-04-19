@@ -83,6 +83,7 @@ CREATE TABLE IF NOT EXISTS `users` (
   `flag` int(10) NOT NULL DEFAULT '0',
   `colour` int(10) NOT NULL DEFAULT '1',
   `coins` int(11) NOT NULL,
+  `mood` char(100) NOT NULL,
   `isMuted` tinyint(1) NOT NULL DEFAULT '0',
   `isStaff` tinyint(1) NOT NULL DEFAULT '0',
   `isAdmin` tinyint(1) NOT NULL DEFAULT '0',

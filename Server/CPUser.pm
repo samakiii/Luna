@@ -29,6 +29,7 @@ method new($resParent, $resSock) {
        $obj->{bitMask} = 1;
        $obj->{banCount} = 0;
        $obj->{invalidLogins} = 0;
+       $obj->{mood} = '';
        $obj->{colour} = 0;
        $obj->{head} = 0;
        $obj->{face} = 0;
@@ -169,7 +170,9 @@ method buildClientString {
                    $self->{xpos}, 
                    $self->{ypos}, 
                    $self->{frame}, 1, 
-                   $self->{rank} * 146,                
+                   $self->{rank} * 146,
+                   0, 0,  
+                   $self->{mood}              
        );
        my $strInfo = join('|', @arrInfo);
        return $strInfo;
@@ -193,7 +196,8 @@ method buildBotString {
                    $self->{parent}->{servConfig}->{botProp}->{botYPos},
                    $self->{parent}->{servConfig}->{botProp}->{botFrame},
                    $self->{parent}->{servConfig}->{botProp}->{botMember},
-                   $self->{parent}->{servConfig}->{botProp}->{botRank}
+                   $self->{parent}->{servConfig}->{botProp}->{botRank}, 0, 0,
+                   $self->{parent}->{servConfig}->{botProp}->{botMood},
        );
        my $strInfo = join('|', @arrInfo);
        return $strInfo;
