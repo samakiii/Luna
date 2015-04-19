@@ -9,7 +9,7 @@ use Method::Signatures;
 method new($resChild) {
        my $obj = bless {}, $self;
        $obj->{child} = $resChild;
-       $obj->{pluginType} = 'XT';
+       $obj->{pluginType} = 2;
        $obj->{property} = {
               'm#sm' => {
                      handler => 'handleCensoring',

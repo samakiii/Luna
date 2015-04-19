@@ -4,6 +4,7 @@ use strict;
 use warnings;
 
 use Method::Signatures;
+use List::Util qw(first);
 
 method new($resChild) {
        my $obj = bless {}, $self;
@@ -17,7 +18,7 @@ method handleEPFAddItem($strData, $objClient) {
        return if (!int($intItem));
        if (!exists($self->{child}->{modules}->{crumbs}->{epfCrumbs}->{$intItem})) {
            return $objClient->sendError(402);
-       } elsif (grep /$intItem/, @{$objClient->{inventory}}) {
+       } elsif (first {$_ == $intItem} @{$objClient->{inventory}}) {
            return $objClient->sendError(400);
        } elsif ($objClient->{epfPoints} < $self->{child}->{modules}->{crumbs}->{epfCrumbs}->{$intItem}->{points}) {
            return $objClient->sendError(405);

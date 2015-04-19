@@ -58,6 +58,7 @@ If you are using Windows, you can use <b>Run.bat</b>
  <li> DBD::mysql</li>
  <li> Module::Find</li>
  <li> Array::Utils</li>
+ <li> List::Util</li>
  <li> HTTP::Date</li>
  <li> Math::Round</li>
  <li> POSIX</li>

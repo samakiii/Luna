@@ -8,7 +8,7 @@ use Method::Signatures;
 method new($resChild) {
        my $obj = bless {}, $self;
        $obj->{child} = $resChild;
-       $obj->{pluginType} = 'XML';
+       $obj->{pluginType} = 1;
        $obj->{property} = {
               'login' => { 
                       handler => 'handleLoginNotice',

@@ -29,8 +29,11 @@ method reverseHash($strKey) {
 }
 
 method generateKey {
-       my @chars = ('A'..'Z', 'a'..'z', 0..9, '!$%^&*()_+-=[]{}:@~;<>?|\,./');
-       my $strKey = join('', map { @chars[rand(@chars)] } 1..8);
+       my @chars = ('a'..'z', 'A'..'Z', '0'..'9', '_');
+	      my $strKey = '';
+	      foreach (1..6) {
+		              $strKey .= $chars[rand(@chars)];
+	      }
        return $strKey;
 }
 

@@ -7,6 +7,7 @@ use Method::Signatures;
 use HTTP::Date qw(str2time);
 use Math::Round qw(round);
 use HTML::Entities;
+use List::Util qw(first);
 use Switch;
 
 method new($resParent, $resSock) {
@@ -357,7 +358,7 @@ method addItem($intItem) {
        return if (!int($intItem));
        if (!exists($self->{parent}->{modules}->{crumbs}->{itemCrumbs}->{$intItem})) {
 	          return $self->sendError(402);
-       } elsif (grep /$intItem/, @{$self->{inventory}}) {
+       } elsif (first {$_ == $intItem} @{$self->{inventory}}) {
 	          return $self->sendError(400);
        } elsif ($self->{coins} < $self->{parent}->{modules}->{crumbs}->{itemCrumbs}->{$intItem}->{cost}) {
 	          return $self->sendError(401);
@@ -371,7 +372,7 @@ method addItem($intItem) {
 method addStamp($intStamp) {
        return if (!int($intStamp));
        return if (!exists($self->{parent}->{modules}->{crumbs}->{stampCrumbs}->{$intStamp}));
-       return if (grep /$intStamp/, @{$self->{stamps}});
+       return if (first {$_ == $intStamp} @{$self->{stamps}});
        push(@{$self->{stamps}}, $intStamp);
        push(@{$self->{restamps}}, $intStamp);
        $self->{parent}->{modules}->{mysql}->updateTable('users', 'stamps', join('|', @{$self->{stamps}}), 'ID', $self->{ID});
@@ -452,7 +453,7 @@ method addIgloo($intIgloo) {
        return if (!int($intIgloo));
        if (!exists($self->{parent}->{modules}->{crumbs}->{iglooCrumbs}->{$intIgloo})) {
 	          return $self->sendError(402);
-       } elsif (grep /$intIgloo/, @{$self->{ownedIgloos}}) {
+       } elsif (first {$_ == $intIgloo} @{$self->{ownedIgloos}}) {
 	          return $self->sendError(400);
        } elsif ($self->{coins} < $self->{parent}->{modules}->{crumbs}->{iglooCrumbs}->{$intIgloo}->{cost}) {
 	          return $self->sendError(401);
