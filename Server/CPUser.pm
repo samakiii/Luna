@@ -623,9 +623,9 @@ method changeRandPuffStat($intPuffle) { # I dont even know if this is the proper
        my $intRandHealth = $self->{parent}->{modules}->{crypt}->generateInt(1, 10);
        my $intRandEnergy = $self->{parent}->{modules}->{crypt}->generateInt(1, 10);
        my $intRandRest = $self->{parent}->{modules}->{crypt}->generateInt(1, 10);
-       my $intNewHealth = $intRandHealth - $arrInfo->{puffleHealth};
-       my $intNewEnergy = $intRandEnergy - $arrInfo->{puffleEnergy};
-       my $intNewRest = $intRandRest - $arrInfo->{puffleRest};
+       my $intNewHealth = $arrInfo->{puffleHealth} - $intRandHealth;
+       my $intNewEnergy = $arrInfo->{puffleEnergy} - $intRandEnergy;
+       my $intNewRest = $arrInfo->{puffleRest} - $intRandRest;
        $self->{parent}->{modules}->{mysql}->execQuery("UPDATE puffles SET `puffleHealth` = '$intNewHealth' WHERE `puffleID` = '$intPuffle' AND `ownerID` = '$self->{ID}'");
        $self->{parent}->{modules}->{mysql}->execQuery("UPDATE puffles SET `puffleEnergy` = '$intNewEnergy' WHERE `puffleID` = '$intPuffle' AND `ownerID` = '$self->{ID}'");
        $self->{parent}->{modules}->{mysql}->execQuery("UPDATE puffles SET `puffleRest` = '$intNewRest' WHERE `puffleID` = '$intPuffle' AND `ownerID` = '$self->{ID}'");
