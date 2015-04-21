@@ -62,6 +62,7 @@ method new($resParent, $resSock) {
        $obj->{ownedFurns} = {};
        $obj->{buddyRequests} = {};
        $obj->{tableID} = 0;
+       $obj->{waddleID} = 0;
        $obj->{seatID} = 999;
        return $obj;
 }
