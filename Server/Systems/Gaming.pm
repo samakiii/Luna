@@ -69,6 +69,52 @@ method handleJoinZone($strData, $objClient) {
      }
 }
 
+method handleGetWaddle($strData, $objClient) {
+     my @arrData = split('%', $strData);
+     splice(@arrData, 0, 5);
+     my $waddlePopulation = '';
+     foreach (@arrData) {
+                if (exists($self->{child}->{waddles}->{$_})) {
+                    $waddlePopulation .= $_ . '|';
+                    my $users = '';
+                    foreach (values %{$self->{child}->{waddles}->{$_}->{clients}}) {
+                          if (exists($_->{username})){
+                               $users .= $_->{username} . ',';
+                          }
+                    }
+                    if ($users =~ tr/,// < $self->{child}->{waddles}->{$_}->{max}){
+                          for (my $i = 0; $i < $self->{child}->{waddles}->{$_}->{max}-1; $i++) {
+                                $users .= ',';
+                          }
+                    }
+                    $waddlePopulation .= $users . '%';
+                }
+     }
+     $objClient->sendXT(['gw', '-1', substr($waddlePopulation, 0, -1)]);
+}
+
+method handleLeaveWaddle($strData, $objClient) {
+     $objClient->sendRoom('%xt%uw%-1%' . $objClient->{waddleID} . '%' . $objClient->{seatID} . '%');
+     $objClient->{waddleID} = 0;
+     $objClient->{seatID} = 999;
+}
+
+method handleJoinWaddle($strData, $objClient) {
+     my @arrData = split('%', $strData);
+     my $waddleID = $arrData[5];
+     return if(!int($waddleID) || !exists($self->{child}->{waddles}->{$waddleID}));
+     if (scalar (keys %{$self->{child}->{waddles}->{$waddleID}->{clients}}) >= $self->{child}->{waddles}->{$waddleID}->{max} || $objClient->{waddleID} ne 0) {
+          return $objClient->sendError(211);
+     }
+     $objClient->{waddleID} = $waddleID;
+     $objClient->{seatID} = scalar(keys %{$self->{child}->{waddles}->{$waddleID}->{clients}});
+     $objClient->sendRoom('%xt%uw%-1%' . $waddleID . '%' . $objClient->{seatID} . '%' . $objClient->{username} . '%' . $objClient->{ID} . '%');
+     $objClient->sendXT(['jw', '-1', $objClient->{seatID}]);
+     if (scalar (keys %{$self->{child}->{waddles}->{$waddleID}->{clients}}) >= $self->{child}->{waddles}->{$waddleID}->{max}) {
+          
+     }
+}
+
 method handleSendMove($strData, $objClient) {
      my @arrData = split('%', $strData);
      if ($objClient->{room} eq 220 || $objClient->{room} eq 221) { # find four
