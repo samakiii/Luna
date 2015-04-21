@@ -611,7 +611,7 @@ method updateBanCount($objClient, $intCount) {
        $objClient->{banCount} = $intCount;
 }
 
-method changePuffleStat($intPuffle, $strType, $intCount, $blnInc = 1) {
+method changePuffleStats($intPuffle, $strType, $intCount, $blnInc = 1) {
        my $arrInfo = $self->{parent}->{modules}->{mysql}->fetchColumns("SELECT $strType FROM puffles WHERE `puffleID` = '$intPuffle' AND `ownerID` = '$self->{ID}'");
        my $intStat = $arrInfo->{$strType};
        $blnInc ? $intStat += $intCount : $intStat -= $intCount;
