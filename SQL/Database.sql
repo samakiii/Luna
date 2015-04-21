@@ -67,6 +67,7 @@ CREATE TABLE IF NOT EXISTS `users` (
   `loginKey` char(32) NOT NULL,
   `ipAddr` mediumblob NOT NULL,
   `age` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP,
+  `LastLogin` timestamp,
   `active` tinyint(1) NOT NULL DEFAULT '1',
   `bitMask` tinyint(1) NOT NULL DEFAULT '1',
   `isBanned` varchar(10) NOT NULL,
