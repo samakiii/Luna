@@ -638,7 +638,7 @@ method changeRandPuffStat($intPuffle) { # I dont even know if this is the proper
        $self->{parent}->{modules}->{mysql}->execQuery("UPDATE puffles SET `puffleRest` = '$intNewRest' WHERE `puffleID` = '$intPuffle' AND `ownerID` = '$self->{ID}'");
 }
 
-method updatePuffleStatistics() {
+method updatePuffleStatistics {
        my $intLastLogin = $self->{parent}->{modules}->{mysql}->fetchColumns("SELECT UNIX_TIMESTAMP(LastLogin) FROM users WHERE `ID` = '$self->{ID}'")->{'UNIX_TIMESTAMP(LastLogin)'};
        my $intTime = (time() - (5*24*60*60));
        my $intRand = $self->{parent}->{modules}->{crypt}->generateInt(0, 4);
