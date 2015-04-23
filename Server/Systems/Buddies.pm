@@ -19,10 +19,11 @@ method handleGetBuddies($strData, $objClient) {
 method handleFetchBuddies($objClient) {
        my $strBuddies = "";
        while (my ($intBuddyID, $strBuddyName) = each(%{$objClient->{buddies}})) {
-              $strBuddies .= $intBuddyID . '|' . $strBuddyName . '%';
+              $strBuddies .= $intBuddyID . '|' . $strBuddyName . '|' . ($objClient->getOnline($intBuddyID) ? 1 : 0) .'%';
        }
        return $strBuddies;
 }
+
 
 method handleBuddyRequest($strData, $objClient) {
        my @arrData = split('%', $strData);
