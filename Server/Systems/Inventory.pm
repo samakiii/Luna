@@ -25,9 +25,11 @@ method handleQueryPlayerAwards($strData, $objClient) {
        my @arrData = split('%', $strData);
        my $intPID = $arrData[5];
        return if (!int($intPID));
-       my $objPlayer = $objClient->getClientByID($intPID);
+       my $arrInfo = $self->{child}->{modules}->{mysql}->fetchColumns("SELECT `inventory` FROM users WHERE `ID` = '$intPID'");
+       my $strItems = $arrInfo->{inventory};
+       my @arrItems = split('%', $strItems);
        my @arrAwards;
-       foreach (@{$objPlayer->{inventory}}) {
+       foreach (@arrItems) {
                 if (exists($self->{child}->{modules}->{crumbs}->{itemCrumbs}->{$_}) && $self->{child}->{modules}->{crumbs}->{itemCrumbs}->{$_}->{type} == 10) {
                     push(@arrAwards, $_);
                 }
@@ -40,9 +42,11 @@ method handleQueryPlayerPins($strData, $objClient) {
        my @arrData = split('%', $strData);
        my $intPID = $arrData[5];
        return if (!int($intPID));
-       my $objPlayer = $objClient->getClientByID($intPID);
+       my $arrInfo = $self->{child}->{modules}->{mysql}->fetchColumns("SELECT `inventory` FROM users WHERE `ID` = '$intPID'");
+       my $strItems = $arrInfo->{inventory};
+       my @arrItems = split('%', $strItems);
        my @arrPins;
-       foreach (@{$objPlayer->{inventory}}) {
+       foreach (@arrItems) {
 				           if (exists($self->{child}->{modules}->{crumbs}->{itemCrumbs}->{$_}) && $self->{child}->{modules}->{crumbs}->{itemCrumbs}->{$_}->{type} == 8) {
                     push(@arrPins, $_);
 				           }   
