@@ -19,7 +19,7 @@ method handleGetBuddies($strData, $objClient) {
 method handleFetchBuddies($objClient) {
        my $strBuddies = "";
        while (my ($intBuddyID, $strBuddyName) = each(%{$objClient->{buddies}})) {
-              $strBuddies .= $intBuddyID . '|' . $strBuddyName . '|' . ($objClient->getOnline($intBuddyID) ? 1 : 0) .'%';
+              $strBuddies .= $intBuddyID . '|' . $strBuddyName . '|' . ($objClient->getOnline($intBuddyID) ? 1 : 0) . '%';
        }
        return $strBuddies;
 }
@@ -52,7 +52,7 @@ method handleBuddyAccept($strData, $objClient) {
 method handleBuddyRemove($strData, $objClient) {
        my @arrData = split('%', $strData);
        my $intBudID = $arrData[5];
-       return if (!int($intBudID));
+       return if (!int($intBudID) && !exists($objClient->{buddies}->{$intBudID}));
        my $objPlayer = $objClient->getClientByID($intBudID);
        delete($objClient->{buddies}->{$objPlayer->{ID}});
        delete($objPlayer->{buddies}->{$objClient->{ID}});    
