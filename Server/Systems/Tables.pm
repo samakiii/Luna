@@ -46,7 +46,7 @@ method handleUpdateTable($strData, $objClient) {
 method handleLeaveTable($strData, $objClient) {
        if ($objClient->{room} eq 220 || $objClient->{room} eq 221) {
            if ($objClient->{tableID} ne 0 && $objClient->{seatID} ne 999) {
-               foreach (values (%{$self->{child}->{tables}->{$objClient->{tableID}}->{clients}})) {
+               foreach (values %{$self->{child}->{tables}->{$objClient->{tableID}}->{clients}}) {
                         if ($_->{ID} ne $objClient->{ID}) {
                             $_->sendXT(['cz', '-1', $objClient->{username}]);
                             $_->{tableID} = 0;

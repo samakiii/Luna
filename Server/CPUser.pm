@@ -640,32 +640,32 @@ method changeRandPuffStat($intPuffle) { # I dont even know if this is the proper
 
 method updatePuffleStatistics {
        my $intLastLogin = $self->{parent}->{modules}->{mysql}->fetchColumns("SELECT UNIX_TIMESTAMP(LastLogin) FROM users WHERE `ID` = '$self->{ID}'")->{'UNIX_TIMESTAMP(LastLogin)'};
-       my $intTime = (time() - (5*24*60*60));
+       my $intTime = time - 432000;
        my $intRand = $self->{parent}->{modules}->{crypt}->generateInt(0, 4);
        my $blnMajor = 0;
        if ($intLastLogin ne 0) {
-             my $intSubtract = $intLastLogin - $intTime;
-             $blnMajor = $intSubtract < 0;
+           my $intSubtract = $intLastLogin - $intTime;
+           $blnMajor = $intSubtract < 0;
        }
        my $puffles = $self->{parent}->{modules}->{mysql}->fetchAll("SELECT * FROM puffles WHERE `ownerID` = '$self->{ID}'");
        foreach (values @{$puffles}) {
-             my $intPuffle = $_->{puffleID};
-             my $intMin = $blnMajor ? 25 : 0;
-             my $intMax = $blnMajor ? 45 : 15;
-             my $intHealth = $_->{puffleHealth} - $self->{parent}->{modules}->{crypt}->generateInt($intMin, $intMax);
-             if ($intHealth <= 5) {
-                   $self->{parent}->{modules}->{mysql}->execQuery("DELETE FROM puffles WHERE `puffleID` = '$intPuffle' AND `ownerID` = '$self->{ID}'");
-                   my $postcardID = $self->sendPostcard($self->{ID}, 'sys', 0, $_->{puffleName}, 10 . $_->{puffleType});
-                   $self->sendXT(['mr', '-1', 'sys', 0, 10 . $_->{puffleType}, $_->{puffleName}, time(), $postcardID]);
-             } else {
-                   my $intHunger = $_->{puffleEnergy} - $self->{parent}->{modules}->{crypt}->generateInt($intMin, $intMax);
-                   if ($intHunger <= 45) {
-                         my $postcardID = $self->sendPostcard($self->{ID}, 'sys', 0, $_->{puffleName}, 110);
-                         $self->sendXT(['mr', '-1', 'sys', 0, 110, $_->{puffleName}, time(), $postcardID]);
-                   }
-                   my $intRest = $_->{puffleRest} - $self->{parent}->{modules}->{crypt}->generateInt($intMin, $intMax);
-                   $self->{parent}->{modules}->{mysql}->execQuery("UPDATE puffles SET `puffleHealth` = '$intHealth', `puffleEnergy` = '$intHunger', `puffleRest` = '$intRest' WHERE `puffleID` = '$intPuffle' AND `ownerID` = '$self->{ID}'");
-             }
+                my $intPuffle = $_->{puffleID};
+                my $intMin = $blnMajor ? 25 : 0;
+                my $intMax = $blnMajor ? 45 : 15;
+                my $intHealth = $_->{puffleHealth} - $self->{parent}->{modules}->{crypt}->generateInt($intMin, $intMax);
+                if ($intHealth <= 5) {
+                    $self->{parent}->{modules}->{mysql}->execQuery("DELETE FROM puffles WHERE `puffleID` = '$intPuffle' AND `ownerID` = '$self->{ID}'");
+                    my $postcardID = $self->sendPostcard($self->{ID}, 'sys', 0, $_->{puffleName}, 10 . $_->{puffleType});
+                    $self->sendXT(['mr', '-1', 'sys', 0, 10 . $_->{puffleType}, $_->{puffleName}, time(), $postcardID]);
+                } else {
+                    my $intHunger = $_->{puffleEnergy} - $self->{parent}->{modules}->{crypt}->generateInt($intMin, $intMax);
+                    if ($intHunger <= 45) {
+                        my $postcardID = $self->sendPostcard($self->{ID}, 'sys', 0, $_->{puffleName}, 110);
+                        $self->sendXT(['mr', '-1', 'sys', 0, 110, $_->{puffleName}, time(), $postcardID]);
+                    }
+                    my $intRest = $_->{puffleRest} - $self->{parent}->{modules}->{crypt}->generateInt($intMin, $intMax);
+                    $self->{parent}->{modules}->{mysql}->execQuery("UPDATE puffles SET `puffleHealth` = '$intHealth', `puffleEnergy` = '$intHunger', `puffleRest` = '$intRest' WHERE `puffleID` = '$intPuffle' AND `ownerID` = '$self->{ID}'");
+                }
        }
 }
 
