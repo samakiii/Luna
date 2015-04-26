@@ -110,9 +110,6 @@ method handleJoinWaddle($strData, $objClient) {
        $objClient->{seatID} = scalar(keys %{$self->{child}->{waddles}->{$waddleID}->{clients}});
        $objClient->sendRoom('%xt%uw%-1%' . $waddleID . '%' . $objClient->{seatID} . '%' . $objClient->{username} . '%' . $objClient->{ID} . '%');
        $objClient->sendXT(['jw', '-1', $objClient->{seatID}]);
-       if (scalar(keys %{$self->{child}->{waddles}->{$waddleID}->{clients}}) >= $self->{child}->{waddles}->{$waddleID}->{max}) {
-          
-       }
 }
 
 method handleSendMove($strData, $objClient) {
