@@ -15,7 +15,7 @@ method handleUpdateMood($strData, $objClient) {
        if (length($strMood) <= 100) {
            $objClient->{mood} = $strMood;
            $self->{child}->{modules}->{mysql}->updateTable('users', 'mood', $strMood, 'ID', $objClient->{ID});
-           $objClient->sendXT(['umo', $objClient->{ID}, $strMood]);
+           $objClient->sendRoom('%xt%umo%' . $objClient->{ID} . '%' . $strMood . '%');
        }
 }
 
