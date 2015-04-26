@@ -49,7 +49,7 @@ method handleBuddyAccept($strData, $objClient) {
        $objPlayer->sendXT(['ba', '-1', $objClient->{ID}, $objClient->{username}]);
 }
 
-method handleBuddyRemove($strData, $objClient) {
+method handleRemoveBuddy($strData, $objClient) {
        my @arrData = split('%', $strData);
        my $intBudID = $arrData[5];
        return if (!int($intBudID) && !exists($objClient->{buddies}->{$intBudID}));
