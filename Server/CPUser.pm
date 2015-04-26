@@ -536,7 +536,6 @@ method botSay($strMsg) {
        }
 }
 
-
 method addPuffle($puffleType, $puffleName) {
        return if (!int($puffleType) && !$puffleName);
        my $puffleID = $self->{parent}->{modules}->{mysql}->insertData('puffles', ['ownerID', 'puffleName', 'puffleType'], [$self->{ID}, $puffleName, $puffleType]);
@@ -612,7 +611,7 @@ method updateBanCount($objClient, $intCount) {
        $objClient->{banCount} = $intCount;
 }
 
-method setLastLogin($time = time()) {
+method setLastLogin($time = time) {
        return if (!int($time));
        $self->{parent}->{modules}->{mysql}->execQuery("UPDATE users SET `LastLogin` = FROM_UNIXTIME($time) WHERE `ID` = '$self->{ID}'");
 }
@@ -656,12 +655,12 @@ method updatePuffleStatistics {
                 if ($intHealth <= 5) {
                     $self->{parent}->{modules}->{mysql}->execQuery("DELETE FROM puffles WHERE `puffleID` = '$intPuffle' AND `ownerID` = '$self->{ID}'");
                     my $postcardID = $self->sendPostcard($self->{ID}, 'sys', 0, $_->{puffleName}, 10 . $_->{puffleType});
-                    $self->sendXT(['mr', '-1', 'sys', 0, 10 . $_->{puffleType}, $_->{puffleName}, time(), $postcardID]);
+                    $self->sendXT(['mr', '-1', 'sys', 0, 10 . $_->{puffleType}, $_->{puffleName}, time, $postcardID]);
                 } else {
                     my $intHunger = $_->{puffleEnergy} - $self->{parent}->{modules}->{crypt}->generateInt($intMin, $intMax);
                     if ($intHunger <= 45) {
                         my $postcardID = $self->sendPostcard($self->{ID}, 'sys', 0, $_->{puffleName}, 110);
-                        $self->sendXT(['mr', '-1', 'sys', 0, 110, $_->{puffleName}, time(), $postcardID]);
+                        $self->sendXT(['mr', '-1', 'sys', 0, 110, $_->{puffleName}, time, $postcardID]);
                     }
                     my $intRest = $_->{puffleRest} - $self->{parent}->{modules}->{crypt}->generateInt($intMin, $intMax);
                     $self->{parent}->{modules}->{mysql}->execQuery("UPDATE puffles SET `puffleHealth` = '$intHealth', `puffleEnergy` = '$intHunger', `puffleRest` = '$intRest' WHERE `puffleID` = '$intPuffle' AND `ownerID` = '$self->{ID}'");
