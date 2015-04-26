@@ -11,7 +11,7 @@ method new($resChild) {
 
 method handleUpdateMood($strData, $objClient) {
        my @arrData = split('%', $strData);
-       my $strMood = decode_entities($arrData[4]);
+       my $strMood = decode_entities($arrData[5]);
        if (length($strMood) <= 100) {
            $objClient->{mood} = $strMood;
            $self->{child}->{modules}->{mysql}->updateTable('users', 'mood', $strMood, 'ID', $objClient->{ID});
