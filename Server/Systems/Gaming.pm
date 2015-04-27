@@ -59,7 +59,7 @@ method handleJoinZone($strData, $objClient) {
                         } 
                         $objClient->sendXT(['uz', '-1', $objClient->{seatID} - 1, $objClient->{username}]);
                }
-               if (keys %{$self->{child}->{tables}->{$objClient->{tableID}}->{clients}} >= $self->{child}->{tables}->{$objClient->{tableID}}->{max}) {
+               if (scalar(keys %{$self->{child}->{tables}->{$objClient->{tableID}}->{clients}}) >= $self->{child}->{tables}->{$objClient->{tableID}}->{max}) {
                    $self->{child}->{tables}->{$objClient->{tableID}}->{currentTurn} = 0;
                    foreach (values %{$self->{child}->{tables}->{$objClient->{tableID}}->{clients}}) {
                             $_->sendXT(['sz', '-1', '0']);
