@@ -42,7 +42,7 @@ method handleMailSend($strData, $objClient) {
        }
 }
 
-method handleMailCheck($strData, $objClient) {
+method handleMailChecked($strData, $objClient) {
        $self->{child}->{modules}->{mysql}->updateTable('postcards', 'isRead', 1, 'recepient', $objClient->{ID});
        $objClient->sendXT(['mc', '-1', 1]);
 }
