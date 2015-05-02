@@ -15,6 +15,7 @@ use Drivers::MySQL;
 use Drivers::Socket;
 
 use Misc::Crumbs;
+use Misc::Matches;
 
 use Server::CPPlugins;
 use Server::CPCommands;
