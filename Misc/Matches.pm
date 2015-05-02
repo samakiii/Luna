@@ -21,7 +21,15 @@ method new ($resChild) {
               204 => {clients => {}, max => 2}, 
               205 => {clients => {}, max => 2},
               206 => {clients => {}, max => 2}, 
-              207 => {clients => {}, max => 2}
+              207 => {clients => {}, max => 2},
+              300 => {clients => {}, max => 2},
+              301 => {clients => {}, max => 2}, 
+              302 => {clients => {}, max => 2}, 
+              303 => {clients => {}, max => 2},
+              304 => {clients => {}, max => 2}, 
+              305 => {clients => {}, max => 2},
+              306 => {clients => {}, max => 2}, 
+              307 => {clients => {}, max => 2}
        };
        $obj->{waddles} = {
               100 => {clients => {}, max => 4},
