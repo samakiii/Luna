@@ -9,21 +9,18 @@ method new($resChild) {
        my $obj = bless {}, $self;
        $obj->{child} = $resChild;
        $obj->{boardMap} = [[0,0,0,0,0,0,0],[0,0,0,0,0,0,0],[0,0,0,0,0,0,0],[0,0,0,0,0,0,0],[0,0,0,0,0,0,0],[0,0,0,0,0,0,0]];
+       $obj->{matches} = $resChild->{modules}->{matches};
        return $obj;
 }
 
 method handleJoinTable($strData, $objClient) {
        my @arrData = split('%', $strData);
-       my $intTable = $arrData[5];
-       return if(!int($intTable) || !exists($self->{child}->{tables}->{$intTable}));
-       if (scalar (keys %{$self->{child}->{tables}->{$intTable}->{clients}}) >= $self->{child}->{tables}->{$intTable}->{max} || $objClient->{tableID} ne 0) {
-           return $objClient->sendError(211);
+       if ($self->{matches}->addToTable($arrData[5], $objClient)) {
+              $self->{matches}->{tables}->{$arrData[5]}->{boardMap} = $self->{boardMap};
+              $objClient->sendXT(['jt', '-1', $objClient->{tableID}, $objClient->{seatID}]);
+       } else {
+              $objClient->sendError(211);
        }
-       $objClient->{tableID} = $intTable;
-       $self->{child}->{tables}->{$intTable}->{clients}->{$objClient->{username}} = $objClient;
-       $self->{child}->{tables}->{$intTable}->{boardMap} = $self->{boardMap};
-       $objClient->{seatID} = scalar(keys %{$self->{child}->{tables}->{$intTable}->{clients}});
-       $objClient->sendXT(['jt', '-1', $objClient->{tableID}, $objClient->{seatID}]);
 }
 
 method handleGetTable($strData, $objClient) {
@@ -31,8 +28,8 @@ method handleGetTable($strData, $objClient) {
        splice(@arrData, 0, 5);
        my $tablePopulation = '';
        foreach (@arrData) {
-                if (exists($self->{child}->{tables}->{$_})) {
-                    $tablePopulation .= $_ . '|' . scalar(keys %{$self->{child}->{tables}->{$_}->{clients}}) . '%';
+                if (defined($self->{matches}->getTable($_))) {
+                    $tablePopulation .= $_ . '|' . $self->{matches}->getTableClientCount($_) . '%';
                 }
        }
        $objClient->sendXT(['gt', '-1', substr($tablePopulation, 0, -1)]);
@@ -46,14 +43,15 @@ method handleUpdateTable($strData, $objClient) {
 method handleLeaveTable($strData, $objClient) {
        if ($objClient->{room} eq 220 || $objClient->{room} eq 221) {
            if ($objClient->{tableID} ne 0 && $objClient->{seatID} ne 999) {
-               foreach (values %{$self->{child}->{tables}->{$objClient->{tableID}}->{clients}}) {
+               foreach (values (%{$self->{matches}->getTable($objClient->{tableID})->{clients}})) {
                         if ($_->{ID} ne $objClient->{ID}) {
                             $_->sendXT(['cz', '-1', $objClient->{username}]);
-                            $_->{tableID} = 0;
-                            $_->{seatID} = 999;
                         }
+                        $self->{matches}->removeFromTable($_->{tableID}, $_->{seatID});
+                        $_->{tableID} = 0;
+                        $_->{seatID} = 0;
                }
-               $self->{child}->{tables}->{$objClient->{tableID}} = {clients => {}, max => 2};
+               $self->{matches}->removeFromTable($objClient->{tableID}, $objClient->{tableID});
                $objClient->{tableID} = 0;
                $objClient->{seatID} = 999;
           }
