@@ -53,7 +53,7 @@ method handleJoinZone($strData, $objClient) {
        if ($objClient->{room} eq 220 || $objClient->{room} eq 221) { # find four
            if ($objClient->{tableID} ne 0 && $objClient->{seatID} ne 999) {
                $objClient->sendXT(['jz', '-1', $objClient->{seatID} - 1, $objClient->{username}]);
-               foreach (values (%{$self->{matches}->getTable($objClient->{tableID})->{clients}})) {
+               foreach (values %{$self->{matches}->getTable($objClient->{tableID})->{clients}}) {
                         if ($_->{ID} ne $objClient->{ID}){
                             $objClient->sendXT(['uz', '-1', $_->{seatID} - 1, $_->{username}]);
                             $_->sendXT(['uz', '-1', $objClient->{seatID} - 1, $objClient->{username}]);
@@ -62,7 +62,7 @@ method handleJoinZone($strData, $objClient) {
                }
                if ($self->{matches}->getTableClientCount($objClient->{tableID}) >= $self->{matches}->getTable($objClient->{tableID})->{max}) {
                    $self->{matches}->{tables}->{$objClient->{tableID}}->{currentTurn} = 0;
-                   foreach (values (%{$self->{matches}->getTable($objClient->{tableID})->{clients}})) {
+                   foreach (values %{$self->{matches}->getTable($objClient->{tableID})->{clients}}) {
                             $_->sendXT(['sz', '-1', '0']);
                    }
                }
@@ -100,7 +100,7 @@ method handleSendMove($strData, $objClient) {
                my $column = $arrData[5];
                my $row = $arrData[6];
                $self->{matches}->{tables}->{$objClient->{tableID}}->{boardMap}[$column][$row] = $self->{matches}->{$objClient->{tableID}}->{currentTurn};
-               foreach (values (%{$self->{matches}->getTable($objClient->{tableID})->{clients}})) {
+               foreach (values %{$self->{matches}->getTable($objClient->{tableID})->{clients}}) {
                         $_->sendXT(['zm', '-1', $self->{matches}->{tables}->{$objClient->{tableID}}->{currentTurn}, $column, $row]);
                }
                $self->{matches}->{tables}->{$objClient->{tableID}}->{currentTurn} = $self->{matches}->{tables}->{$objClient->{tableID}}->{currentTurn} == 0 ? 1 : 0;
