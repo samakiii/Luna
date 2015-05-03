@@ -58,7 +58,7 @@ method getWaddleClientCount($waddleID) {
        my $clients = 0;
        foreach (values %{$self->{waddles}->{$waddleID}->{clients}}) {
                 if ($_->{waddleID} ne $waddleID) {
-                    delete($self->{waddles}->{$waddleID}->{clients}->{$_->seatID});
+                    delete($self->{waddles}->{$waddleID}->{clients}->{$_->{seatID}});
                     next;
                 }
                 $clients++;
@@ -71,7 +71,7 @@ method getTableClientCount($tableID) {
        my $clients = 0;
        foreach (values %{$self->{tables}->{$tableID}->{clients}}) {
                 if ($_->{tableID} ne $tableID) {
-                    delete($self->{tables}->{$tableID}->{clients}->{$_->seatID});
+                    delete($self->{tables}->{$tableID}->{clients}->{$_->{seatID}});
                     next;
                 }
                 $clients++;
