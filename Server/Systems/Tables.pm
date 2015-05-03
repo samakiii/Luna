@@ -15,8 +15,9 @@ method new($resChild) {
 
 method handleJoinTable($strData, $objClient) {
        my @arrData = split('%', $strData);
-       if ($self->{matches}->addToTable($arrData[5], $objClient)) {
-           $self->{matches}->{tables}->{$arrData[5]}->{boardMap} = $self->{boardMap};
+       my $intTable = $arrData[5];
+       if ($self->{matches}->addToTable($intTable, $objClient)) {
+           $self->{matches}->{tables}->{$intTable}->{boardMap} = $self->{boardMap};
            $objClient->sendXT(['jt', '-1', $objClient->{tableID}, $objClient->{seatID}]);
        } else {
            $objClient->sendError(211);
@@ -43,7 +44,7 @@ method handleUpdateTable($strData, $objClient) {
 method handleLeaveTable($strData, $objClient) {
        if ($objClient->{room} eq 220 || $objClient->{room} eq 221) {
            if ($objClient->{tableID} ne 0 && $objClient->{seatID} ne 999) {
-               foreach (values (%{$self->{matches}->getTable($objClient->{tableID})->{clients}})) {
+               foreach (values %{$self->{matches}->getTable($objClient->{tableID})->{clients}}) {
                         if ($_->{ID} ne $objClient->{ID}) {
                             $_->sendXT(['cz', '-1', $objClient->{username}]);
                         }
