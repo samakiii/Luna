@@ -49,63 +49,63 @@ method handleGetZone($strData, $objClient) {
 }
 
 method handleJoinZone($strData, $objClient) {
-     my @arrData = split('%', $strData);
-     if ($objClient->{room} eq 220 || $objClient->{room} eq 221) { # find four
-         if ($objClient->{tableID} ne 0 && $objClient->{seatID} ne 999) {
-             $objClient->sendXT(['jz', '-1', $objClient->{seatID} - 1, $objClient->{username}]);
-             foreach (values (%{$self->{matches}->getTable($objClient->{tableID})->{clients}})) {
-                      if ($_->{ID} ne $objClient->{ID}){
-                          $objClient->sendXT(['uz', '-1', $_->{seatID} - 1, $_->{username}]);
-                          $_->sendXT(['uz', '-1', $objClient->{seatID} - 1, $objClient->{username}]);
-                      }
-                      $objClient->sendXT(['uz', '-1', $objClient->{seatID} - 1, $objClient->{username}]);
-             }
-             if ($self->{matches}->getTableClientCount($objClient->{tableID}) >= $self->{matches}->getTable($objClient->{tableID})->{max}) {
-                 $self->{matches}->{tables}->{$objClient->{tableID}}->{currentTurn} = 0;
-                 foreach (values (%{$self->{matches}->getTable($objClient->{tableID})->{clients}})) {
-                          $_->sendXT(['sz', '-1', '0']);
-                 }
-             }
-         }
-     }
+       my @arrData = split('%', $strData);
+       if ($objClient->{room} eq 220 || $objClient->{room} eq 221) { # find four
+           if ($objClient->{tableID} ne 0 && $objClient->{seatID} ne 999) {
+               $objClient->sendXT(['jz', '-1', $objClient->{seatID} - 1, $objClient->{username}]);
+               foreach (values (%{$self->{matches}->getTable($objClient->{tableID})->{clients}})) {
+                        if ($_->{ID} ne $objClient->{ID}){
+                            $objClient->sendXT(['uz', '-1', $_->{seatID} - 1, $_->{username}]);
+                            $_->sendXT(['uz', '-1', $objClient->{seatID} - 1, $objClient->{username}]);
+                        }
+                        $objClient->sendXT(['uz', '-1', $objClient->{seatID} - 1, $objClient->{username}]);
+               }
+               if ($self->{matches}->getTableClientCount($objClient->{tableID}) >= $self->{matches}->getTable($objClient->{tableID})->{max}) {
+                   $self->{matches}->{tables}->{$objClient->{tableID}}->{currentTurn} = 0;
+                   foreach (values (%{$self->{matches}->getTable($objClient->{tableID})->{clients}})) {
+                            $_->sendXT(['sz', '-1', '0']);
+                   }
+               }
+           }
+       }
 }
 
 method handleGetWaddle($strData, $objClient) {
-     my @arrData = split('%', $strData);
-     splice(@arrData, 0, 5);
-     my $waddlePopulation = '';
-     foreach (@arrData) {
-          $waddlePopulation .= $self->{matches}->getWaddleString($_);
-     }
-     $objClient->sendXT(['gw', '-1', substr($waddlePopulation, 0, -1)]);
+       my @arrData = split('%', $strData);
+       splice(@arrData, 0, 5);
+       my $waddlePopulation = '';
+       foreach (@arrData) {
+                $waddlePopulation .= $self->{matches}->getWaddleString($_);
+       }
+       $objClient->sendXT(['gw', '-1', substr($waddlePopulation, 0, -1)]);
 }
 
 method handleLeaveWaddle($strData, $objClient) {
-     $self->{matches}->leaveWaddle($objClient);
+       $self->{matches}->leaveWaddle($objClient);
 }
 
 method handleJoinWaddle($strData, $objClient) {
-     my @arrData = split('%', $strData);
-     my $waddleID = $arrData[5];
-     return if(!int($waddleID) || !defined($self->{matches}->getWaddle($waddleID)));
-     if (!$self->{matches}->joinWaddle($objClient, $waddleID)) {
-          return $objClient->sendError(211);
-     }
+       my @arrData = split('%', $strData);
+       my $waddleID = $arrData[5];
+       return if(!int($waddleID) || !defined($self->{matches}->getWaddle($waddleID)));
+       if (!$self->{matches}->joinWaddle($objClient, $waddleID)) {
+           return $objClient->sendError(211);
+       }
 }
 
 method handleSendMove($strData, $objClient) {
-     my @arrData = split('%', $strData);
-     if ($objClient->{room} eq 220 || $objClient->{room} eq 221) { # find four
-         if ($objClient->{tableID} ne 0 && $objClient->{seatID} ne 999) {
-             my $column = $arrData[5];
-             my $row = $arrData[6];
-             $self->{matches}->{tables}->{$objClient->{tableID}}->{boardMap}[$column][$row] = $self->{matches}->{$objClient->{tableID}}->{currentTurn};
-             foreach (values (%{$self->{matches}->getTable($objClient->{tableID})->{clients}})) {
-                      $_->sendXT(['zm', '-1', $self->{matches}->{tables}->{$objClient->{tableID}}->{currentTurn}, $column, $row]);
-             }
-             $self->{matches}->{tables}->{$objClient->{tableID}}->{currentTurn} = $self->{matches}->{tables}->{$objClient->{tableID}}->{currentTurn} == 0 ? 1 : 0;
-         }
-     }
+       my @arrData = split('%', $strData);
+       if ($objClient->{room} eq 220 || $objClient->{room} eq 221) { # find four
+           if ($objClient->{tableID} ne 0 && $objClient->{seatID} ne 999) {
+               my $column = $arrData[5];
+               my $row = $arrData[6];
+               $self->{matches}->{tables}->{$objClient->{tableID}}->{boardMap}[$column][$row] = $self->{matches}->{$objClient->{tableID}}->{currentTurn};
+               foreach (values (%{$self->{matches}->getTable($objClient->{tableID})->{clients}})) {
+                        $_->sendXT(['zm', '-1', $self->{matches}->{tables}->{$objClient->{tableID}}->{currentTurn}, $column, $row]);
+               }
+               $self->{matches}->{tables}->{$objClient->{tableID}}->{currentTurn} = $self->{matches}->{tables}->{$objClient->{tableID}}->{currentTurn} == 0 ? 1 : 0;
+           }
+       }
 }
 
 1;

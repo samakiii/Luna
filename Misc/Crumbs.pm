@@ -124,14 +124,14 @@ method loadFurnitures($arrFurns) {
 
 method loadRooms($arrRooms) {
        foreach (sort keys %{$arrRooms}) {
-          my $intRoom = $arrRooms->{$_}->{room_id};
-          my $intLimit = $arrRooms->{$_}->{max_users};
-          my $strKey = $arrRooms->{$_}->{room_key};
-          if ($strKey ne '') {
-	             %{$self->{roomCrumbs}->{$intRoom}} = (limit => $intLimit);
-          } else {
-              %{$self->{gameRoomCrumbs}->{$intRoom}} = (limit => $intLimit);
-          }
+                my $intRoom = $arrRooms->{$_}->{room_id};
+                my $intLimit = $arrRooms->{$_}->{max_users};
+                my $strKey = $arrRooms->{$_}->{room_key};
+                if ($strKey ne '') {
+	                   %{$self->{roomCrumbs}->{$intRoom}} = (limit => $intLimit);
+                } else {
+                    %{$self->{gameRoomCrumbs}->{$intRoom}} = (limit => $intLimit);
+                }
        }
        $self->{child}->{modules}->{logger}->output('Successfully Loaded ' . scalar(keys %{$self->{roomCrumbs}}) . ' Rooms', Logger::LEVELS->{inf});
        $self->{child}->{modules}->{logger}->output('Successfully Loaded ' . scalar(keys %{$self->{gameRoomCrumbs}}) . ' Game Rooms', Logger::LEVELS->{inf});

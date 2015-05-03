@@ -57,11 +57,11 @@ method getWaddleClientCount($waddleID) {
        return if (!exists($self->{waddles}->{$waddleID}));
        my $clients = 0;
        foreach (values %{$self->{waddles}->{$waddleID}->{clients}}) {
-              if ($_->{waddleID} ne $waddleID) {
+                if ($_->{waddleID} ne $waddleID) {
                     delete($self->{waddles}->{$waddleID}->{clients}->{$_->seatID});
                     next;
-              }
-              $clients++;
+                }
+                $clients++;
        }
        return $clients;
 }
@@ -70,11 +70,11 @@ method getTableClientCount($tableID) {
        return if (!exists($self->{tables}->{$tableID}));
        my $clients = 0;
        foreach (values %{$self->{tables}->{$tableID}->{clients}}) {
-              if ($_->{tableID} ne $tableID) {
+                if ($_->{tableID} ne $tableID) {
                     delete($self->{tables}->{$tableID}->{clients}->{$_->seatID});
                     next;
-              }
-              $clients++;
+                }
+                $clients++;
        }
        return $clients;
 }
@@ -99,7 +99,7 @@ method joinWaddle($objClient, $waddleID) {
        $objClient->sendRoom('%xt%uw%-1%' . $waddleID . '%' . $objClient->{seatID} . '%' . $objClient->{username} . '%' . $objClient->{ID} . '%');
        $objClient->sendXT(['jw', '-1', $objClient->{seatID}]);
        if ($self->getWaddleClientCount($waddleID) >= $self->{waddles}->{$waddleID}->{max}) {
-              $self->prepareWaddle($waddleID);
+           $self->prepareWaddle($waddleID);
        }
        return 1;
 }
@@ -132,12 +132,12 @@ method resetWaddle($waddleID) {
 method getWaddleString($waddleID) {
        return if (!exists($self->{waddles}->{$waddleID}));
        my $rtnStr = $waddleID . '|';
-       for (my $i = 0; $i < ($self->{waddles}->{$waddleID}->{max} - 1); $i++) {
-              if (!exists($self->{waddles}->{$waddleID}->{clients}->{$i})) {
-                     $rtnStr .= ',';
-                     next;
-              }
-              $rtnStr .= $self->{waddles}->{$waddleID}->{clients}->{$i}->{username} . ',';
+       for (my $count = 0; $count < ($self->{waddles}->{$waddleID}->{max} - 1); $count++) {
+            if (!exists($self->{waddles}->{$waddleID}->{clients}->{$count})) {
+                $rtnStr .= ',';
+                next;
+            }
+            $rtnStr .= $self->{waddles}->{$waddleID}->{clients}->{$count}->{username} . ',';
        } 
        return $rtnStr . '%';
 }
@@ -145,8 +145,8 @@ method getWaddleString($waddleID) {
 method getUpdateString($waddleID) {
       my $waddle = $self->{waddles}->{$waddleID};
       my $rtnStr = $waddle->{max} . '%';
-      foreach (values %{$waddle->clients}) {
-             $rtnStr .= $_->{username} . '|' . $_->{colour} . '|' . $_->{hand} . '|' . lc($_->{username}) . '%';
+      foreach (values %{$waddle->{clients}) {
+               $rtnStr .= $_->{username} . '|' . $_->{colour} . '|' . $_->{hand} . '|' . lc($_->{username}) . '%';
       }
       return $rtnStr;
 }

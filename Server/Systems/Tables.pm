@@ -16,10 +16,10 @@ method new($resChild) {
 method handleJoinTable($strData, $objClient) {
        my @arrData = split('%', $strData);
        if ($self->{matches}->addToTable($arrData[5], $objClient)) {
-              $self->{matches}->{tables}->{$arrData[5]}->{boardMap} = $self->{boardMap};
-              $objClient->sendXT(['jt', '-1', $objClient->{tableID}, $objClient->{seatID}]);
+           $self->{matches}->{tables}->{$arrData[5]}->{boardMap} = $self->{boardMap};
+           $objClient->sendXT(['jt', '-1', $objClient->{tableID}, $objClient->{seatID}]);
        } else {
-              $objClient->sendError(211);
+           $objClient->sendError(211);
        }
 }
 
