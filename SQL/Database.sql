@@ -84,7 +84,6 @@ CREATE TABLE IF NOT EXISTS `users` (
   `flag` int(10) NOT NULL DEFAULT '0',
   `colour` int(10) NOT NULL DEFAULT '1',
   `coins` int(11) NOT NULL,
-  `mood` char(100) NOT NULL,
   `isMuted` tinyint(1) NOT NULL DEFAULT '0',
   `isStaff` tinyint(1) NOT NULL DEFAULT '0',
   `isAdmin` tinyint(1) NOT NULL DEFAULT '0',
@@ -98,6 +97,13 @@ CREATE TABLE IF NOT EXISTS `users` (
   `stamps` longblob NOT NULL,
   `cover` longblob NOT NULL,
   `restamps` longblob NOT NULL,
+  `nameglow` mediumblob NOT NULL,
+  `namecolour` mediumblob NOT NULL,
+  `bubbletext` mediumblob NOT NULL,
+  `bubblecolour` mediumblob NOT NULL,
+  `ringcolour` mediumblob NOT NULL,
+  `speed` smallint(3) NOT NULL,
+  `mood` char(100) NOT NULL,
   PRIMARY KEY (`ID`)
 ) ENGINE=MyISAM  DEFAULT CHARSET=latin1 AUTO_INCREMENT=1;
 

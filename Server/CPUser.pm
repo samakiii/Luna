@@ -30,7 +30,6 @@ method new($resParent, $resSock) {
        $obj->{bitMask} = 1;
        $obj->{banCount} = 0;
        $obj->{invalidLogins} = 0;
-       $obj->{mood} = '';
        $obj->{colour} = 0;
        $obj->{head} = 0;
        $obj->{face} = 0;
@@ -64,6 +63,13 @@ method new($resParent, $resSock) {
        $obj->{tableID} = 0;
        $obj->{waddleID} = 0;
        $obj->{seatID} = 999;
+       $obj->{mood} = ''; 
+       $obj->{speed} = 0;
+       $obj->{namecolour} = '';
+       $obj->{nameglow} = '';
+       $obj->{bubbletext} = '';
+       $obj->{bubblecolour} = '';
+       $obj->{ringcolour} = '';
        return $obj;
 }
 
@@ -173,7 +179,13 @@ method buildClientString {
                    $self->{ypos}, 
                    $self->{frame}, 1, 
                    $self->{rank} * 146,
-                   0, 0,  
+                   $self->{nameglow},
+                   $self->{namecolour},
+                   $self->{bubblecolour},
+                   $self->{bubbletext},
+                   $self->{ringcolour},
+                   $self->{speed},
+                   $self->{rank} * 146,
                    $self->{mood}              
        );
        my $strInfo = join('|', @arrInfo);
@@ -198,7 +210,14 @@ method buildBotString {
                    $self->{parent}->{servConfig}->{botProp}->{botYPos},
                    $self->{parent}->{servConfig}->{botProp}->{botFrame},
                    $self->{parent}->{servConfig}->{botProp}->{botMember},
-                   $self->{parent}->{servConfig}->{botProp}->{botRank}, 0, 0,
+                   $self->{parent}->{servConfig}->{botProp}->{botRank},
+                   $self->{parent}->{servConfig}->{botProp}->{botNameGlow},
+                   $self->{parent}->{servConfig}->{botProp}->{botNameColour},
+                   $self->{parent}->{servConfig}->{botProp}->{botBubbleColour},
+                   $self->{parent}->{servConfig}->{botProp}->{botBubbleText},
+                   $self->{parent}->{servConfig}->{botProp}->{botRingColour},
+                   $self->{parent}->{servConfig}->{botProp}->{botSpeed},
+                   $self->{parent}->{servConfig}->{botProp}->{botRank},
                    $self->{parent}->{servConfig}->{botProp}->{botMood},
        );
        my $strInfo = join('|', @arrInfo);
@@ -260,6 +279,13 @@ method updatePlayerCard($strData, $strType, $intItem) {
        $self->sendRoom('%xt%' . $strData . '%-1%' . $self->{ID} . '%' . $intItem . '%');
        $self->{parent}->{modules}->{mysql}->updateTable('users', $strType, $intItem, 'ID', $self->{ID});
        $self->{$strType} = $intItem;
+}
+
+method updateOpenGlow($strType, $mixData) {
+       return if (!$strType);
+       $self->{parent}->{modules}->{mysql}->updateTable('users', $strType, $mixData, 'ID', $self->{ID});
+       $self->{$strType} = $mixData;
+       $self->sendRoom('%xt%up%-1%' . $self->buildClientString . '%');
 }
 
 method throwSnowball($intX, $intY) {

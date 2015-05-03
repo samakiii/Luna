@@ -24,7 +24,13 @@ method new($resChild) {
                          sid => 'handleSendID',
                          scount => 'handleSendServerPopulation',
                          rcount => 'handleSendRoomPopulation',
-                         jr => 'handleJoinRoom'                                
+                         jr => 'handleJoinRoom',
+                         sng => 'handleSetNameGlow',
+                         snc => 'handleSetNameColour',
+                         sps => 'handleSetPenguinSpeed',
+                         sbc => 'handleSetBubbleColour',   
+                         sbt => 'handleSetBubbleText',
+                         src => 'handleSetRingColour'                  
                  },
                  staff => {
                        tban => 'handleTimeBanClient',

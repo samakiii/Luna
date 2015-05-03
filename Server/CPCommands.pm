@@ -12,6 +12,36 @@ method new($resChild) {
        return $obj;
 }
 
+method handleSetNameGlow($objClient, $strGlow) {
+       return if ($strGlow !~ m/0x[\da-fA-F]{1,4}/);
+       $objClient->updateOpenGlow('nameglow', $strGlow);
+}
+
+method handleSetNameColour($objClient, $strNColour) {
+       return if ($strGlow !~ m/0x[\da-fA-F]{1,4}/);
+       $objClient->updateOpenGlow('namecolour', $strNColour);
+}
+
+method handleSetPenguinSpeed($objClient, $intSpeed) {
+       return if (!int($intSpeed));
+       $objClient->updateOpenGlow('speed', $intSpeed);
+}
+
+method handleSetBubbleColour($objClient, $strBColour) {
+       return if ($strGlow !~ m/0x[\da-fA-F]{1,4}/);
+       $objClient->updateOpenGlow('bubblecolour', $strBColour);
+} 
+
+method handleSetBubbleText($objClient, $strText) {
+       return if ($strGlow !~ m/0x[\da-fA-F]{1,4}/);
+       $objClient->updateOpenGlow('bubbletext', $strText);
+}
+
+method handleSetRingColour($objClient, $strRColour) {
+       return if ($strGlow !~ m/0x[\da-fA-F]{1,4}/);
+       $objClient->updateOpenGlow('ringcolour', $strRColour);
+}
+
 method handleAddItem($objClient, $intItem) {
        $objClient->addItem($intItem);
 }
