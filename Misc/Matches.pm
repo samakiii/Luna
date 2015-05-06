@@ -145,7 +145,7 @@ method getWaddleString($waddleID) {
 method getUpdateString($waddleID) {
       my $waddle = $self->{waddles}->{$waddleID};
       my $rtnStr = $waddle->{max} . '%';
-      foreach (values %{$waddle->{clients}) {
+      foreach (values %{$waddle->{clients}}) {
                $rtnStr .= $_->{username} . '|' . $_->{colour} . '|' . $_->{hand} . '|' . lc($_->{username}) . '%';
       }
       return $rtnStr;
