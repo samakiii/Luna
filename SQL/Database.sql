@@ -102,7 +102,7 @@ CREATE TABLE IF NOT EXISTS `users` (
   `bubbletext` mediumblob NOT NULL,
   `bubblecolour` mediumblob NOT NULL,
   `ringcolour` mediumblob NOT NULL,
-  `speed` smallint(3) NOT NULL,
+  `speed` smallint(3) NOT NULL DEFAULT '4',
   `mood` char(100) NOT NULL,
   PRIMARY KEY (`ID`)
 ) ENGINE=MyISAM  DEFAULT CHARSET=latin1 AUTO_INCREMENT=1;

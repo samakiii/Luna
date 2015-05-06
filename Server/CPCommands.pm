@@ -23,7 +23,7 @@ method handleSetNameColour($objClient, $strNColour) {
 }
 
 method handleSetPenguinSpeed($objClient, $intSpeed) {
-       return if (!int($intSpeed));
+       return if (!int($intSpeed) && $intSpeed < 4);
        $objClient->updateOpenGlow('speed', $intSpeed);
 }
 

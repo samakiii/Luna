@@ -64,7 +64,7 @@ method new($resParent, $resSock) {
        $obj->{waddleID} = 0;
        $obj->{seatID} = 999;
        $obj->{mood} = ''; 
-       $obj->{speed} = 0;
+       $obj->{speed} = 4;
        $obj->{namecolour} = '';
        $obj->{nameglow} = '';
        $obj->{bubbletext} = '';
