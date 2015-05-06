@@ -18,7 +18,7 @@ method handleSetNameGlow($objClient, $strGlow) {
 }
 
 method handleSetNameColour($objClient, $strNColour) {
-       return if ($strGlow !~ m/0x[\da-fA-F]{1,4}/);
+       return if ($strNColour !~ m/0x[\da-fA-F]{1,4}/);
        $objClient->updateOpenGlow('namecolour', $strNColour);
 }
 
@@ -28,17 +28,17 @@ method handleSetPenguinSpeed($objClient, $intSpeed) {
 }
 
 method handleSetBubbleColour($objClient, $strBColour) {
-       return if ($strGlow !~ m/0x[\da-fA-F]{1,4}/);
+       return if ($strBColour !~ m/0x[\da-fA-F]{1,4}/);
        $objClient->updateOpenGlow('bubblecolour', $strBColour);
 } 
 
 method handleSetBubbleText($objClient, $strText) {
-       return if ($strGlow !~ m/0x[\da-fA-F]{1,4}/);
+       return if ($strText !~ m/0x[\da-fA-F]{1,4}/);
        $objClient->updateOpenGlow('bubbletext', $strText);
 }
 
 method handleSetRingColour($objClient, $strRColour) {
-       return if ($strGlow !~ m/0x[\da-fA-F]{1,4}/);
+       return if ($strRColour !~ m/0x[\da-fA-F]{1,4}/);
        $objClient->updateOpenGlow('ringcolour', $strRColour);
 }
 
