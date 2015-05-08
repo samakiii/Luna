@@ -358,7 +358,6 @@ method setAction($intAction) {
 }
 
 method removePlayer {
-       return if (!int($self->{room}));
        $self->sendRoom('%xt%rp%-1%' . $self->{ID} . '%');
 }
 
