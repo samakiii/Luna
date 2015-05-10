@@ -12,12 +12,11 @@ DROP TABLE IF EXISTS `users`;
 DROP TABLE IF EXISTS `igloos`;
 
 CREATE TABLE IF NOT EXISTS `servers` (
-  `servType` varchar(10) NOT NULL,
+  `servType` varchar(10) NOT NULL DEFAULT 'game',
   `servPort` mediumint(5) NOT NULL,
   `servName` char(20) NOT NULL,
   `servIP` mediumblob NOT NULL,
-  `curPop` int(10) NOT NULL DEFAULT '0',
-  PRIMARY KEY (`servType`)
+  `curPop` int(10) NOT NULL DEFAULT '0'
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
 CREATE TABLE IF NOT EXISTS `puffles` (
