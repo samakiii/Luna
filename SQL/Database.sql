@@ -12,7 +12,7 @@ DROP TABLE IF EXISTS `users`;
 DROP TABLE IF EXISTS `igloos`;
 
 CREATE TABLE IF NOT EXISTS `servers` (
-  `servType` varchar(10) NOT NULL DEFAULT 'game',
+  `servType` varchar(10) NOT NULL,
   `servPort` mediumint(5) NOT NULL,
   `servName` char(20) NOT NULL,
   `servIP` mediumblob NOT NULL,
