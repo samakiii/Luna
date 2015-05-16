@@ -73,7 +73,7 @@ method handleGetOwnedFurniture($strData, $objClient) {
 
 method handleGetFurnitureRevision($strData, $objClient) {
        my @arrData = split('%', $strData);
-       my $strFurns = '';
+       my $strFurns = "";
        while (my ($intKey, $strValue) = each(@arrData)) {
               if ($intKey > 4) {
                   $strFurns .= $strValue . ',';

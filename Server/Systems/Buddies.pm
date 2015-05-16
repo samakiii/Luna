@@ -17,10 +17,7 @@ method handleGetBuddies($strData, $objClient) {
 }
 
 method handleFetchBuddies($objClient) {
-       my $strBuddies = "";
-       while (my ($intBuddyID, $strBuddyName) = each(%{$objClient->{buddies}})) {
-              $strBuddies .= $intBuddyID . '|' . $strBuddyName . '|' . ($objClient->getOnline($intBuddyID) ? 1 : 0) . '%';
-       }
+       $strBuddies = join('%', map { $_ . '|' . $objClient->{buddies}->{$_} . '|' . ($objClient->getOnline($_) ? 1 : 0); } keys %{$objClient->{buddies}});
        return $strBuddies;
 }
 

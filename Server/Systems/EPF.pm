@@ -24,7 +24,7 @@ method handleEPFAddItem($strData, $objClient) {
            return $objClient->sendError(405);
        }
        push(@{$objClient->{inventory}}, $intItem);
-       $self->{child}->{modules}->{mysql}->updateTable('users', 'inventory', join('%', @{$objClient->{inventory}}) , 'ID', $objClient->{ID});
+       $self->{child}->{modules}->{mysql}->updateTable('users', 'inventory', join('%', @{$objClient->{inventory}}), 'ID', $objClient->{ID});
        $objClient->updateEPFPoints($objClient->{epfPoints} - $self->{child}->{modules}->{crumbs}->{epfCrumbs}->{$intItem}->{points});
        $objClient->sendXT(['epfai', '-1', $intItem, $objClient->{epfPoints}]);
 }
