@@ -17,7 +17,7 @@ method handleGetBuddies($strData, $objClient) {
 }
 
 method handleFetchBuddies($objClient) {
-       $strBuddies = join('%', map { $_ . '|' . $objClient->{buddies}->{$_} . '|' . ($objClient->getOnline($_) ? 1 : 0); } keys %{$objClient->{buddies}});
+       my $strBuddies = join('%', map { $_ . '|' . $objClient->{buddies}->{$_} . '|' . ($objClient->getOnline($_) ? 1 : 0); } keys %{$objClient->{buddies}});
        return $strBuddies;
 }
 
