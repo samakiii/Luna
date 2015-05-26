@@ -80,7 +80,7 @@ If you are using Windows, you can use <b>Run.bat</b>
  <li><a href="http://www.adminer.org/">How to install Adminer(Optional)</a></li>
 </ul>
 
-*<b>Note:</b>* Windows users please do not install Perl when installing XAMPP.
+*<b>Note:</b>* Windows users please do not install Perl when installing XAMPP. Also it is recommended that you install Active State Perl instead of Strawberry Perl.
 
 ### Default Server Account:
 
