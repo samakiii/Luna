@@ -12,21 +12,21 @@ require_once('recaptchalib.php');
 $dbHost = '127.0.0.1';
 $dbName = 'Luna';
 $dbUser = 'root';
-$dbPass = 'kevinismybf';
+$dbPass = 'passwordgoeshere';
 
 function sendError($strErr) {
-             $strMsg = "<center><h1>Error creating account: " . $strErr . "</h1></center>"; 
+             $strMsg = "<center><h1>Error: " . $strErr . "</h1></center>"; 
              die($strMsg);
 }
 
-$mysql = new mysqli($dbHost, $dbUser, $dbPass, $dbName);
+$resDBCon= mysqli_connect($dbHost, $dbUser, $dbPass, $dbName) or sendError('Failed to connect to MySQL: ' . mysqli_connect_error());
 
 if (array_key_exists('submit', $_POST)) { 
-     $strUsername = $mysql->real_escape_string($_POST['username']);
-     $strPassword = $mysql->real_escape_string($_POST['pass']);
-     $strPasswordTwo = $mysql->real_escape_string($_POST['passtwo']);
-     $intColor = $mysql->real_escape_string($_POST['color']);
-     $strEmail = $mysql->real_escape_string($_POST['email']);
+     $strUsername = mysqli_real_escape_string($resDBCon, $_POST['username']);
+     $strPassword = mysqli_real_escape_string($resDBCon, $_POST['pass']);
+     $strPasswordTwo = mysqli_real_escape_string($resDBCon, $_POST['passtwo']);
+     $intColor = mysqli_real_escape_string($resDBCon, $_POST['color']);
+     $strEmail = mysqli_real_escape_string($resDBCon, $_POST['email']);
      if (empty($strEmail) && empty($strUsername) && empty($strPassword) && empty($strPasswordTwo) && empty($intColor)) {
          sendError('One or more fields has not been completed, please complete them');
      }
@@ -48,26 +48,26 @@ if (array_key_exists('submit', $_POST)) {
      } elseif (strlen($strPassword) > 15 && strlen($strPassword)  < 5 && strlen($strPasswordTwo) > 15 && strlen($strPasswordTwo) < 5) {
          sendError('Password is either too long or too short');
      }
-     $arrExistUser = $mysql->query("SELECT username FROM users WHERE username = '$strUsername'");
-     $intUsers = $arrExistUser->num_rows;
+     $arrExistUsers = mysqli_query($resDBCon, "SELECT username FROM users WHERE username = '$strUsername'");
+     $intUsers = mysqli_num_rows($arrExistUsers);
      if ($intUsers != 0) {
          sendError('Username already exists, please try another name');
      }
-     $arrExistEmail = $mysql->query("SELECT email FROM users WHERE email = '$strEmail'");
-     $intEmails = $arrExistEmail->num_rows;
+     $arrExistEmails = mysqli_query($resDBCon, "SELECT email FROM users WHERE email = '$strEmail'");
+     $intEmails = mysqli_num_rows($arrExistEmails);
      if ($intEmails != 0) {
          sendError('Email is already in use, please try another email');
      }
-     $strIP = $mysql->real_escape_string($_SERVER['REMOTE_ADDR']);
+     $strIP = mysqli_real_escape_string($resDBCon, $_SERVER['REMOTE_ADDR']);
      $strMD5 = md5($strPassword);
-     $mixResp = recaptcha_check_answer ('6Ldbc9cSAAAAAHs88TTzyytdrIlkbVx3h5x55t8j', $strIP, $_POST["recaptcha_challenge_field"], $_POST["recaptcha_response_field"]); // edit the first parameter, its the private key
+     $mixResp = recaptcha_check_answer ('6Ldbc9cSAAAAAHs88TTzyytdrIlkbVx3h5x55t8j', $strIP, $_POST['recaptcha_challenge_field'], $_POST['recaptcha_response_field']); // edit the first parameter, its the private key
      if (!$mixResp->is_valid) {
          sendError($mixResp->error);
      } else {
-         $mysql->query("INSERT INTO users (`username`, `nickname`, `email`, `password`, `colour`, `ipAddr`, 'stamps') VALUES ('" . $strUsername . "', '" . $strUsername . "', '" . $strEmail . "', '" . $strPassword . "', '" . $intColor . "', '" . $strIP . "', '31|7|33|8|32|35|34|36|290|358|448')");
-         $intPID = $mysql->insert_id;
-         $mysql->query("INSERT INTO igloos ('ID', `username`) VALUES ('" . $intPID . "', '" . $strUsername . "')");
-         $mysql->query("INSERT INTO postcards (`ID`, `username`) VALUES ('" . $intPID . "', '" . $strUsername . "')");
+         mysqli_query($resDBCon, "INSERT INTO users (`username`, `nickname`, `email`, `password`, `colour`,  `ipAddr`, `stamps`) VALUES ('" . $strUsername . "', '" . $strUsername . "', '" . $strEmail . "', '" . $strMD5 . "', '" . $intColor . "', '" . $strIP . "', '31|7|33|8|32|35|34|36|290|358|448')");
+         $intPID = mysqli_insert_id($resDBCon);
+         mysqli_query($resDBCon, "INSERT INTO igloos ('ID', `username`) VALUES ('" . $intPID . "', '" . $strUsername . "')");
+         mysqli_query($resDBCon, "INSERT INTO postcards (`ID`, `username') VALUES ('" . $intPID . "', '" . $strUsername . "')");
          echo "<center><h1>You have successfully registered with Luna, $strUsername ! You may now login to the game :-)</h1></center>";
      }
 } else {
