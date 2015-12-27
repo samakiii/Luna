@@ -11,7 +11,7 @@
 $dbHost = '127.0.0.1';
 $dbName = 'Luna';
 $dbUser = 'root';
-$dbPass = 'kevinismybf';
+$dbPass = 'passwordinhere';
 
 function sendError($strErr) {
              $strMsg = "<center><h1>Error: " . $strErr . "</h1></center>"; 
