@@ -1,18 +1,17 @@
 <html>
 <head>
 <title>Luna - Register</title>
+<script src='https://www.google.com/recaptcha/api.js'></script>
 </head>
 <center>
 
 <?php
 
-require_once('recaptchalib.php');
-
 //Edit only these details and scroll below and edit the captcha keys
 $dbHost = '127.0.0.1';
 $dbName = 'Luna';
 $dbUser = 'root';
-$dbPass = 'passwordgoeshere';
+$dbPass = 'kevinismybf';
 
 function sendError($strErr) {
              $strMsg = "<center><h1>Error: " . $strErr . "</h1></center>"; 
@@ -60,9 +59,10 @@ if (array_key_exists('submit', $_POST)) {
      }
      $strIP = mysqli_real_escape_string($resDBCon, $_SERVER['REMOTE_ADDR']);
      $strMD5 = md5($strPassword);
-     $mixResp = recaptcha_check_answer ('6Ldbc9cSAAAAAHs88TTzyytdrIlkbVx3h5x55t8j', $strIP, $_POST['recaptcha_challenge_field'], $_POST['recaptcha_response_field']); // edit the first parameter, its the private key
-     if (!$mixResp->is_valid) {
-         sendError($mixResp->error);
+     $strSecretKey = '6Ldbc9cSAAAAAHs88TTzyytdrIlkbVx3h5x55t8j';
+     $arrData = json_decode(file_get_contents("https://www.google.com/recaptcha/api/siteverify?secret=" . $strSecretKey . "&response=". $_POST['g-recaptcha-response'] . "&remoteip=" . $strIP), true);
+     if (!$arrData['success']) {
+         sendError('Get a life jackass');
      } else {
          mysqli_query($resDBCon, "INSERT INTO users (`username`, `nickname`, `email`, `password`, `colour`,  `ipAddr`, `stamps`) VALUES ('" . $strUsername . "', '" . $strUsername . "', '" . $strEmail . "', '" . $strMD5 . "', '" . $intColor . "', '" . $strIP . "', '31|7|33|8|32|35|34|36|290|358|448')");
          $intPID = mysqli_insert_id($resDBCon);
@@ -112,10 +112,7 @@ if (array_key_exists('submit', $_POST)) {
 </select>
 </td></tr>
 <br>
-<?php
-require_once('recaptchalib.php');
-echo recaptcha_get_html('6Ldbc9cSAAAAACYGs9FWEemI_A4Atx20sOtk6YA-'); //edit this key, its the public key
-?>
+<div class="g-recaptcha" data-sitekey="6Ldbc9cSAAAAACYGs9FWEemI_A4Atx20sOtk6YA-"></div>
 <tr><th colspan=2><input type="submit" name="submit" value="Register">
 </th></tr>
 </table>
