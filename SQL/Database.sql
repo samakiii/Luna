@@ -65,6 +65,7 @@ CREATE TABLE IF NOT EXISTS `users` (
   `password` char(32) NOT NULL,
   `loginKey` char(32) NOT NULL,
   `ipAddr` mediumblob NOT NULL,
+  `email` mediumblob NOT NULL,
   `age` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP,
   `LastLogin` timestamp,
   `active` tinyint(1) NOT NULL DEFAULT '1',
