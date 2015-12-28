@@ -12,7 +12,7 @@ require 'recaptcha/src/autoload.php';
 $dbHost = '127.0.0.1';
 $dbName = 'Luna';
 $dbUser = 'root';
-$dbPass = 'kevinismybf';
+$dbPass = 'passwordgoeshere';
 
 function sendError($strErr) {
              $strMsg = "<center><h1>Error: " . $strErr . "</h1></center>"; 
@@ -69,8 +69,7 @@ if (array_key_exists('submit', $_POST)) {
          $resQuery = mysqli_query($resDBCon, "INSERT INTO users (`username`, `nickname`, `email`, `password`, `colour`,  `ipAddr`, `stamps`) VALUES ('" . $strUsername . "', '" . $strUsername . "', '" . $strEmail . "', '" . $strMD5 . "', '" . $intColor . "', '" . $strIP . "', '31|7|33|8|32|35|34|36|290|358|448')");
          $intPID = mysqli_insert_id($resDBCon);
          mysqli_query($resDBCon, "INSERT INTO igloos (`ID`, `username`) VALUES ('" . $intPID . "', '" . $strUsername . "')");
-          //yet to fix the postcards
-         //mysqli_query($resDBCon, "INSERT INTO postcards (`postcardID`, `recepient`, `mailerID`, `mailerName`, `postcardType`) VALUES ('1', '" . $intPID . "', '0', 'Luna', '125')");
+         mysqli_query($resDBCon, "INSERT INTO postcards (`recepient`, `mailerID`, `mailerName`, `postcardType`) VALUES ('" . $intPID . "', '0', 'Luna', '125')");
          echo "<center><h1>You have successfully registered with Luna, $strUsername ! You may now login to the game :-)</h1></center>";
      }
 } else {
