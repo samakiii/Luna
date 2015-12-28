@@ -1,17 +1,18 @@
 <html>
 <head>
 <title>Luna - Register</title>
-<script src='https://www.google.com/recaptcha/api.js'></script>
 </head>
 <center>
 
 <?php
 
+require 'recaptcha/src/autoload.php';
+
 //Edit only these details and scroll below and edit the captcha keys
 $dbHost = '127.0.0.1';
 $dbName = 'Luna';
 $dbUser = 'root';
-$dbPass = 'passwordinhere';
+$dbPass = 'kevinismybf';
 
 function sendError($strErr) {
              $strMsg = "<center><h1>Error: " . $strErr . "</h1></center>"; 
@@ -59,15 +60,17 @@ if (array_key_exists('submit', $_POST)) {
      }
      $strIP = mysqli_real_escape_string($resDBCon, $_SERVER['REMOTE_ADDR']);
      $strMD5 = md5($strPassword);
-     $strSecretKey = '6Ldbc9cSAAAAAHs88TTzyytdrIlkbVx3h5x55t8j';
-     $arrData = json_decode(file_get_contents("https://www.google.com/recaptcha/api/siteverify?secret=" . $strSecretKey . "&response=". $_POST['g-recaptcha-response'] . "&remoteip=" . $strIP), true);
-     if (!$arrData['success']) {
-         sendError('Get a life jackass');
+     $strSecretKey = '6Lee7RMTAAAAAD_B4-4nEt2Amni4XC3EfGmKEI_K'; //edit this, its your secret/private key
+     $recaptcha = new \ReCaptcha\ReCaptcha($strSecretKey);
+     $resp = $recaptcha->verify($_POST['g-recaptcha-response'], $strIP);
+     if (!$resp->isSuccess()) {
+         sendError($resp->getErrorCodes());
      } else {
-         mysqli_query($resDBCon, "INSERT INTO users (`username`, `nickname`, `email`, `password`, `colour`,  `ipAddr`, `stamps`) VALUES ('" . $strUsername . "', '" . $strUsername . "', '" . $strEmail . "', '" . $strMD5 . "', '" . $intColor . "', '" . $strIP . "', '31|7|33|8|32|35|34|36|290|358|448')");
+         $resQuery = mysqli_query($resDBCon, "INSERT INTO users (`username`, `nickname`, `email`, `password`, `colour`,  `ipAddr`, `stamps`) VALUES ('" . $strUsername . "', '" . $strUsername . "', '" . $strEmail . "', '" . $strMD5 . "', '" . $intColor . "', '" . $strIP . "', '31|7|33|8|32|35|34|36|290|358|448')");
          $intPID = mysqli_insert_id($resDBCon);
-         mysqli_query($resDBCon, "INSERT INTO igloos ('ID', `username`) VALUES ('" . $intPID . "', '" . $strUsername . "')");
-         mysqli_query($resDBCon, "INSERT INTO postcards (`ID`, `username') VALUES ('" . $intPID . "', '" . $strUsername . "')");
+         mysqli_query($resDBCon, "INSERT INTO igloos (`ID`, `username`) VALUES ('" . $intPID . "', '" . $strUsername . "')");
+          //yet to fix the postcards
+         //mysqli_query($resDBCon, "INSERT INTO postcards (`postcardID`, `recepient`, `mailerID`, `mailerName`, `postcardType`) VALUES ('1', '" . $intPID . "', '0', 'Luna', '125')");
          echo "<center><h1>You have successfully registered with Luna, $strUsername ! You may now login to the game :-)</h1></center>";
      }
 } else {
@@ -112,7 +115,9 @@ if (array_key_exists('submit', $_POST)) {
 </select>
 </td></tr>
 <br>
-<div class="g-recaptcha" data-sitekey="6Ldbc9cSAAAAACYGs9FWEemI_A4Atx20sOtk6YA-"></div>
+<!--edit the site key to match yours -->
+<div class="g-recaptcha" data-sitekey="6Lee7RMTAAAAANDR7uPCUyEE323E9aY9n3a6yuLS"></div>
+<script type="text/javascript" src='https://www.google.com/recaptcha/api.js?hl=en'></script>
 <tr><th colspan=2><input type="submit" name="submit" value="Register">
 </th></tr>
 </table>
