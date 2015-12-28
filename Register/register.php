@@ -12,7 +12,7 @@ require 'recaptcha/src/autoload.php';
 $dbHost = '127.0.0.1';
 $dbName = 'Luna';
 $dbUser = 'root';
-$dbPass = 'passwordgoeshere';
+$dbPass = 'kevinismybf';
 
 function sendError($strErr) {
              $strMsg = "<center><h1>Error: " . $strErr . "</h1></center>"; 
@@ -59,6 +59,11 @@ if (array_key_exists('submit', $_POST)) {
          sendError('Email is already in use, please try another email');
      }
      $strIP = mysqli_real_escape_string($resDBCon, $_SERVER['REMOTE_ADDR']);
+     $arrExistIPS = mysqli_query($resDBCon, "SELECT ipAddr FROM users WHERE ipAddr = '$strIP'");
+     $intIPS = mysqli_num_rows($arrExistIPS);
+     if ($intPS >= 2) {
+         sendError('You cannot create more than two accounts using this IP');
+     }
      $strMD5 = md5($strPassword);
      $strSecretKey = '6Lee7RMTAAAAAD_B4-4nEt2Amni4XC3EfGmKEI_K'; //edit this, its your secret/private key
      $recaptcha = new \ReCaptcha\ReCaptcha($strSecretKey);
@@ -76,25 +81,11 @@ if (array_key_exists('submit', $_POST)) {
 ?>
 
 <form method="post" action="<?php echo $_SERVER['PHP_SELF']; ?>">
-<tr><td>Username:</td><td>
-<input type="text" name="username" maxlength="10" placeholder="Username goes here" width="100">
-</td></tr><tr>
-<br>
-<td>Email:</td><td>
-<input type="text" name="email" maxlength="25" placeholder="Enter Your Email" width="100">
-</td></tr>
-<br>
-<tr><td>Password:</td><td>
-<input type="password" name="pass" maxlength="15" placeholder="Enter Your Password" width="100">
-</td></tr>
-<br>
-<tr><td>Verify Password:</td><td>
-<input type="password" name="passtwo" maxlength="15" placeholder="Enter Your Password Again" width="100">
-</td></tr>
-</td></tr>
-<br>
-<tr><td>Color:</td><td>
-<select name="color" id="color">
+<p>Username: <input type="text" name="username" maxlength="10" placeholder="Username goes here" width="100"></p>
+<p>Email: <input type="text" name="email" maxlength="25" placeholder="Enter Your Email" width="100"></p>
+<p>Password: <input type="password" name="pass" maxlength="15" placeholder="Enter Your Password" width="100"></p>
+<p>Verify Password: <input type="password" name="passtwo" maxlength="15" placeholder="Enter Your Password Again" width="100"></p>
+<p>Color: <select name="color" id="color">
 <option value="0" selected="true"></option>
 <option value="1">Blue</option>
 <option value="2">Green</option>
@@ -112,8 +103,7 @@ if (array_key_exists('submit', $_POST)) {
 <option value="14">Grey</option>
 <option value="15">Aqua</option>
 </select>
-</td></tr>
-<br>
+</p>
 <!--edit the site key to match yours -->
 <div class="g-recaptcha" data-sitekey="6Lee7RMTAAAAANDR7uPCUyEE323E9aY9n3a6yuLS"></div>
 <script type="text/javascript" src='https://www.google.com/recaptcha/api.js?hl=en'></script>
