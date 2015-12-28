@@ -11,7 +11,7 @@ Club Penguin Server Emulator - AS2 Protocol
 ### Requirements:
 <ul>
  <li> PHP 5.5+</li>
- <li> Perl 5.12+</li>
+ <li> Perl 5.12 till 5.18</li>
  <li> reCaptcha Keys</li>
  <li> Apache/Nginx</li>
  <li> Phpmyadmin/Adminer</li>
