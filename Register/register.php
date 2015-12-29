@@ -1,8 +1,12 @@
-<html>
+<!DOCTYPE html>
+<html >
 <head>
+<meta charset="UTF-8">
 <title>Luna - Register</title>
+<link rel="stylesheet" href="css/style.css">
 </head>
 <center>
+<body>
 
 <?php
 
@@ -12,10 +16,10 @@ require 'recaptcha/src/autoload.php';
 $dbHost = '127.0.0.1';
 $dbName = 'Luna';
 $dbUser = 'root';
-$dbPass = 'passwordgoezhere';
+$dbPass = 'kevinismybf';
 
 function sendError($strErr) {
-             $strMsg = "<center><h1>Error: " . $strErr . "</h1></center>"; 
+             $strMsg = "<center><h2>Error: " . $strErr . "</h2></center>"; 
              die($strMsg);
 }
 
@@ -75,42 +79,65 @@ if (array_key_exists('submit', $_POST)) {
          $intPID = mysqli_insert_id($resDBCon);
          mysqli_query($resDBCon, "INSERT INTO igloos (`ID`, `username`) VALUES ('" . $intPID . "', '" . $strUsername . "')");
          mysqli_query($resDBCon, "INSERT INTO postcards (`recepient`, `mailerID`, `mailerName`, `postcardType`) VALUES ('" . $intPID . "', '0', 'Luna', '125')");
-         echo "<center><h1>You have successfully registered with Luna, $strUsername ! You may now login to the game :-)</h1></center>";
+         echo "<center><h2>You have successfully registered with Luna, $strUsername ! You may now login to the game :-)</h2></center>";
      }
 } else {
 ?>
 
-<form method="post" action="<?php echo $_SERVER['PHP_SELF']; ?>">
-<p>Username: <input type="text" name="username" maxlength="10" placeholder="Username goes here" width="100"></p>
-<p>Email: <input type="text" name="email" maxlength="25" placeholder="Enter Your Email" width="100"></p>
-<p>Password: <input type="password" name="pass" maxlength="15" placeholder="Enter Your Password" width="100"></p>
-<p>Verify Password: <input type="password" name="passtwo" maxlength="15" placeholder="Enter Your Password Again" width="100"></p>
-<p>Color: <select name="color" id="color">
-<option value="0" selected="true"></option>
-<option value="1">Blue</option>
-<option value="2">Green</option>
-<option value="3">Pink</option>
-<option value="4">Black</option>   
-<option value="5">Red</option>
-<option value="6">Orange</option>
-<option value="7">Yellow</option>
-<option value="8">Dark Purple</option>
-<option value="9">Brown</option>
-<option value="10">Peach</option>
-<option value="11">Dark Green</option>
-<option value="12">Light Blue</option>
-<option value="13">Light Green</option>
-<option value="14">Grey</option>
-<option value="15">Aqua</option>
-</select>
-</p>
-<!--edit the site key to match yours -->
-<div class="g-recaptcha" data-sitekey="6Lee7RMTAAAAANDR7uPCUyEE323E9aY9n3a6yuLS"></div>
-<script type="text/javascript" src='https://www.google.com/recaptcha/api.js?hl=en'></script>
-<tr><th colspan=2><input type="submit" name="submit" value="Register">
-</th></tr>
-</table>
+<div class="wrapper">
+<div class="container">
+<form class="form" name="form" method="post" action="<?php echo $_SERVER['PHP_SELF']; ?>">
+			 <input type="text" name="username" maxlength="10" placeholder="Enter Your Username">
+       <input type="text" name="email" maxlength="25" placeholder="Enter Your Email">
+       <input type="password" name="pass" maxlength="15" placeholder="Enter Your Password">
+       <input type="password" name="passtwo" maxlength="15" placeholder="Enter Your Password Again">
+       <div class="select">
+       <span class="arr"></span>
+       <select name="color" id="color">
+                <option value="">Color</option>
+                <option value="1">Blue</option>
+                <option value="2">Green</option>
+                <option value="3">Pink</option>
+                <option value="4">Black</option>   
+                <option value="5">Red</option>
+                <option value="6">Orange</option>
+                <option value="7">Yellow</option>
+                <option value="8">Dark Purple</option>
+                <option value="9">Brown</option>
+                <option value="10">Peach</option>
+                <option value="11">Dark Green</option>
+                <option value="12">Light Blue</option>
+                <option value="13">Light Green</option>
+                <option value="14">Grey</option>
+                <option value="15">Aqua</option>
+       </select>
+       </div>
+       <center>
+       <br>
+       <!--edit the site key to match yours -->
+       <div class="g-recaptcha" data-sitekey="6Lee7RMTAAAAANDR7uPCUyEE323E9aY9n3a6yuLS"></div>
+       <script type="text/javascript" src='https://www.google.com/recaptcha/api.js?hl=en'></script>
+       </center>
+       <br>
+       <input type="submit" id="login-button" name="submit" value="Sign Up">
 </form>
+</div>
+<ul class="bg-bubbles">
+		<li></li>
+		<li></li>
+		<li></li>
+		<li></li>
+		<li></li>
+		<li></li>
+		<li></li>
+		<li></li>
+		<li></li>
+		<li></li>
+</ul>
+</div>
+<script src='http://cdnjs.cloudflare.com/ajax/libs/jquery/2.1.3/jquery.min.js'></script>
+<script src="js/index.js"></script>
+</body>
 </center>
 </html>
 
