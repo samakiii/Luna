@@ -119,7 +119,7 @@ method handleKickBanClient($objClient, $strName) {
 
 method handleUnbanClient($objClient, $strName) {
        return if ($objClient->{rank} < 4);
-       $self->{child}->{modules}->{mysql}->updateTable('users', 'isBanned', '', 'username', $strName);
+       $self->{child}->{modules}->{mysql}->updateTable('users', 'isBanned', 0, 'username', $strName);
        $self->{child}->{modules}->{mysql}->updateTable('users', 'banCount', 0, 'username', $strName);
 }
 

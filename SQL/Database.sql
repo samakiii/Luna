@@ -16,7 +16,8 @@ CREATE TABLE IF NOT EXISTS `servers` (
   `servPort` mediumint(5) NOT NULL,
   `servName` char(20) NOT NULL,
   `servIP` mediumblob NOT NULL,
-  `curPop` int(10) NOT NULL DEFAULT '0'
+  `curPop` int(10) NOT NULL DEFAULT '0',
+  PRIMARY KEY (`servType`)
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
 CREATE TABLE IF NOT EXISTS `puffles` (
@@ -70,7 +71,7 @@ CREATE TABLE IF NOT EXISTS `users` (
   `LastLogin` timestamp,
   `active` tinyint(1) NOT NULL DEFAULT '1',
   `bitMask` tinyint(1) NOT NULL DEFAULT '1',
-  `isBanned` varchar(10) NOT NULL,
+  `isBanned` varchar(10) NOT NULL DEFAULT '0',
   `banCount` tinyint(1) NOT NULL DEFAULT '0',
   `invalidLogins` smallint(3) NOT NULL DEFAULT '0',
   `inventory` longblob NOT NULL,
