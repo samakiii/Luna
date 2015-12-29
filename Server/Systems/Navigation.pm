@@ -40,7 +40,7 @@ method handleJoinServer($strData, $objClient) {
        }
        $objClient->updateKey('', $objClient->{username});
        $objClient->sendXT(['js', '-1', 0, 1, $objClient->{isStaff}, 0]);
-       $objClient->sendXT(['lp', '-1', $objClient->buildClientString, $objClient->{coins}, 0, 1440, 100, $objClient->{age}, 4, $objClient->{age}, 7]);
+       $objClient->write('%xt%lp%-1%' . $objClient->buildClientString . '%' . $objClient->{coins} . '%0%1440%100%' . $objClient->{age} . '%4%' . $objClient->{age} . '%%7%');
        $objClient->sendXT(['gps', '-1', $objClient->{ID}, join('|', @{$objClient->{stamps}})]);
        $objClient->joinRoom($self->{child}->generateRoom);  
        $objClient->updatePuffleStatistics; 
