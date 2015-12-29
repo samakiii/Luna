@@ -97,6 +97,12 @@ method handleKickClient($objClient, $strName) {
        $self->{child}->{modules}->{base}->removeClient($objPlayer->{sock});
 }
 
+method handleSummonClient($objClient, $strName) {
+            return if ($objClient->{rank} < 4);
+            my $objPlayer = $objClient->getClientByName($strName);
+            $objPlayer->joinRoom($objClient->{room});
+}
+
 method handleBanClient($objClient, $strName) {
        return if ($objClient->{rank} < 4);
        my $objPlayer = $objClient->getClientByName($strName);
