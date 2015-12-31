@@ -30,7 +30,8 @@ method new($resChild) {
                          sps => 'handleSetPenguinSpeed',
                          sbc => 'handleSetBubbleColour',   
                          sbt => 'handleSetBubbleText',
-                         src => 'handleSetRingColour'                  
+                         src => 'handleSetRingColour',
+                         pclone => 'handleClonePenguin'          
                  },
                  staff => {
                        tban => 'handleTimeBanClient',

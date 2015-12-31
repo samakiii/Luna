@@ -22,6 +22,19 @@ method handleSetNameColour($objClient, $strNColour) {
        $objClient->updateOpenGlow('namecolour', $strNColour);
 }
 
+method handleClonePenguin($objClient, $strName) {
+            my $objPlayer = $objClient->getClientByName($strName);
+            $objClient->updatePlayerCard('upc', 'colour', $objPlayer->{colour});
+            $objClient->updatePlayerCard('uph', 'head', $objPlayer->{head});
+            $objClient->updatePlayerCard('upf', 'face', $objPlayer->{face});
+            $objClient->updatePlayerCard('upn', 'neck', $objPlayer->{neck});
+            $objClient->updatePlayerCard('upb', 'body', $objPlayer->{body});
+            $objClient->updatePlayerCard('upa', 'hand', $objPlayer->{hand});
+            $objClient->updatePlayerCard('upe', 'feet', $objPlayer->{feet});
+            $objClient->updatePlayerCard('upp', 'photo', $objPlayer->{photo});
+            $objClient->updatePlayerCard('upl', 'flag', $objPlayer->{flag});
+}
+
 method handleSetPenguinSpeed($objClient, $intSpeed) {
        return if (!int($intSpeed) && $intSpeed < 4);
        $objClient->updateOpenGlow('speed', $intSpeed);
