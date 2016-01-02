@@ -2,7 +2,7 @@
 
 $strDBHost = 'localhost';
 $strDBUser = 'root';
-$strDBPass = 'kevinismybf';
+$strDBPass = 'passswordhere';
 $strDBName = 'Luna';
 
 ?>
