@@ -1,9 +1,7 @@
 
 <?php
 
-set_time_limit(0);
-
-include('login.php');
+include 'login.php';
 
 if (array_key_exists('login_user', $_SESSION)) {
     header("location: profile.php");

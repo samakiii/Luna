@@ -1,8 +1,6 @@
 <?php
 
-set_time_limit(0);
-
-include('session.php');
+include 'session.php';
 
 ?>
 
@@ -21,18 +19,11 @@ include('session.php');
 <li><a class="active" href="profile.php">Home</a></li>
 <li><a href="settings.php">Settings</a></li>
 <li><a href="search.php">Search</a></li>
-<?php 
-    if ($_SESSION['isStaff'] == true) { 
-?>
- <li><a href="moderator.php">Mod Panel</a></li>
-<?php 
-    if ($_SESSION['isAdmin'] == true) { 
-?>
+<?php if ($_SESSION['isStaff'] == true) { ?>
+<li><a href="moderator.php">Mod Panel</a></li>
+<?php if ($_SESSION['isAdmin'] == true) { ?>
 <li><a href="admin.php">Admin Panel</a></li></ul>
-<?php 
-} 
-} 
-?>
+<?php } } ?>
 <li><a href="logout.php">Logout</a></li>
 </ul>     
 
@@ -40,7 +31,7 @@ include('session.php');
 
 <?php
 
-include "config.php";
+include 'config.php';
 
 $resMysql = mysqli_connect($strDBHost, $strDBUser, $strDBPass, $strDBName);
 
@@ -50,13 +41,24 @@ $resQuery = mysqli_query($resMysql, "SELECT * FROM users WHERE username = '$strU
 
 $arrResults = mysqli_fetch_assoc($resQuery);
 
+$arrRanks = array(
+                1 => 'Member',
+                2 => 'VIP',
+                3 => 'Mediator',
+                4 => 'Moderator',
+                5 => 'Administrator',
+                6 => 'Owner'
+);
+
 echo '<center>';
+echo '<img  src="avatar.php?avatarInfo=' . implode('|', array($arrResults['colour'], $arrResults['head'], $arrResults['face'], $arrResults['body'], $arrResults['neck'], $arrResults['feet'])) . '&avatarSize=120">';
+echo '<br><br>';
 echo '<p>Username: ' . $arrResults['username'] . '</p>';
 echo '<p>Email: ' . $arrResults['email'] . '</p>';
 echo '<p>Penguin Age: ' . round((time() - strtotime($arrResults['age'])) / 86400) . '</p>';
-echo '<p>Rank: ' . $arrResults['rank'] . '</p>';
+echo '<p>Coins: ' . $arrResults['coins'] . '</p>';
+echo '<p>Rank: ' . $arrRanks[$arrResults['rank']] . '</p>';
 echo '<p>Last Seen: ' . $arrResults['LastLogin'] . '</p>';
-echo '<p>Status: ' . $arrResults['mood'] . '</p>';
 echo "</center>";
 
 ?>

@@ -1,5 +1,5 @@
 <?php
-include('session.php');
+include 'session.php';
 
 if ($_SESSION['isStaff'] == false) { 
     header("location: index.php");
@@ -22,18 +22,11 @@ if ($_SESSION['isStaff'] == false) {
 <li><a href="profile.php">Home</a></li>
 <li><a href="settings.php">Settings</a></li>
 <li><a href="search.php">Search</a></li>
-<?php 
-    if ($_SESSION['isStaff'] == true) { 
-?>
+<?php if ($_SESSION['isStaff'] == true) { ?>
  <li><a class="active" href="moderator.php">Mod Panel</a></li>
-<?php 
-    if ($_SESSION['isAdmin'] == true) { 
-?>
+<?php if ($_SESSION['isAdmin'] == true) { ?>
 <li><a href="admin.php">Admin Panel</a></li></ul>
-<?php 
-} 
-} 
-?>
+<?php } } ?>
 <li><a href="logout.php">Logout</a></li>
 </ul>     
 
