@@ -22,7 +22,7 @@ include 'session.php';
 <?php if ($_SESSION['isStaff'] == true) { ?>
 <li><a href="moderator.php">Mod Panel</a></li>
 <?php if ($_SESSION['isAdmin'] == true) { ?>
-<li><a href="admin.php">Admin Panel</a></li></ul>
+<li><a href="admin.php">Admin Panel</a></li>
 <?php } } ?>
 <li><a href="logout.php">Logout</a></li>
 </ul>     
@@ -50,8 +50,17 @@ $arrRanks = array(
                 6 => 'Owner'
 );
 
+if ($arrResults['isBanned'] == 'PERM') {
+    $strStatus = 'Permanently Banned';
+} elseif (is_numeric($arrResults['isBanned']) && $arrResults['isBanned'] > time()) {
+    $intRemainingTime = round(($arrResults['isBanned'] - time()) / 3600);
+    $strStatus = 'Temporarily Banned For $intRaminingTime hours';
+} else {
+    $strStatus = 'Active';
+}
+
 echo '<center>';
-echo '<img  src="avatar.php?avatarInfo=' . implode('|', array($arrResults['colour'], $arrResults['head'], $arrResults['face'], $arrResults['body'], $arrResults['neck'], $arrResults['feet'])) . '&avatarSize=120">';
+echo '<img  src="avatar.php?avatarInfo=' . implode('|', array($arrResults['colour'], $arrResults['head'], $arrResults['face'], $arrResults['body'], $arrResults['neck'], $arrResults['hands'], $arrResults['feet'])) . '&avatarSize=300">';
 echo '<br><br>';
 echo '<p>Username: ' . $arrResults['username'] . '</p>';
 echo '<p>Email: ' . $arrResults['email'] . '</p>';
@@ -59,6 +68,7 @@ echo '<p>Penguin Age: ' . round((time() - strtotime($arrResults['age'])) / 86400
 echo '<p>Coins: ' . $arrResults['coins'] . '</p>';
 echo '<p>Rank: ' . $arrRanks[$arrResults['rank']] . '</p>';
 echo '<p>Last Seen: ' . $arrResults['LastLogin'] . '</p>';
+echo '<p>Account Status: ' . $strStatus . '</p>';
 echo "</center>";
 
 ?>

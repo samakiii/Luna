@@ -82,7 +82,7 @@ if (isset($_POST['submit2'])) {
 <?php if ($_SESSION['isStaff'] == true) { ?>
  <li><a href="moderator.php">Mod Panel</a></li>
 <?php if ($_SESSION['isAdmin'] == true) { ?>
-<li><a href="admin.php">Admin Panel</a></li></ul>
+<li><a href="admin.php">Admin Panel</a></li>
 <?php } } ?>
 <li><a href="logout.php">Logout</a></li>
 </ul>     
