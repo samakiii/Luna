@@ -16,7 +16,7 @@ require 'recaptcha/src/autoload.php';
 $dbHost = '127.0.0.1';
 $dbName = 'Luna';
 $dbUser = 'root';
-$dbPass = 'kevinismybf';
+$dbPass = 'passwordhere';
 
 function sendError($strErr) {
              $strMsg = "<center><h2>Error: " . $strErr . "</h2></center>"; 
