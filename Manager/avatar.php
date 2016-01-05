@@ -2,7 +2,7 @@
  
 header('Content-Type: image/png');
  
-header('Cache-Control: public');
+header('Cache-Control: public, max-age=31556926 , pre-check=31556926');
  
 class penguinAvatar {
  

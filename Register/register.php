@@ -25,27 +25,32 @@ function sendError($strErr) {
 
 $resDBCon= mysqli_connect($dbHost, $dbUser, $dbPass, $dbName) or sendError('Failed to connect to MySQL: ' . mysqli_connect_error());
 
-if (array_key_exists('submit', $_POST)) { 
-     $strUsername = mysqli_real_escape_string($resDBCon, $_POST['username']);
-     $strPassword = mysqli_real_escape_string($resDBCon, $_POST['pass']);
-     $strPasswordTwo = mysqli_real_escape_string($resDBCon, $_POST['passtwo']);
-     $intColor = mysqli_real_escape_string($resDBCon, $_POST['color']);
-     $strEmail = mysqli_real_escape_string($resDBCon, $_POST['email']);
-     if (empty($strEmail) && empty($strUsername) && empty($strPassword) && empty($strPasswordTwo) && empty($intColor)) {
-         sendError('One or more fields has not been completed, please complete them');
-     }
-     if (!get_magic_quotes_gpc()) {
-        $strUsername = addslashes($_POST['username']);
-        $strPassword = addslashes($_POST['pass']);
-        $strPasswordTwo = addslashes($_POST['passtwo']);
-        $intColor = addslashes($_POST['color']);
-        $strEmail = addslashes($_POST['email']);
+if (isset($_POST['submit'])) { 
+    $strUsername = $_POST['username'];
+    $strPassword = $_POST['pass'];
+    $strPasswordTwo = $_POST['passtwo'];
+    $intColor = $_POST['color'];
+    $strEmail = $_POST['email'];
+    if (empty($strEmail) || empty($strUsername) || empty($strPassword) || empty($strPasswordTwo) || empty($intColor)) {
+        sendError('One or more fields has not been completed, please complete them');
+    }
+    $strUsername = mysqli_real_escape_string($resDBCon, $strUsername);
+    $strPassword = mysqli_real_escape_string($resDBCon, $strPassword);
+    $strPasswordTwo = mysqli_real_escape_string($resDBCon, $strPasswordTwo);
+    $intColor = mysqli_real_escape_string($resDBCon, $intColor);
+    $strEmail = mysqli_real_escape_string($resDBCon, $strEmail);
+    if (!get_magic_quotes_gpc()) {
+        $strUsername = addslashes($strUsername);
+        $strPassword = addslashes($strPassword);
+        $strPasswordTwo = addslashes($strPasswordTwo);
+        $intColor = addslashes($intColor);
+        $strEmail = addslashes($strEmail);
      }
      if (!filter_var($strEmail, FILTER_VALIDATE_EMAIL)) {
          sendError('Invalid email address! Please recheck your email');
      } elseif (!ctype_alnum($strUsername) && strlen($strUsername) > 10 && strlen($strUsername) <= 3) {
          sendError('Invalid username! Please make sure the username is alphanumeric and not too long or short');
-     } elseif ($intColor > 15 && $intColor < 0 && !int($intColor)) {
+     } elseif ($intColor > 15 && $intColor < 0 && !is_numeric($intColor)) {
          sendError('Invalid color! Please use a valid color');
      } elseif ($strPassword != $strPasswordTwo) {
          sendError('Password does not match! Please make sure the passwords match');

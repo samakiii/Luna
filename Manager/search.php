@@ -15,6 +15,7 @@ include 'session.php';
 <ul>
 <li><a href="profile.php">Home</a></li>
 <li><a href="settings.php">Settings</a></li>
+<li><a href="glows.php">Glow Panel</a></li>
 <li><a class="active" href="search.php">Search</a></li>
 <?php if ($_SESSION['isStaff'] == true) { ?>
 <li><a href="moderator.php">Mod Panel</a></li>
@@ -28,19 +29,16 @@ include 'session.php';
 <div class="container">
 
 <?php
-include 'config.php';
+
+include 'mysql.php';
 
 $strError = '';
-
-$resMysql = mysqli_connect($strDBHost, $strDBUser, $strDBPass, $strDBName);
 
 if (isset($_POST['submit'])) {
     $strSearch = $_POST['search'];
     if (isset($strSearch)) {
-       $strSearch = stripslashes($strSearch);
-       $strSearch =  mysqli_real_escape_string($resMysql, $strSearch);
-       $resQuery = mysqli_query($resMysql, "SELECT * FROM users WHERE username = '$strSearch'");
-       $arrResults = mysqli_fetch_assoc($resQuery);
+       $strSearch = $mysql->perfEscape(stripslashes($strSearch));
+       $arrResults = $mysql->perfFetchAssoc("SELECT * FROM users WHERE username = '$strSearch'");
        if (!empty($arrResults)) {
            $arrRanks = array(
                 1 => 'Member',

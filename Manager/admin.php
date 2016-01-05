@@ -2,7 +2,7 @@
 include 'session.php';
 
 if ($_SESSION['isStaff'] == false) { 
-    header("location: index.php");
+    header('location: index.php');
 }
 
 ?>
@@ -21,6 +21,7 @@ if ($_SESSION['isStaff'] == false) {
 <ul>
 <li><a href="profile.php">Home</a></li>
 <li><a href="settings.php">Settings</a></li>
+<li><a href="glows.php">Glow Panel</a></li>
 <li><a href="search.php">Search</a></li>
 <?php if ($_SESSION['isStaff'] == true) { ?>
  <li><a href="moderator.php">Mod Panel</a></li>
@@ -36,21 +37,17 @@ if ($_SESSION['isStaff'] == false) {
 
 <?php
 
-include 'config.php';
+include 'mysql.php';
 
 $strMessage = '';
 $strMessageTwo = '';
-
-$resMysql = mysqli_connect($strDBHost, $strDBUser, $strDBPass, $strDBName);
 
 if (isset($_POST['update_rank'])) {
     $strUsername = $_POST['username'];
     $intRank = $_POST['rank'];
     if (isset($strUsername) && isset($intRank)) {
-        $strUsername = stripslashes($_POST['username']);
-        $intRank = stripslashes($_POST['rank']);
-        $strUsername = mysqli_real_escape_string($resMysql, $_POST['username']);
-        $intRank = mysqli_real_escape_string($resMysql, $_POST['rank']);
+        $strUsername = $mysql->perfEscape(stripslashes($strUsername));
+        $intRank = $mysql->perfEscape(stripslashes($intRank));
         $arrRanks = array(
                 1 => 'Member',
                 2 => 'VIP',
@@ -67,10 +64,10 @@ if (isset($_POST['update_rank'])) {
         );
         $strRank = $arrRanks[$intRank];
         if (array_key_exists($intRank, $arrStaffRanks)) {
-            mysqli_query($resMysql, "UPDATE users SET rank = '$intRank' WHERE username = '$strUsername'");
-            mysqli_query($resMysql, "UPDATE users SET isStaff = '1' WHERE username = '$strUsername'");
+            $mysql->perfQuery("UPDATE users SET rank = '$intRank' WHERE username = '$strUsername'");
+            $mysql->perfQuery("UPDATE users SET isStaff = '1' WHERE username = '$strUsername'");
         } else {
-            mysqli_query($resMysql, "UPDATE users SET rank = '$intRank' WHERE username = '$strUsername'");
+            $mysql->perfQuery("UPDATE users SET rank = '$intRank' WHERE username = '$strUsername'");
         }
         $strMessage = 'You have successfuly updated $strUsername rank to $strRank';
     }
@@ -78,19 +75,17 @@ if (isset($_POST['update_rank'])) {
 
 if (isset($_POST['update_active'])) {
     $strUsername = $_POST['username'];
-    $intRank = $_POST['action'];
+    $intAction = $_POST['action'];
     if (isset($strUsername) && isset($intRank)) {
-        $strUsername = stripslashes($_POST['username']);
-        $intAction = stripslashes($_POST['action']);
-        $strUsername = mysqli_real_escape_string($resMysql, $_POST['username']);
-        $intAction = mysqli_real_escape_string($resMysql, $_POST['action']);
+        $strUsername = $mysql->perfEscape(stripslashes($strUsername));
+        $intAction = $mysql->perfEscape(stripslashes($intAction));
         switch ($intAction) {
                     case 0:
-                            mysqli_query($resMysql, "UPDATE users SET active = '0' WHERE username = '$strUsername'");
+                            $mysql->perfQuery("UPDATE users SET active = '0' WHERE username = '$strUsername'");
                             $strMessage = 'You have deactivated $strUsername account';
                     break;
                     case 1:
-                            mysqli_query($resMysql, "UPDATE users SET active = '1' WHERE username = '$strUsername'");
+                            $mysql->perfQuery("UPDATE users SET active = '1' WHERE username = '$strUsername'");
                             $strMessage = 'You have activated $strUsername account';
                     break;
         }

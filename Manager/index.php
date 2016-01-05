@@ -3,8 +3,8 @@
 
 include 'login.php';
 
-if (array_key_exists('login_user', $_SESSION)) {
-    header("location: profile.php");
+if (isset($_SESSION['login_user'])) {
+    header('location: profile.php');
 }
 
 ?>

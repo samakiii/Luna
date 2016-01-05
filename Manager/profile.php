@@ -14,10 +14,10 @@ include 'session.php';
 <body>
 
 <div class="wrapper">
-
 <ul>
 <li><a class="active" href="profile.php">Home</a></li>
 <li><a href="settings.php">Settings</a></li>
+<li><a href="glows.php">Glow Panel</a></li>
 <li><a href="search.php">Search</a></li>
 <?php if ($_SESSION['isStaff'] == true) { ?>
 <li><a href="moderator.php">Mod Panel</a></li>
@@ -26,20 +26,17 @@ include 'session.php';
 <?php } } ?>
 <li><a href="logout.php">Logout</a></li>
 </ul>     
+</div>
 
 <div class="container">
 
 <?php
 
-include 'config.php';
-
-$resMysql = mysqli_connect($strDBHost, $strDBUser, $strDBPass, $strDBName);
+include 'mysql.php';
 
 $strUsername = $_SESSION['login_user'];
 
-$resQuery = mysqli_query($resMysql, "SELECT * FROM users WHERE username = '$strUsername'");
-
-$arrResults = mysqli_fetch_assoc($resQuery);
+$arrResults = $mysql->perfFetchAssoc("SELECT * FROM users WHERE username = '$strUsername'");
 
 $arrRanks = array(
                 1 => 'Member',
@@ -73,7 +70,6 @@ echo "</center>";
 
 ?>
 
-</div>
 </div>
 <footer class="bg-bubbles">
     <li></li>
