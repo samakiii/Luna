@@ -1,17 +1,21 @@
 <?php
 
-include 'mysql.php';
+include 'config.php';
 
 session_start();
 
 $strUsername = $_SESSION['login_user'];
 
-$arrResults = $mysql->perfFetchAssoc("SELECT username FROM users WHERE username = '$strUsername'");
+$mysql = new mysqli($strDBHost, $strDBUser, $strDBPass, $strDBName);
+
+$resQuery = $mysql->query("SELECT username FROM users WHERE username = '$strUsername'");
+
+$arrResults = $resQuery->fetch_assoc();
 
 $resSession = $arrResults['username'];
 
 if (!isset($resSession)) {
-    $mysql->closeMySQL();
+    $mysql->close();
     header('Location: index.php');
 }
 

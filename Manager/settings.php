@@ -1,7 +1,7 @@
 <?php
 
 include 'session.php';
-include 'mysql.php';
+include 'config.php';
 
 $strForm1Error = '';
 $strForm2Error = '';
@@ -10,19 +10,22 @@ $strForm2Message = '';
 
 $strUsername = $_SESSION['login_user'];
 
+$mysql = new mysqli($strDBHost, $strDBUser, $strDBPass, $strDBName);
+
 if (isset($_POST['submit'])) {
     $strOldEmail = $_POST['oldemail'];
     $strNewEmail = $_POST['newemail'];
     if (!empty($strOldEmail) && !empty($strNewEmail)) {
-        $strOldEmail = $mysql->perfEscape(stripslashes($strOldEmail));
-        $strNewEmail = $mysql->perfEscape(stripslashes($strNewEmail));
+        $strOldEmail = $mysql->real_escape_string(stripslashes($strOldEmail));
+        $strNewEmail = $mysql->real_escape_string(stripslashes($strNewEmail));
         if (filter_var($strNewEmail, FILTER_VALIDATE_EMAIL) && filter_var($strOldEmail, FILTER_VALIDATE_EMAIL)) {
-            $arrResults = $mysql->perfFetchAssoc("SELECT email FROM users WHERE username = '$strUsername'");
+            $resQuery = $mysql->query("SELECT email FROM users WHERE username = '$strUsername'");
+            $arrResults = $resQuery->fetch_assoc();
             $strCurEmail = $arrResults['email'];  
             if ($strCurEmail != $strOldEmail) {
                 $strForm1Error = 'Old email does not match with supplied email!';
             } else {
-                $mysql->perfQuery("UPDATE users SET email = '$strNewEmail' WHERE username = '$strUsername'");
+                $mysql->query("UPDATE users SET email = '$strNewEmail' WHERE username = '$strUsername'");
                 $strForm1Message = 'Successfully updated to your new email';
             }
        } else {
@@ -37,12 +40,12 @@ if (isset($_POST['submit2'])) {
     $strNewPass = $_POST['newpass'];
     $strNewPassTwo = $_POST['newpasstwo'];
     if (!empty($strNewPass) && !empty($strNewPassTwo)) {
-        $strNewPass = $mysql->perfEscape(stripslashes($strNewPass));
-        $strNewPassTwo = $mysql->perfEscape(stripslashes($strNewPassTwo));
+        $strNewPass = $mysql->real_escape_string(stripslashes($strNewPass));
+        $strNewPassTwo = $mysql->real_escape_string(stripslashes($strNewPassTwo));
         if ($strNewPass == $strNewPassTwo) {
             if (strlen($strNewPass) < 15 && strlen($strNewPass) > 5 && strlen($strNewPassTwo) < 15 && strlen($strNewPassTwo) > 5) {
                 $strMD5 = md5($strNewPass);
-                $mysql->perfQuery("UPDATE users SET password = '$strMD5' WHERE username = '$strUsername'");
+                $mysql->query("UPDATE users SET password = '$strMD5' WHERE username = '$strUsername'");
                 $strForm2Message = 'Successfully updated to your new password';
             } else {
                 $strForm2Error = 'Password is either too short or too long!';

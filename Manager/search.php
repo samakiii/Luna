@@ -30,15 +30,18 @@ include 'session.php';
 
 <?php
 
-include 'mysql.php';
+include 'config.php';
 
 $strError = '';
+
+$mysql = new mysqli($strDBHost, $strDBUser, $strDBPass, $strDBName);
 
 if (isset($_POST['submit'])) {
     $strSearch = $_POST['search'];
     if (isset($strSearch)) {
-       $strSearch = $mysql->perfEscape(stripslashes($strSearch));
-       $arrResults = $mysql->perfFetchAssoc("SELECT * FROM users WHERE username = '$strSearch'");
+       $strSearch = $mysql->real_escape_string(stripslashes($strSearch));
+       $resQuery = $mysql->query("SELECT * FROM users WHERE username = '$strSearch'");
+       $arrResults = $resQuery->fetch_assoc();
        if (!empty($arrResults)) {
            $arrRanks = array(
                 1 => 'Member',

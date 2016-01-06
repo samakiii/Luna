@@ -32,11 +32,15 @@ include 'session.php';
 
 <?php
 
-include 'mysql.php';
+include 'config.php';
 
 $strUsername = $_SESSION['login_user'];
 
-$arrResults = $mysql->perfFetchAssoc("SELECT * FROM users WHERE username = '$strUsername'");
+$mysql = new mysqli($strDBHost, $strDBUser, $strDBPass, $strDBName);
+
+$resQuery = $mysql->query("SELECT * FROM users WHERE username = '$strUsername'");
+
+$arrResults = $resQuery->fetch_assoc();
 
 $arrRanks = array(
                 1 => 'Member',

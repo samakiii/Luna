@@ -37,17 +37,19 @@ if ($_SESSION['isStaff'] == false) {
 
 <?php
 
-include 'mysql.php';
+include 'config.php';
 
 $strMessage = '';
 $strMessageTwo = '';
+
+$mysql = new mysqli($strDBHost, $strDBUser, $strDBPass, $strDBName);
 
 if (isset($_POST['update_rank'])) {
     $strUsername = $_POST['username'];
     $intRank = $_POST['rank'];
     if (isset($strUsername) && isset($intRank)) {
-        $strUsername = $mysql->perfEscape(stripslashes($strUsername));
-        $intRank = $mysql->perfEscape(stripslashes($intRank));
+        $strUsername = $mysql->real_escape_string(stripslashes($strUsername));
+        $intRank = $mysql->real_escape_string(stripslashes($intRank));
         $arrRanks = array(
                 1 => 'Member',
                 2 => 'VIP',
@@ -64,10 +66,10 @@ if (isset($_POST['update_rank'])) {
         );
         $strRank = $arrRanks[$intRank];
         if (array_key_exists($intRank, $arrStaffRanks)) {
-            $mysql->perfQuery("UPDATE users SET rank = '$intRank' WHERE username = '$strUsername'");
-            $mysql->perfQuery("UPDATE users SET isStaff = '1' WHERE username = '$strUsername'");
+            $mysql->query("UPDATE users SET rank = '$intRank' WHERE username = '$strUsername'");
+            $mysql->query("UPDATE users SET isStaff = '1' WHERE username = '$strUsername'");
         } else {
-            $mysql->perfQuery("UPDATE users SET rank = '$intRank' WHERE username = '$strUsername'");
+            $mysql->query("UPDATE users SET rank = '$intRank' WHERE username = '$strUsername'");
         }
         $strMessage = 'You have successfuly updated $strUsername rank to $strRank';
     }
@@ -77,15 +79,15 @@ if (isset($_POST['update_active'])) {
     $strUsername = $_POST['username'];
     $intAction = $_POST['action'];
     if (isset($strUsername) && isset($intRank)) {
-        $strUsername = $mysql->perfEscape(stripslashes($strUsername));
-        $intAction = $mysql->perfEscape(stripslashes($intAction));
+        $strUsername = $mysql->real_escape_string(stripslashes($strUsername));
+        $intAction = $mysql->real_escape_string(stripslashes($intAction));
         switch ($intAction) {
                     case 0:
-                            $mysql->perfQuery("UPDATE users SET active = '0' WHERE username = '$strUsername'");
+                            $mysql->query("UPDATE users SET active = '0' WHERE username = '$strUsername'");
                             $strMessage = 'You have deactivated $strUsername account';
                     break;
                     case 1:
-                            $mysql->perfQuery("UPDATE users SET active = '1' WHERE username = '$strUsername'");
+                            $mysql->query("UPDATE users SET active = '1' WHERE username = '$strUsername'");
                             $strMessage = 'You have activated $strUsername account';
                     break;
         }

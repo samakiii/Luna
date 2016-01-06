@@ -37,18 +37,21 @@ if ($_SESSION['isStaff'] == false) {
 
 <?php
 
-include 'mysql.php';
+include 'config.php';
 
 $strError = '';
 $strMessage = '';
+
+$mysql = new mysqli($strDBHost, $strDBUser, $strDBPass, $strDBName);
 
 if (isset($_POST['submit'])) {
    $strUsername = $_POST['username'];
     $strAction = $_POST['action'];
     if (!empty($strUsername) && !empty($strAction)) {
-        $strUsername = $mysql->perfEscape(stripslashes($strUsername));
-        $strAction = $mysql->perfEscape(stripslashes($strAction));
-        $arrResult= $mysql->perfFetchAssoc("SELECT * FROM users WHERE username = '$strUsername'");
+        $strUsername = $mysql->real_escape_string(stripslashes($strUsername));
+        $strAction = $mysql->real_escape_string(stripslashes($strAction));
+        $resQuery = $mysql->query("SELECT * FROM users WHERE username = '$strUsername'");
+        $arrResult = $resQuery->fetch_assoc();
         if (!empty($arrResult)) {
             if ($arrResult['rank'] < 3) {
                 switch ($strAction) {
@@ -56,7 +59,7 @@ if (isset($_POST['submit'])) {
                            if ($arrResult['isBanned'] != 'PERM') {
                                if (!is_numeric($arrResult['isBanned'])) {                      
                                    if ($arrResult['isBanned'] < time()) {
-                                       $mysql->perfQuery("UPDATE users SET isBanned = 'PERM' WHERE username = '$strUsername'");
+                                       $mysql->query("UPDATE users SET isBanned = 'PERM' WHERE username = '$strUsername'");
                                        $strMessage = 'You have permanently banned $strUsername';
                                    }
                               } else {
@@ -69,7 +72,7 @@ if (isset($_POST['submit'])) {
                           break;
                           case 1:
                           if ($arrResult['isBanned'] != '') {
-                              $mysql->perfQuery("UPDATE users SET isBanned = '' WHERE username = '$strUsername'");
+                              $mysql->query("UPDATE users SET isBanned = '' WHERE username = '$strUsername'");
                               $strMessage = 'You have successfully unbanned $strUsername';
                           } else {
                               $strError = 'This user is already unbanned';
@@ -79,7 +82,7 @@ if (isset($_POST['submit'])) {
                           if ($arrResult['isBanned'] != 'PERM') {
                               if (!is_numeric($arrResult['isBanned'])) {                      
                                   if ($arrResult['isBanned'] < time()) {
-                                      $mysql->perfQuery("UPDATE users SET isBanned = '" . (time() + 86400)  . "' WHERE username = '$strUsername'");
+                                      $mysql->query("UPDATE users SET isBanned = '" . (time() + 86400)  . "' WHERE username = '$strUsername'");
                                       $strMessage = 'You have banned $strUsername for 24 hours';
                                   }
                               } else {
@@ -94,7 +97,7 @@ if (isset($_POST['submit'])) {
                           if ($arrResult['isBanned'] != 'PERM') {
                               if (!is_numeric($arrResult['isBanned'])) {                      
                                   if ($arrResult['isBanned'] > time()) {
-                                      $mysql->perfQuery("UPDATE users SET isBanned = '" . (time() + 172800)  . "' WHERE username = '$strUsername'");
+                                      $mysql->query("UPDATE users SET isBanned = '" . (time() + 172800)  . "' WHERE username = '$strUsername'");
                                       $strMessage = 'You have banned $strUsername for 48 hours';
                                   }
                               } else {
@@ -109,7 +112,7 @@ if (isset($_POST['submit'])) {
                           if ($arrResult['isBanned'] != 'PERM') {
                               if (!is_numeric($arrResult['isBanned'])) {                      
                                   if ($arrResult['isBanned'] > time()) {
-                                      $mysql->perfQuery("UPDATE users SET isBanned = '" . (time() + 259200)  . "' WHERE username = '$strUsername'");
+                                      $mysql->query("UPDATE users SET isBanned = '" . (time() + 259200)  . "' WHERE username = '$strUsername'");
                                       $strMessage = 'You have banned $strUsername for 72 hours';
                                   }
                               } else {
@@ -122,7 +125,7 @@ if (isset($_POST['submit'])) {
                           break;
                           case 5:
                           if ($arrResult['isMuted'] != true) {
-                              $mysql->perfQuery("UPDATE users SET isMuted = '1' WHERE username = '$strUsername'");
+                              $mysql->query("UPDATE users SET isMuted = '1' WHERE username = '$strUsername'");
                               $strMessage = 'You have muted $strUsername';
                           } else {
                               $strError = '$strUsername is already muted';
@@ -130,7 +133,7 @@ if (isset($_POST['submit'])) {
                           break;
                           case 6:
                           if ($arrResult['isMuted'] != false) {
-                              $mysql->perfQuery("UPDATE users SET isMuted = '0' WHERE username = '$strUsername'");
+                              $mysql->query("UPDATE users SET isMuted = '0' WHERE username = '$strUsername'");
                               $strMessage = 'You have unmuted $strUsername';
                           } else {
                               $strError = '$strUsername is already unmuted';

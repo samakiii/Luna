@@ -1,10 +1,12 @@
 <?php
 
-include 'mysql.php';
+include 'config.php';
 
 session_start();
 
 $strError = '';
+
+$mysql = new mysqli($strDBHost, $strDBUser, $strDBPass, $strDBName);
 
 if (isset($_POST['submit'])) {
     $strName = $_POST['username'];
@@ -13,12 +15,13 @@ if (isset($_POST['submit'])) {
         $strError = 'Please fill in both the username and the password';
     } else {
        
-        $strName = $mysql->perfEscape(stripslashes($strName));
-        $strPass = $mysql->perfEscape(stripslashes($strPass));
+        $strName = $mysql->real_escape_string(stripslashes($strName));
+        $strPass = $mysql->real_escape_string(stripslashes($strPass));
         $strPass = md5($strPass);
-        $intRows = $mysql->perfRowCount("SELECT username FROM users WHERE username = '$strName' AND password = '$strPass'");
+        $resQuery = $mysql->query("SELECT * FROM users WHERE username = '$strName' AND password = '$strPass'");
+        $intRows = $resQuery->num_rows();
+        $arrInfo = $resQuery->fetch_assoc();
         if ($intRows == 1) {
-            $arrInfo = $mysql->perfFetchAssoc("SELECT * FROM users WHERE username = '$strName'");
             $_SESSION['login_user'] = $strName;
             $_SESSION['isStaff'] = $arrInfo['isStaff'];
             $_SESSION['isAdmin'] = $arrInfo['isAdmin'];
