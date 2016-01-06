@@ -10,22 +10,22 @@ $strForm2Message = '';
 
 $strUsername = $_SESSION['login_user'];
 
-$mysql = new mysqli($strDBHost, $strDBUser, $strDBPass, $strDBName);
+$mysql = mysqli_connect($strDBHost, $strDBUser, $strDBPass, $strDBName);
 
 if (isset($_POST['submit'])) {
     $strOldEmail = $_POST['oldemail'];
     $strNewEmail = $_POST['newemail'];
     if (!empty($strOldEmail) && !empty($strNewEmail)) {
-        $strOldEmail = $mysql->real_escape_string(stripslashes($strOldEmail));
-        $strNewEmail = $mysql->real_escape_string(stripslashes($strNewEmail));
+        $strOldEmail = mysqli_real_escape_string($mysql, stripslashes($strOldEmail));
+        $strNewEmail = mysqli_real_escape_string($mysql, stripslashes($strNewEmail));
         if (filter_var($strNewEmail, FILTER_VALIDATE_EMAIL) && filter_var($strOldEmail, FILTER_VALIDATE_EMAIL)) {
-            $resQuery = $mysql->query("SELECT email FROM users WHERE username = '$strUsername'");
-            $arrResults = $resQuery->fetch_assoc();
+            $resQuery = mysqli_query($mysql, "SELECT email FROM users WHERE username = '$strUsername'");
+            $arrResults = mysqli_fetch_assoc($resQuery);
             $strCurEmail = $arrResults['email'];  
             if ($strCurEmail != $strOldEmail) {
                 $strForm1Error = 'Old email does not match with supplied email!';
             } else {
-                $mysql->query("UPDATE users SET email = '$strNewEmail' WHERE username = '$strUsername'");
+                mysqli_query($mysql, "UPDATE users SET email = '$strNewEmail' WHERE username = '$strUsername'");
                 $strForm1Message = 'Successfully updated to your new email';
             }
        } else {
@@ -40,12 +40,12 @@ if (isset($_POST['submit2'])) {
     $strNewPass = $_POST['newpass'];
     $strNewPassTwo = $_POST['newpasstwo'];
     if (!empty($strNewPass) && !empty($strNewPassTwo)) {
-        $strNewPass = $mysql->real_escape_string(stripslashes($strNewPass));
-        $strNewPassTwo = $mysql->real_escape_string(stripslashes($strNewPassTwo));
+        $strNewPass = mysqli_real_escape_string($mysql, stripslashes($strNewPass));
+        $strNewPassTwo = mysqli_real_escape_string($mysql, stripslashes($strNewPassTwo));
         if ($strNewPass == $strNewPassTwo) {
             if (strlen($strNewPass) < 15 && strlen($strNewPass) > 5 && strlen($strNewPassTwo) < 15 && strlen($strNewPassTwo) > 5) {
                 $strMD5 = md5($strNewPass);
-                $mysql->query("UPDATE users SET password = '$strMD5' WHERE username = '$strUsername'");
+                mysqli_query($mysql, "UPDATE users SET password = '$strMD5' WHERE username = '$strUsername'");
                 $strForm2Message = 'Successfully updated to your new password';
             } else {
                 $strForm2Error = 'Password is either too short or too long!';
@@ -74,13 +74,14 @@ if (isset($_POST['submit2'])) {
 <ul>
 <li><a href="profile.php">Home</a></li>
 <li><a class="active" href="settings.php">Settings</a></li>
-<li><a href="glows.php">Glow Panel</a></li>
 <li><a href="search.php">Search</a></li>
+<li><a href="glows.php">Glow Panel</a></li>
 <?php if ($_SESSION['isStaff'] == true) { ?>
  <li><a href="moderator.php">Mod Panel</a></li>
 <?php if ($_SESSION['isAdmin'] == true) { ?>
 <li><a href="admin.php">Admin Panel</a></li>
 <?php } } ?>
+<li><a href="server.php">Server</a></li>
 <li><a href="logout.php">Logout</a></li>
 </ul>     
 

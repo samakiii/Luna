@@ -6,7 +6,7 @@ include 'config.php';
 $strError = '';
 $strMessage = '';
 
-$mysql = new mysqli($strDBHost, $strDBUser, $strDBPass, $strDBName);
+$mysql = mysqli_connect($strDBHost, $strDBUser, $strDBPass, $strDBName);
 
 if (isset($_POST['update'])) {
     $strNG = $_POST['nameglow'];
@@ -17,12 +17,12 @@ if (isset($_POST['update'])) {
     $intSpeed = $_POST['speed'];
 
     if (isset($strNG) && isset($strNC) && isset($strBT) && isset($strBC) && isset($strRC)) {
-        $strNG = $mysql->real_escape_string(stripslashes($strNG));
-        $strNC = $mysql->real_escape_string(stripslashes($strNC));
-        $strBT = $mysql->real_escape_string(stripslashes($strBT));
-        $strBC = $mysql->real_escape_string(stripslashes($strBC));
-        $strRC = $mysql->real_escape_string(stripslashes($strRC));
-        $intSpeed = $mysql->real_escape_string(stripslashes($intSpeed));
+        $strNG = mysqli_real_escape_string($mysql, stripslashes($strNG));
+        $strNC = mysqli_real_escape_string($mysql, stripslashes($strNC));
+        $strBT = mysqli_real_escape_string($mysql, stripslashes($strBT));
+        $strBC = mysqli_real_escape_string($mysql, stripslashes($strBC));
+        $strRC = mysqli_real_escape_string($mysql, stripslashes($strRC));
+        $intSpeed = mysqli_real_escape_string($mysql, stripslashes($intSpeed));
 
         $strUsername = $_SESSION['login_user'];
 
@@ -37,12 +37,12 @@ if (isset($_POST['update'])) {
                                 $strBTHex = '0x' . $strBT;
                                 $strBCHex = '0x' . $strBC;
                                 $strRCHex = '0x' . $strRC;
-                                $mysql->query("UPDATE users SET nameglow = '$strNGHex' WHERE username = '$strUsername'");
-                                $mysql->query("UPDATE users SET namecolour = '$strNCHex' WHERE username = '$strUsername'");
-                                $mysql->query("UPDATE users SET bubbletext = '$strBTHex' WHERE username = '$strUsername'");
-                                $mysql->query("UPDATE users SET bubblecolour = '$strBCHex' WHERE username = '$strUsername'");
-                                $mysql->query("UPDATE users SET ringcolour = '$strRCHex' WHERE username = '$strUsername'");
-                                $mysql->query("UPDATE users SET speed = '$intSpeed' WHERE username = '$strUsername'");
+                                mysqli_query($mysql, "UPDATE users SET nameglow = '$strNGHex' WHERE username = '$strUsername'");
+                                mysqli_query($mysql, "UPDATE users SET namecolour = '$strNCHex' WHERE username = '$strUsername'");
+                                mysqli_query($mysql, "UPDATE users SET bubbletext = '$strBTHex' WHERE username = '$strUsername'");
+                                mysqli_query($mysql, "UPDATE users SET bubblecolour = '$strBCHex' WHERE username = '$strUsername'");
+                                mysqli_query($mysql, "UPDATE users SET ringcolour = '$strRCHex' WHERE username = '$strUsername'");
+                                mysqli_query($mysql, "UPDATE users SET speed = '$intSpeed' WHERE username = '$strUsername'");
                                 $strMessage = 'Successfully updated glow settings';
                             } else {
                                 $strError = 'Invalid Ring Color Pattern';
@@ -82,13 +82,14 @@ if (isset($_POST['update'])) {
 <ul>
 <li><a href="profile.php">Home</a></li>
 <li><a href="settings.php">Settings</a></li>
-<li><a class="active" href="glows.php">Glow Panel</a></li>
 <li><a href="search.php">Search</a></li>
+<li><a class="active" href="glows.php">Glow Panel</a></li>
 <?php if ($_SESSION['isStaff'] == true) { ?>
  <li><a href="moderator.php">Mod Panel</a></li>
 <?php if ($_SESSION['isAdmin'] == true) { ?>
 <li><a href="admin.php">Admin Panel</a></li>
 <?php } } ?>
+<li><a href="server.php">Server</a></li>
 <li><a href="logout.php">Logout</a></li>
 </ul>     
 </div>

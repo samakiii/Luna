@@ -6,16 +6,16 @@ session_start();
 
 $strUsername = $_SESSION['login_user'];
 
-$mysql = new mysqli($strDBHost, $strDBUser, $strDBPass, $strDBName);
+$mysql = mysqli_connect($strDBHost, $strDBUser, $strDBPass, $strDBName);
 
-$resQuery = $mysql->query("SELECT username FROM users WHERE username = '$strUsername'");
+$resQuery = mysqli_query($mysql, "SELECT username FROM users WHERE username = '$strUsername'");
 
-$arrResults = $resQuery->fetch_assoc();
+$arrResults = mysqli_fetch_assoc($resQuery);
 
 $resSession = $arrResults['username'];
 
 if (!isset($resSession)) {
-    $mysql->close();
+    mysqli_close($mysql);
     header('Location: index.php');
 }
 

@@ -33,29 +33,27 @@ include 'session.php';
 
 <?php
 
-/*
 
 include 'config.php';
 
-$mysql = new mysqli($strDBHost, $strDBUser, $strDBPass, $strDBName);
+$mysql = mysqli_connect($strDBHost, $strDBUser, $strDBPass, $strDBName);
 
-$resQuery = $mysql->query("SELECT * FROM users");
+$resQuery = mysqli_query($mysql, "SELECT * FROM users");
 
-$intRegistered = $resQuery->num_rows();
+$intRegistered = mysqli_num_rows($resQuery);
 
-$resQueryTwo = $mysql->query("SELECT curPop FROM servers WHERE servPort = '$intGamePort' AND servIP = '$strServerHost'");
+$resQueryTwo = mysqli_query($mysql, "SELECT curPop FROM servers WHERE servPort = '$intGamePort' AND servIP = '$strServerHost'");
 
-$arrData = $resQueryTwo->fetch_assoc();
+$arrData = mysqli_fetch_assoc($resQueryTwo);
 
 echo '<center>';
-echo ($resCon = @fsockopen($strServerHost, $intLoginPort, null, null, 2)) ? "Login Server: <font color=\"green\">Online</font>" : "Login Server: <font color=\"red\">Offline</font>";
-echo ($resCon = @fsockopen($strServerHost, $intGamePort, null, null, 2)) ? "Game Server: <font color=\"green\">Online</font>" : "Game Server: <font color=\"red\">Offline</font>";
+echo ($resCon = @fsockopen($strServerHost, $intLoginPort)) ? "Login Server: <font color=\"green\">Online</font>" : "Login Server: <font color=\"red\">Offline</font>";
+echo '<br>';
+echo ($resCon = @fsockopen($strServerHost, $intGamePort)) ? "Game Server: <font color=\"green\">Online</font>" : "Game Server: <font color=\"red\">Offline</font>";
 @fclose($resCon);
 echo '<p>Users Registered: ' . $intRegistered . '</p>';
 echo '<p>Users Online: ' . $arrData['curPop'] . '</p>';
 echo "</center>";
-
-$mysql->close(); */
 
 ?>
 

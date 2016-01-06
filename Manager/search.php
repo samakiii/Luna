@@ -34,14 +34,14 @@ include 'config.php';
 
 $strError = '';
 
-$mysql = new mysqli($strDBHost, $strDBUser, $strDBPass, $strDBName);
+$mysql = mysqli_connect($strDBHost, $strDBUser, $strDBPass, $strDBName);
 
 if (isset($_POST['submit'])) {
     $strSearch = $_POST['search'];
     if (isset($strSearch)) {
-       $strSearch = $mysql->real_escape_string(stripslashes($strSearch));
-       $resQuery = $mysql->query("SELECT * FROM users WHERE username = '$strSearch'");
-       $arrResults = $resQuery->fetch_assoc();
+       $strSearch = mysqli_real_escape_string($mysql, stripslashes($strSearch));
+       $resQuery = mysqli_query($mysql, "SELECT * FROM users WHERE username = '$strSearch'");
+       $arrResults = mysqli_fetch_assoc($resQuery);
        if (!empty($arrResults)) {
            $arrRanks = array(
                 1 => 'Member',

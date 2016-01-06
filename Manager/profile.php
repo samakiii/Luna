@@ -17,13 +17,14 @@ include 'session.php';
 <ul>
 <li><a class="active" href="profile.php">Home</a></li>
 <li><a href="settings.php">Settings</a></li>
-<li><a href="glows.php">Glow Panel</a></li>
 <li><a href="search.php">Search</a></li>
+<li><a href="glows.php">Glow Panel</a></li>
 <?php if ($_SESSION['isStaff'] == true) { ?>
 <li><a href="moderator.php">Mod Panel</a></li>
 <?php if ($_SESSION['isAdmin'] == true) { ?>
 <li><a href="admin.php">Admin Panel</a></li>
 <?php } } ?>
+<li><a href="server.php">Server</a></li>
 <li><a href="logout.php">Logout</a></li>
 </ul>     
 </div>
@@ -36,11 +37,11 @@ include 'config.php';
 
 $strUsername = $_SESSION['login_user'];
 
-$mysql = new mysqli($strDBHost, $strDBUser, $strDBPass, $strDBName);
+$mysql = mysqli_connect($strDBHost, $strDBUser, $strDBPass, $strDBName);
 
-$resQuery = $mysql->query("SELECT * FROM users WHERE username = '$strUsername'");
+$resQuery = mysqli_query($mysql, "SELECT * FROM users WHERE username = '$strUsername'");
 
-$arrResults = $resQuery->fetch_assoc();
+$arrResults = mysqli_fetch_assoc($resQuery);
 
 $arrRanks = array(
                 1 => 'Member',
