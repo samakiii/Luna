@@ -53,6 +53,7 @@ If you are using Windows, you can use <b>Run.bat</b>
  <li> Digest::MD5</li>
  <li> XML::Simple</li>
  <li> LWP::Simple</li>
+ <li> Data::Alias</li>
  <li> Cwd</li>
  <li> JSON</li>
  <li> Coro</li>
