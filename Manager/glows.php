@@ -74,39 +74,7 @@ if (isset($_POST['update'])) {
 <title>Luna - Manager</title>
 <link rel="stylesheet" href="css/style.css">
 <script src="js/jscolor.js"></script>
-<script type="text/javascript">
-var r = document.querySelectorAll('input[type=range]'), 
-    prefs = ['webkit-slider-runnable', 'moz-range'], 
-    styles = [], 
-    l = prefs.length,
-    n = r.length;
-
-var getTrackStyleStr = function(el, j) {
-  var str = '', 
-      min = el.min || 0, 
-      perc = (el.max) ? ~~(100*(el.value - min)/(el.max - min)) : el.value, 
-      val = perc + '% 100%';
-
-  for(var i = 0; i < l; i++) {
-    str += 'input[type=range]:nth-of-type(' + j + ')::-' + prefs[i] + '-track{background-size:' + val + '} ';
-  }
-  return str;
-};
-
-var setDragStyleStr = function(evt) {
-  //console.log(evt, this);
-  var trackStyle = getTrackStyleStr(evt.target, this + 1);  
-  console.log(trackStyle);
-  styles[this].textContent = trackStyle;
-};
-
-for(var i = 0; i < n; i++) {
-  var s = document.createElement('style');
-  document.body.appendChild(s);
-  styles.push(s);  
-  r[i].addEventListener('input', setDragStyleStr.bind(i), false);
-}
-</script>
+<link rel='stylesheet prefetch' href='http://ajax.googleapis.com/ajax/libs/jqueryui/1.11.2/themes/smoothness/jquery-ui.css'>
 </head>
 <body>
 
@@ -139,8 +107,10 @@ for(var i = 0; i < n; i++) {
        <label for="ringcolor">Ring Color: </label>
        <input class="jscolor" type="text" name="ringcolor" maxlength="6">
        <label for="speed">Speed: </label>
-       <output for="range">0</output>
-       <input type="range" name="speed" value="0">
+       <div class="slider">
+       <output id="rangevalue">10</output>
+       <input type = "range" min="0" max="100" name="speed" onchange="rangevalue.value=value"/>
+       </div>
        <input type="submit" id="login-button" name="update" value="Update">
        <span><?php echo $strError; ?></span>
        <span><?php echo $strMessage; ?></span>
@@ -160,6 +130,7 @@ for(var i = 0; i < n; i++) {
 		<li></li>
 </footer>
 <script src='http://cdnjs.cloudflare.com/ajax/libs/jquery/2.1.3/jquery.min.js'></script>
+<script src='http://ajax.googleapis.com/ajax/libs/jqueryui/1.11.2/jquery-ui.min.js'></script>
 <script src="js/index.js"></script>
 </body>
 </html>
