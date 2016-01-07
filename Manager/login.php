@@ -11,22 +11,27 @@ $mysql = mysqli_connect($strDBHost, $strDBUser, $strDBPass, $strDBName);
 if (isset($_POST['submit'])) {
     $strName = $_POST['username'];
     $strPass = $_POST['password'];
-    if (empty($strName) || empty($strPass)) {
-        $strError = 'Please fill in both the username and the password';
-    } else {
-       
+    $intPin = $_POST['spin'];
+    if (empty($strName) || empty($strPass) || empty($intPin)) {
+        $strError = 'Please fill in all the information';
+    } else {      
         $strName = mysqli_real_escape_string($mysql, stripslashes($strName));
         $strPass = mysqli_real_escape_string($mysql, stripslashes($strPass));
+        $intPin = mysqli_real_escape_string($mysql, stripslashes($intPin));
         $strPass = md5($strPass);
         $resQuery = mysqli_query($mysql, "SELECT username FROM users WHERE username = '$strName' AND password = '$strPass'");
         $intRows = mysqli_num_rows($resQuery);
         if ($intRows == 1) {
-            $resQueryTwo = mysqli_query($mysql, "SELECT username FROM users WHERE username = '$strName'");
+            $resQueryTwo = mysqli_query($mysql, "SELECT * FROM users WHERE username = '$strName'");
             $arrInfo = mysqli_fetch_assoc($resQueryTwo);
-            $_SESSION['login_user'] = $strName;
-            $_SESSION['isStaff'] = $arrInfo['isStaff'];
-            $_SESSION['isAdmin'] = $arrInfo['isAdmin'];
-            header('location: profile.php');
+            if ($arrInfo['spin'] == $intPin) {
+                $_SESSION['login_user'] = $strName;
+                $_SESSION['isStaff'] = $arrInfo['isStaff'];
+                $_SESSION['isAdmin'] = $arrInfo['isAdmin'];
+                header('location: profile.php');
+            } else {
+                $strError = 'Secret pin is invalid';
+            }
         } else {
             $strError = 'Username or Password is invalid';
         }

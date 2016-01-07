@@ -64,6 +64,7 @@ CREATE TABLE IF NOT EXISTS `users` (
   `username` char(20) NOT NULL,
   `nickname` char(20) NOT NULL,
   `password` char(32) NOT NULL,
+  `spin` tinyint(6) NOT NULL,
   `loginKey` char(32) NOT NULL,
   `ipAddr` mediumblob NOT NULL,
   `email` mediumblob NOT NULL,

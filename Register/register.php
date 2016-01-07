@@ -31,7 +31,8 @@ if (isset($_POST['submit'])) {
     $strPasswordTwo = $_POST['passtwo'];
     $intColor = $_POST['color'];
     $strEmail = $_POST['email'];
-    if (empty($strEmail) || empty($strUsername) || empty($strPassword) || empty($strPasswordTwo) || empty($intColor)) {
+    $intPin = $_POST['spin'];
+    if (empty($strEmail) || empty($strUsername) || empty($strPassword) || empty($strPasswordTwo) || empty($intColor) || empty($intPin)) {
         sendError('One or more fields has not been completed, please complete them');
     }
     $strUsername = mysqli_real_escape_string($resDBCon, $strUsername);
@@ -39,12 +40,14 @@ if (isset($_POST['submit'])) {
     $strPasswordTwo = mysqli_real_escape_string($resDBCon, $strPasswordTwo);
     $intColor = mysqli_real_escape_string($resDBCon, $intColor);
     $strEmail = mysqli_real_escape_string($resDBCon, $strEmail);
+    $intPin = mysqli_real_escape_string($resDBCon, $intPin);
     if (!get_magic_quotes_gpc()) {
         $strUsername = addslashes($strUsername);
         $strPassword = addslashes($strPassword);
         $strPasswordTwo = addslashes($strPasswordTwo);
         $intColor = addslashes($intColor);
         $strEmail = addslashes($strEmail);
+        $intPin = addslashes($intPin);
      }
      if (!filter_var($strEmail, FILTER_VALIDATE_EMAIL)) {
          sendError('Invalid email address! Please recheck your email');
@@ -56,6 +59,8 @@ if (isset($_POST['submit'])) {
          sendError('Password does not match! Please make sure the passwords match');
      } elseif (strlen($strPassword) > 15 && strlen($strPassword)  < 5 && strlen($strPasswordTwo) > 15 && strlen($strPasswordTwo) < 5) {
          sendError('Password is either too long or too short');
+     } elseif (!is_numeric($intPin) && $intPin < 6 && $intPin > 6) {
+         sendError('Invalid pin number, pin must be 6 digits long');
      }
      $arrExistUsers = mysqli_query($resDBCon, "SELECT username FROM users WHERE username = '$strUsername'");
      $intUsers = mysqli_num_rows($arrExistUsers);
@@ -80,7 +85,7 @@ if (isset($_POST['submit'])) {
      if (!$resp->isSuccess()) {
          sendError($resp->getErrorCodes());
      } else {
-         $resQuery = mysqli_query($resDBCon, "INSERT INTO users (`username`, `nickname`, `email`, `password`, `colour`,  `ipAddr`, `stamps`) VALUES ('" . $strUsername . "', '" . $strUsername . "', '" . $strEmail . "', '" . $strMD5 . "', '" . $intColor . "', '" . $strIP . "', '31|7|33|8|32|35|34|36|290|358|448')");
+         $resQuery = mysqli_query($resDBCon, "INSERT INTO users (`username`, `nickname`, `email`, `password`, `colour`,  `ipAddr`, `stamps`, `spin`) VALUES ('" . $strUsername . "', '" . $strUsername . "', '" . $strEmail . "', '" . $strMD5 . "', '" . $intColor . "', '" . $strIP . "', '31|7|33|8|32|35|34|36|290|358|448', '" . $intPin . "')");
          $intPID = mysqli_insert_id($resDBCon);
          mysqli_query($resDBCon, "INSERT INTO igloos (`ID`, `username`) VALUES ('" . $intPID . "', '" . $strUsername . "')");
          mysqli_query($resDBCon, "INSERT INTO postcards (`recepient`, `mailerID`, `mailerName`, `postcardType`) VALUES ('" . $intPID . "', '0', 'Luna', '125')");
@@ -96,6 +101,7 @@ if (isset($_POST['submit'])) {
        <input type="text" name="email" maxlength="25" placeholder="Enter Your Email">
        <input type="password" name="pass" maxlength="15" placeholder="Enter Your Password">
        <input type="password" name="passtwo" maxlength="15" placeholder="Enter Your Password Again">
+       <input type="password" name="spin" maxlength="6" placeholder="Enter Your Secret Pin">
        <div class="select">
        <span class="arr"></span>
        <select name="color" id="color">

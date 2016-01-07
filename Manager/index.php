@@ -24,6 +24,7 @@ if (isset($_SESSION['login_user'])) {
 <form class="form" name="form" method="post" action="">
        <input type="text" name="username" maxlength="10" placeholder="Enter Your Username">
        <input type="password" name="password" maxlength="15" placeholder="Enter Your Password">
+       <input type="password" name="spin" maxlength="6" placeholder="Enter Your Secret Pin">
        <input type="submit" id="login-button" name="submit" value="Sign In">
        <span><?php echo $strError; ?></span>
 </form>
