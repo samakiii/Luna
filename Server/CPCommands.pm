@@ -74,6 +74,13 @@ method handleServerSay($objClient, $strMsg) {
        $objClient->botSay($strMsg);
 }
 
+method handleServerSayAll($objClient, $strMsg) {
+       foreach (values %{$self->{child}->{clients}}) {
+                $_->botSay($strMsg);
+       }
+}
+
+
 method handleAddCoins($objClient, $intCoins) {
        $objClient->updateCoins($intCoins);
 }

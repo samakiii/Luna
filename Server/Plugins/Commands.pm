@@ -37,9 +37,10 @@ method new($resChild) {
                        tban => 'handleTimeBanClient',
                        kbc => 'handleKickBanClient',
                        ban => 'handleBanClient',
+                       kick => 'handleKickClient',
                        unban => 'handleUnbanClient',
                        reboot => 'handleRebootServer',
-                       global => 'handleServerSay',
+                       global => 'handleServerSayAll',
                        summon => 'handleSummonClient'
                  }
        };
