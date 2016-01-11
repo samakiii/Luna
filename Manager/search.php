@@ -22,6 +22,8 @@ include 'session.php';
 <?php if ($_SESSION['isAdmin'] == true) { ?>
 <li><a href="admin.php">Admin Panel</a></li>
 <?php } } ?>
+<li><a href="store.php">Store</a></li>
+<li><a href="server.php">Server</a></li>
 <li><a href="logout.php">Logout</a></li>
 </ul>     
 
