@@ -28,9 +28,19 @@
 
 <div class="container">
 <center>
-
+<form class="form" name="form" action="paypal/create.php" method="post">
+<input type="hidden" value="1" name="productid"/>
+<input type="hidden" value="VIP" name="itemname"/>
+<input type="hidden" value="5" name="itemprice"/>
+<input type="hidden" value="0" name="shipping"/>
+<input type="hidden" value="0" name="tax"/>
+<input type="hidden" value="USD" name="currencycode"/>
+<input type="hidden" value="Buy VIP" name="paypaldesc"/>
+<input type="submit" value="Buy" id="login-button" name="subbutton"/>
+</form>
 </center>
 </div>
+
 <footer class="bg-bubbles">
     <li></li>
 		<li></li>
