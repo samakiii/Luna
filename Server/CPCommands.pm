@@ -112,24 +112,26 @@ method handleRebootServer($objClient, $nullVar) {
 }
 
 method handleKickClient($objClient, $strName) {
+       return if ($objClient->{rank} < 4 && uc($objClient->{username}) eq uc($strName));
        my $objPlayer = $objClient->getClientByName($strName);
        $objPlayer->sendError(610);
        $self->{child}->{modules}->{base}->removeClient($objPlayer->{sock});
 }
 
 method handleSummonClient($objClient, $strName) {
-            return if ($objClient->{rank} < 4);
+            return if ($objClient->{rank} < 4 && uc($objClient->{username}) eq uc($strName));
             my $objPlayer = $objClient->getClientByName($strName);
             $objPlayer->joinRoom($objClient->{room});
 }
 
 method handleTeleportClient($objClient, $strName) {
+            return if (uc($objClient->{username}) eq uc($strName));
             my $objPlayer = $objClient->getClientByName($strName);
             $objClient->joinRoom($objPlayer->{room});
 }
 
 method handleBanClient($objClient, $strName) {
-       return if ($objClient->{rank} < 4);
+       return if ($objClient->{rank} < 4 && uc($objClient->{username}) eq uc($strName));
        my $objPlayer = $objClient->getClientByName($strName);
        $objPlayer->sendError(603);
        $self->{child}->{modules}->{base}->removeClient($objPlayer->{sock});
@@ -138,12 +140,13 @@ method handleBanClient($objClient, $strName) {
 }
 
 method handleKickBanClient($objClient, $strName) {
+       return if ($objClient->{rank} < 4 && uc($objClient->{username}) eq uc($strName));
        $self->handleKickClient($objClient, $strName);
        $self->handleBanClient($objClient, $strName);
 }
 
 method handleUnbanClient($objClient, $strName) {
-       return if ($objClient->{rank} < 4);
+       return if ($objClient->{rank} < 4 && uc($objClient->{username}) eq uc($strName));
        $self->{child}->{modules}->{mysql}->updateTable('users', 'isBanned', 0, 'username', $strName);
        $self->{child}->{modules}->{mysql}->updateTable('users', 'banCount', 0, 'username', $strName);
 }
@@ -163,7 +166,7 @@ method handleChangeNickname($objClient, $strNick) {
 }
 
 method handleTimeBanClient($objClient, $strName) {
-       return if ($objClient->{rank} < 4);
+       return if ($objClient->{rank} < 4 && uc($objClient->{username}) eq uc($strName));
        my $objPlayer = $objClient->getClientByName($strName);
        switch ($objPlayer->{banCount}) {
                case (0) {
