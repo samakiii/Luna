@@ -31,7 +31,8 @@ method new($resChild) {
                          sbc => 'handleSetBubbleColour',   
                          sbt => 'handleSetBubbleText',
                          src => 'handleSetRingColour',
-                         pclone => 'handleClonePenguin'          
+                         pclone => 'handleClonePenguin',
+                         goto => 'handleTeleportClient'          
                  },
                  staff => {
                        tban => 'handleTimeBanClient',

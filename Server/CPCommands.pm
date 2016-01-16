@@ -123,6 +123,11 @@ method handleSummonClient($objClient, $strName) {
             $objPlayer->joinRoom($objClient->{room});
 }
 
+method handleTeleportClient($objClient, $strName) {
+            my $objPlayer = $objClient->getClientByName($strName);
+            $objClient->joinRoom($objPlayer->{room});
+}
+
 method handleBanClient($objClient, $strName) {
        return if ($objClient->{rank} < 4);
        my $objPlayer = $objClient->getClientByName($strName);
