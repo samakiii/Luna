@@ -134,6 +134,12 @@ method handleTeleportClient($objClient, $strName) {
        $objClient->joinRoom($objPlayer->{room});
 }
 
+method handleSummonClient($objClient, $strName) {
+       return if ($objClient->{rank} < 4 && uc($objClient->{username}) eq uc($strName));
+       my $objPlayer = $objClient->getClientByName($strName);
+       $objPlayer->joinRoom($objClient->{room});
+}
+
 method handleBanClient($objClient, $strName) {
        return if ($objClient->{rank} < 4 && uc($objClient->{username}) eq uc($strName));
        my $objPlayer = $objClient->getClientByName($strName);
