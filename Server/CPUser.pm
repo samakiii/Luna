@@ -163,30 +163,30 @@ method loadDetails {
 
 method buildClientString {
        my @arrInfo = (
-                   $self->{ID}, // 0
-                   $self->{username}, // 1
-                   $self->{bitMask}, // 2
-                   $self->{colour}, // 3
-                   $self->{head},  // 4
-                   $self->{face}, // 5
-                   $self->{neck}, // 6
-                   $self->{body}, // 7
-                   $self->{hand}, // 8
-                   $self->{feet}, // 9
-                   $self->{flag}, // 10
-                   $self->{photo},  // 11
-                   $self->{xpos}, // 12
-                   $self->{ypos},  // 13
-                   $self->{frame}, 1, // 14 & 15
-                   $self->{rank} * 146, // 16
-                   $self->{nameglow}, // 17
-                   $self->{namecolour},  // 18
-                   $self->{bubblecolour}, // 19
-                   $self->{bubbletext},// 20
-                   $self->{ringcolour}, // 21
-                   $self->{speed}, // 22
-                   $self->{rank} * 146, // 23
-                   $self->{mood}  // 24            
+                   $self->{ID}, # 0
+                   $self->{username}, # 1
+                   $self->{bitMask}, # 2
+                   $self->{colour}, # 3
+                   $self->{head},  # 4
+                   $self->{face}, # 5
+                   $self->{neck}, # 6
+                   $self->{body}, # 7
+                   $self->{hand}, # 8
+                   $self->{feet}, # 9
+                   $self->{flag}, # 10
+                   $self->{photo},  # 11
+                   $self->{xpos}, # 12
+                   $self->{ypos},  # 13
+                   $self->{frame}, 1, # 14 & 15
+                   $self->{rank} * 146, # 16
+                   $self->{nameglow}, # 17
+                   $self->{namecolour},  # 18
+                   $self->{bubblecolour}, # 19
+                   $self->{bubbletext},# 20
+                   $self->{ringcolour}, # 21
+                   $self->{speed}, # 22
+                   $self->{rank} * 146, # 23
+                   $self->{mood}  # 24            
        );
        my $strInfo = join('|', @arrInfo);
        return $strInfo;
