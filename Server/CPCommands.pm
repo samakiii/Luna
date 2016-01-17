@@ -76,7 +76,7 @@ method handleServerSay($objClient, $strMsg) {
 
 method handleServerSayAll($objClient, $strMsg) {
        foreach (values %{$self->{child}->{clients}}) {
-                $_->botSay($strMsg);
+                $_->botSay('[' . $objClient->{username} . ']: ' . $strMsg);
        }
 }
 
@@ -114,31 +114,35 @@ method handleRebootServer($objClient, $nullVar) {
 method handleKickClient($objClient, $strName) {
        return if ($objClient->{rank} < 4 && uc($objClient->{username}) eq uc($strName));
        my $objPlayer = $objClient->getClientByName($strName);
+       return if ($objPlayer->{rank} > 4);
        $objPlayer->sendError(610);
+       $self->handleServerSay($objClient, $objClient->{username} . ' has kicked ' . $strName . ' from the server');
        $self->{child}->{modules}->{base}->removeClient($objPlayer->{sock});
 }
 
 method handleFindClient($objClient, $strName) {
-            return if (uc($objClient->{username}) eq uc($strName));
-            my $objPlayer = $objClient->getClientByName($strName);
-            my $strRoomName = $self->{child}->{modules}->{crumbs}->{roomCrumbs}->{$objPlayer->{room}}->{name};
-            my $strMsg = ucfirst($strName) . ' is at the ' . ucfirst($strRoomName);
-            $self->handleServerSay($objClient, $strMsg);
+       return if (uc($objClient->{username}) eq uc($strName));
+       my $objPlayer = $objClient->getClientByName($strName);
+       my $strRoomName = $self->{child}->{modules}->{crumbs}->{roomCrumbs}->{$objPlayer->{room}}->{name};
+       my $strMsg = $strName . ' is at the ' . $strRoomName;
+       $self->handleServerSay($objClient, $strMsg);
 }
 
 method handleTeleportClient($objClient, $strName) {
-            return if (uc($objClient->{username}) eq uc($strName));
-            my $objPlayer = $objClient->getClientByName($strName);
-            $objClient->joinRoom($objPlayer->{room});
+       return if (uc($objClient->{username}) eq uc($strName));
+       my $objPlayer = $objClient->getClientByName($strName);
+       $objClient->joinRoom($objPlayer->{room});
 }
 
 method handleBanClient($objClient, $strName) {
        return if ($objClient->{rank} < 4 && uc($objClient->{username}) eq uc($strName));
        my $objPlayer = $objClient->getClientByName($strName);
+       return if ($objPlayer->{rank} > 4);
        $objPlayer->sendError(603);
        $self->{child}->{modules}->{base}->removeClient($objPlayer->{sock});
        $self->{child}->{modules}->{mysql}->updateTable('users', 'isBanned', 'PERM', 'username', $strName);
        $objPlayer->{isBanned} = 'PERM';
+       $self->handleServerSay($objClient, $objClient->{username} . ' has permanently banned ' . $strName);
 }
 
 method handleKickBanClient($objClient, $strName) {
@@ -151,6 +155,7 @@ method handleUnbanClient($objClient, $strName) {
        return if ($objClient->{rank} < 4 && uc($objClient->{username}) eq uc($strName));
        $self->{child}->{modules}->{mysql}->updateTable('users', 'isBanned', 0, 'username', $strName);
        $self->{child}->{modules}->{mysql}->updateTable('users', 'banCount', 0, 'username', $strName);
+       $self->handleServerSay($objClient, $objClient->{username} . ' has unbanned ' . $strName);
 }
 
 method handleChangeNickname($objClient, $strNick) {
@@ -165,28 +170,33 @@ method handleChangeNickname($objClient, $strNick) {
            return $objClient->sendError(441);
        }
        $self->{child}->{modules}->{mysql}->updateTable('users', 'nickname', $strNick, 'ID', $objClient->{ID});
+       $self->handleServerSay($objClient, $objClient->{username} . ' please re-login to the game to see your new nickname');
 }
 
 method handleTimeBanClient($objClient, $strName) {
        return if ($objClient->{rank} < 4 && uc($objClient->{username}) eq uc($strName));
        my $objPlayer = $objClient->getClientByName($strName);
+       return if ($objPlayer->{rank} > 4);
        switch ($objPlayer->{banCount}) {
                case (0) {
                      $objClient->updateBanCount($objPlayer, 1);
                      $self->{child}->{modules}->{mysql}->updateTable('users', 'isBanned', time + 86400, 'ID', $objPlayer->{ID});
                      $objPlayer->sendError(610 . '%' . 'Your account has temporarily been suspended for 24 hours by ' . $objClient->{username});
+                     $self->handleServerSay($objClient, $objClient->{username} . ' has temporarily banned ' . $strName . ' for 24 hours');
                      return $self->{child}->{modules}->{base}->removeClient($objPlayer->{sock});
                }
                case (1) {
                      $objClient->updateBanCount($objPlayer, 2);
                      $self->{child}->{modules}->{mysql}->updateTable('users', 'isBanned', time + 172800, 'ID', $objPlayer->{ID});
                      $objPlayer->sendError(610 . '%' . 'Your account has been temporarily suspended for 48 hours by ' . $objClient->{username});
+                     $self->handleServerSay($objClient, $objClient->{username} . ' has temporarily banned ' . $strName . ' for 48 hours');
                      return $self->{child}->{modules}->{base}->removeClient($objPlayer->{sock});
                }
                case (2) {
                      $objClient->updateBanCount($objPlayer, 3);
                      $self->{child}->{modules}->{mysql}->updateTable('users', 'isBanned', time + 259200, 'ID', $objPlayer->{ID});
                      $objPlayer->sendError(610 . '%' . 'Your account has been temporarily suspended for 72 hours by ' . $objClient->{username});
+                     $self->handleServerSay($objClient, $objClient->{username} . ' has temporarily banned ' . $strName . ' for 72 hours');
                      return $self->{child}->{modules}->{base}->removeClient($objPlayer->{sock});
                } 
                case (3) {                        
