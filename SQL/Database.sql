@@ -10,6 +10,8 @@ DROP TABLE IF EXISTS `postcards`;
 DROP TABLE IF EXISTS `puffles`;
 DROP TABLE IF EXISTS `users`;
 DROP TABLE IF EXISTS `igloos`;
+DROP TABLE IF EXISTS `paypal_payments`;
+DROP TABLE IF EXISTS `paypal_products`;
 
 CREATE TABLE IF NOT EXISTS `servers` (
   `servType` varchar(10) NOT NULL DEFAULT 'game',
@@ -19,6 +21,22 @@ CREATE TABLE IF NOT EXISTS `servers` (
   `curPop` int(10) NOT NULL DEFAULT '0',
   PRIMARY KEY (`servType`)
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+
+CREATE TABLE IF NOT EXISTS `paypal_payments` (
+ `payment_id` mediumint(6) NOT NULL,
+ `product_id` mediumint(6) NOT NULL,
+ PRIMARY KEY (`payment_id`)
+) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+
+CREATE TABLE IF NOT EXISTS `paypal_products` (
+ `itemprice` mediumint(6) NOT NULL,
+ `shipping` mediumint(6) NOT NULL,
+ `product_id` mediumint(6) NOT NULL,
+ `tax` mediumint(6) NOT NULL,
+ `currencycode` varchar(5) NOT NULL,
+ PRIMARY KEY (`product_id`)
+) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+
 
 CREATE TABLE IF NOT EXISTS `puffles` (
   `puffleID` int(11) NOT NULL AUTO_INCREMENT,
