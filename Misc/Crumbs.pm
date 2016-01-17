@@ -128,7 +128,7 @@ method loadRooms($arrRooms) {
                 my $intLimit = $arrRooms->{$_}->{max_users};
                 my $strKey = $arrRooms->{$_}->{room_key};
                 if ($strKey ne '') {
-	                   %{$self->{roomCrumbs}->{$intRoom}} = (limit => $intLimit);
+	                   %{$self->{roomCrumbs}->{$intRoom}} = (name => $strKey, limit => $intLimit);
                 } else {
                     %{$self->{gameRoomCrumbs}->{$intRoom}} = (limit => $intLimit);
                 }

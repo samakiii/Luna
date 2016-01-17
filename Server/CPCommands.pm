@@ -118,10 +118,12 @@ method handleKickClient($objClient, $strName) {
        $self->{child}->{modules}->{base}->removeClient($objPlayer->{sock});
 }
 
-method handleSummonClient($objClient, $strName) {
-            return if ($objClient->{rank} < 4 && uc($objClient->{username}) eq uc($strName));
+method handleFindClient($objClient, $strName) {
+            return if (uc($objClient->{username}) eq uc($strName));
             my $objPlayer = $objClient->getClientByName($strName);
-            $objPlayer->joinRoom($objClient->{room});
+            my $strRoomName = $self->{child}->{modules}->{crumbs}->{roomCrumbs}->{$objPlayer->{room}}->{name};
+            my $strMsg = ucfirst($strName) . ' is at the ' . ucfirst($strRoomName);
+            $self->handleServerSay($objClient, $strMsg);
 }
 
 method handleTeleportClient($objClient, $strName) {
