@@ -12,6 +12,21 @@ method new($resChild) {
        return $obj;
 }
 
+method handlePenguinSuperSize($objClient, $intSize) {
+       return if (!int($intSize));
+       $objClient->updateOpenGlow('penguin_size', $intSize);
+}
+
+method handlePenguinBlend($objClient, $intBlend) {
+       return if (!int($intBlend));
+       $objClient->updateOpenGlow('penguin_blend', $intBlend);
+}
+
+method handlePenguinAlpha($objClient, $intAlpha) {
+       return if (!int($intAlpha));
+       $objClient->updateOpenGlow('penguin_alpha', $intAlpha);
+}
+
 method handleSetNameGlow($objClient, $strGlow) {
        return if ($strGlow !~ m/0x[\da-fA-F]{1,4}/);
        $objClient->updateOpenGlow('nameglow', $strGlow);

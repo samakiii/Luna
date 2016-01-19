@@ -57,6 +57,16 @@ function SetGlows(){
             var Glow = new flash.filters.DropShadowFilter(0, 0, Players[PlayerIndex].Nameglow, 20, 5, 5, 15, 3);
             PlayerName.name_txt.filters = [Glow];
         }
+        if (Players[PlayerIndex].Alpha != "") {
+	           ENGINE.room_mc.load_mc["p" + PlayerIndex]._alpha = int(Players[PlayerIndex].Alpha);
+        }
+        if ((Players[PlayerIndex].Blend != "") && (Players[PlayerIndex].Blend != 0)) {
+	           ENGINE.room_mc.load_mc["p" + PlayerIndex].blendMode = Players[PlayerIndex].Blend;
+        }
+        if ((Players[PlayerIndex].Size != "") && (Players[PlayerIndex].Size != 1)) {
+	           ENGINE.room_mc.load_mc["p" + PlayerIndex]._yscale = int(Players[PlayerIndex].Size);
+	           ENGINE.room_mc.load_mc["p" + PlayerIndex]._xscale = int(Players[PlayerIndex].Size);
+        }
         if(Players[PlayerIndex].BubbleColor){
             var i = INTERFACE.BALLOONS["p" + PlayerIndex];
             var _loc1 = new Color(i.balloon_mc);
@@ -128,7 +138,10 @@ function UpdatePlayer(PlayerArray){
         RingColor: PlayerArray[21],
         Speed: PlayerArray[22],
         Rank: PlayerArray[23],
-        Mood: PlayerArray[24]
+        Mood: PlayerArray[24],
+        Alpha: PlayerArray[25], 
+        Blend: PlayerArray[26],
+        Size:  PlayerArray[27]
     };
 }
 INTERFACE.showBalloon2 = INTERFACE.showBalloon;

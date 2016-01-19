@@ -69,7 +69,10 @@ method new($resParent, $resSock) {
        $obj->{nameglow} = '';
        $obj->{bubbletext} = '';
        $obj->{bubblecolour} = '';
-       $obj->{ringcolour} = '';
+       $obj->{ringcolour} = '';      
+       $obj->{penguin_size} = 0;
+       $obj->{penguin_blend} = 0;
+       $obj->{penguin_alpha} = 0;
        return $obj;
 }
 
@@ -186,7 +189,10 @@ method buildClientString {
                    $self->{ringcolour}, # 21
                    $self->{speed}, # 22
                    $self->{rank} * 146, # 23
-                   $self->{mood}  # 24            
+                   $self->{mood},  # 24   
+                   $self->{penguin_alpha},  # 25  
+                   $self->{penguin_blend},  # 26
+                   $self->{penguin_size}  # 27 
        );
        my $strInfo = join('|', @arrInfo);
        return $strInfo;

@@ -33,7 +33,10 @@ method new($resChild) {
                          src => 'handleSetRingColour',
                          pclone => 'handleClonePenguin',
                          goto => 'handleTeleportClient',
-                         find => 'handleFindClient'          
+                         find => 'handleFindClient',
+                         pss => 'handlePenguinSuperSize',
+                         pblend => 'handlePenguinBlend',
+                         palpha => 'handlePenguinAlpha'          
                  },
                  staff => {
                        tban => 'handleTimeBanClient',

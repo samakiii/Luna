@@ -124,6 +124,9 @@ CREATE TABLE IF NOT EXISTS `users` (
   `ringcolour` mediumblob NOT NULL,
   `speed` smallint(3) NOT NULL DEFAULT '4',
   `mood` char(100) NOT NULL,
+  `penguin_size` mediumint(3) NOT NULL,
+  `penguin_blend` mediumint(3) NOT NULL,
+  `penguin_alpha` mediumint(3) NOT NULL,
   PRIMARY KEY (`ID`)
 ) ENGINE=MyISAM  DEFAULT CHARSET=latin1 AUTO_INCREMENT=1;
 
