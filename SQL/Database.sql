@@ -15,7 +15,7 @@ DROP TABLE IF EXISTS `paypal_products`;
 
 CREATE TABLE IF NOT EXISTS `servers` (
   `servType` varchar(10) NOT NULL DEFAULT 'game',
-  `servPort` mediumint(5) NOT NULL,
+  `servPort` int(5) NOT NULL,
   `servName` char(20) NOT NULL,
   `servIP` mediumblob NOT NULL,
   `curPop` int(10) NOT NULL DEFAULT '0',
@@ -23,16 +23,16 @@ CREATE TABLE IF NOT EXISTS `servers` (
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
 CREATE TABLE IF NOT EXISTS `paypal_payments` (
- `payment_id` mediumint(6) NOT NULL,
- `product_id` mediumint(6) NOT NULL,
+ `payment_id` int(6) NOT NULL,
+ `product_id` int(6) NOT NULL,
  PRIMARY KEY (`payment_id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
 CREATE TABLE IF NOT EXISTS `paypal_products` (
- `itemprice` mediumint(6) NOT NULL,
- `shipping` mediumint(6) NOT NULL,
- `product_id` mediumint(6) NOT NULL,
- `tax` mediumint(6) NOT NULL,
+ `itemprice` int(6) NOT NULL,
+ `shipping` int(6) NOT NULL,
+ `product_id` int(6) NOT NULL,
+ `tax` int(6) NOT NULL,
  `currencycode` varchar(5) NOT NULL,
  PRIMARY KEY (`product_id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
@@ -40,12 +40,12 @@ CREATE TABLE IF NOT EXISTS `paypal_products` (
 
 CREATE TABLE IF NOT EXISTS `puffles` (
   `puffleID` int(11) NOT NULL AUTO_INCREMENT,
-  `ownerID` smallint(2) NOT NULL,
+  `ownerID` int(2) NOT NULL,
   `puffleName` char(10) NOT NULL,
-  `puffleType` smallint(2) NOT NULL,
-  `puffleEnergy` smallint(3) NOT NULL DEFAULT '100',
-  `puffleHealth` smallint(3) NOT NULL DEFAULT '100',
-  `puffleRest` smallint(3) NOT NULL DEFAULT '100',
+  `puffleType` int(2) NOT NULL,
+  `puffleEnergy` int(3) NOT NULL DEFAULT '100',
+  `puffleHealth` int(3) NOT NULL DEFAULT '100',
+  `puffleRest` int(3) NOT NULL DEFAULT '100',
   PRIMARY KEY (`puffleID`)
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1 AUTO_INCREMENT=1;
 
@@ -56,8 +56,8 @@ CREATE TABLE IF NOT EXISTS `postcards` (
   `mailerID` int(10) NOT NULL,
   `notes` char(12) NOT NULL,
   `timestamp` int(8) NOT NULL,
-  `postcardType` mediumint(5) NOT NULL,
-  `isRead` tinyint(1) NOT NULL DEFAULT '0',
+  `postcardType` int(5) NOT NULL,
+  `isRead` int(1) NOT NULL DEFAULT '0',
   PRIMARY KEY (`postcardID`)
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1 AUTO_INCREMENT=1;
 
@@ -82,17 +82,17 @@ CREATE TABLE IF NOT EXISTS `users` (
   `username` char(20) NOT NULL,
   `nickname` char(20) NOT NULL,
   `password` char(32) NOT NULL,
-  `spin` tinyint(6) NOT NULL,
+  `spin` int(6) NOT NULL,
   `loginKey` char(32) NOT NULL,
   `ipAddr` mediumblob NOT NULL,
   `email` mediumblob NOT NULL,
   `age` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP,
   `LastLogin` timestamp,
-  `active` tinyint(1) NOT NULL DEFAULT '1',
-  `bitMask` tinyint(1) NOT NULL DEFAULT '1',
+  `active` int(1) NOT NULL DEFAULT '1',
+  `bitMask` int(1) NOT NULL DEFAULT '1',
   `isBanned` varchar(10) NOT NULL DEFAULT '0',
-  `banCount` tinyint(1) NOT NULL DEFAULT '0',
-  `invalidLogins` smallint(3) NOT NULL DEFAULT '0',
+  `banCount` int(1) NOT NULL DEFAULT '0',
+  `invalidLogins` int(3) NOT NULL DEFAULT '0',
   `inventory` longblob NOT NULL,
   `head` int(10) NOT NULL DEFAULT '0',
   `face` int(10) NOT NULL DEFAULT '0',
@@ -104,14 +104,14 @@ CREATE TABLE IF NOT EXISTS `users` (
   `flag` int(10) NOT NULL DEFAULT '0',
   `colour` int(10) NOT NULL DEFAULT '1',
   `coins` int(11) NOT NULL,
-  `isMuted` tinyint(1) NOT NULL DEFAULT '0',
-  `isStaff` tinyint(1) NOT NULL DEFAULT '0',
-  `isAdmin` tinyint(1) NOT NULL DEFAULT '0',
-  `rank` tinyint(1) NOT NULL DEFAULT '1',  
+  `isMuted` int(1) NOT NULL DEFAULT '0',
+  `isStaff` int(1) NOT NULL DEFAULT '0',
+  `isAdmin` int(1) NOT NULL DEFAULT '0',
+  `rank` int(1) NOT NULL DEFAULT '1',  
   `buddies` longblob NOT NULL,
   `ignored` longblob NOT NULL,
-  `isEPF` tinyint(1) NOT NULL DEFAULT '0',
-  `fieldOPStatus` tinyint(1) NOT NULL DEFAULT '0',
+  `isEPF` int(1) NOT NULL DEFAULT '0',
+  `fieldOPStatus` int(1) NOT NULL DEFAULT '0',
   `epfPoints` int(10) NOT NULL DEFAULT '20',
   `totalEPFPoints` int(10) NOT NULL DEFAULT '100',
   `stamps` longblob NOT NULL,
@@ -122,11 +122,11 @@ CREATE TABLE IF NOT EXISTS `users` (
   `bubbletext` mediumblob NOT NULL,
   `bubblecolour` mediumblob NOT NULL,
   `ringcolour` mediumblob NOT NULL,
-  `speed` smallint(3) NOT NULL DEFAULT '4',
+  `speed` int(3) NOT NULL DEFAULT '4',
   `mood` char(100) NOT NULL,
-  `penguin_size` mediumint(3) NOT NULL,
-  `penguin_blend` mediumint(3) NOT NULL,
-  `penguin_alpha` mediumint(3) NOT NULL,
+  `penguin_size` int(3) NOT NULL,
+  `penguin_blend` int(3) NOT NULL,
+  `penguin_alpha` int(3) NOT NULL,
   PRIMARY KEY (`ID`)
 ) ENGINE=MyISAM  DEFAULT CHARSET=latin1 AUTO_INCREMENT=1;
 
