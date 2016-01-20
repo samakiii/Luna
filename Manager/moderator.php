@@ -47,37 +47,39 @@ $strMessage = '';
 $mysql = mysqli_connect($strDBHost, $strDBUser, $strDBPass, $strDBName);
 
 if (isset($_POST['submit'])) {
-   $strUsername = $_POST['username'];
-    $strAction = $_POST['action'];
-    if (!empty($strUsername) && !empty($strAction)) {
+    $strUsername = $_POST['username'];
+    $intAction = $_POST['action_type'];
+    if (isset($strUsername) && isset($intAction)) {
         $strUsername = mysqli_real_escape_string($mysql, stripslashes($strUsername));
-        $strAction = mysqli_real_escape_string($mysql, stripslashes($strAction));
-        $resQuery = mysqli_query($mysql, "SELECT * FROM users WHERE username = '$strUsername'");
-        $arrResult = mysqli_fetch_assoc($resQuery);
-        if (!empty($arrResult)) {
+        $intAction = mysqli_real_escape_string($mysql, stripslashes($intAction));
+        $resQuery = mysqli_query($mysql, "SELECT username FROM users WHERE username = '$strUsername'");
+        $intPExists = mysqli_num_rows($resQuery);
+        if ($intPExists == 1) {
+            $resQueryTwo = mysqli_query($mysql, "SELECT * FROM users WHERE username = '$strUsername'");
+            $arrResult = mysqli_fetch_assoc($resQueryTwo);
             if ($arrResult['rank'] < 3) {
-                switch ($strAction) {
+                switch ($intAction) {
                            case 0:
                            if ($arrResult['isBanned'] != 'PERM') {
                                if (!is_numeric($arrResult['isBanned'])) {                      
                                    if ($arrResult['isBanned'] < time()) {
                                        mysqli_query($mysql, "UPDATE users SET isBanned = 'PERM' WHERE username = '$strUsername'");
-                                       $strMessage = 'You have permanently banned $strUsername';
+                                       $strMessage = "You have permanently banned $strUsername";
                                    }
                               } else {
                                   $intRemainingTime = round(($arrResult['isBanned'] - time()) / 3600);
-                                  $strError = 'This user is already banned for the next $intRemainingTime hours';
+                                  $strError = "This user is already banned for the next $intRemainingTime hours";
                               }
                           } else {
-                              $strError = 'This user is already banned permanently';
+                              $strError = "This user is already banned permanently";
                           }
                           break;
                           case 1:
                           if ($arrResult['isBanned'] != '') {
                               mysqli_query($mysql, "UPDATE users SET isBanned = '' WHERE username = '$strUsername'");
-                              $strMessage = 'You have successfully unbanned $strUsername';
+                              $strMessage = "You have successfully unbanned $strUsername";
                           } else {
-                              $strError = 'This user is already unbanned';
+                              $strError = "This user is already unbanned";
                           }
                           break;
                           case 2:
@@ -85,14 +87,14 @@ if (isset($_POST['submit'])) {
                               if (!is_numeric($arrResult['isBanned'])) {                      
                                   if ($arrResult['isBanned'] < time()) {
                                       mysqli_query($mysql, "UPDATE users SET isBanned = '" . (time() + 86400)  . "' WHERE username = '$strUsername'");
-                                      $strMessage = 'You have banned $strUsername for 24 hours';
+                                      $strMessage = "You have banned $strUsername for 24 hours";
                                   }
                               } else {
                                   $intRemainingTime = round(($arrResult['isBanned'] - time()) / 3600);
-                                  $strError = 'This user is already banned for the next $intRemainingTime hours';
+                                  $strError = "This user is already banned for the next $intRemainingTime hours";
                               }
                           } else {
-                              $strError = 'This user is already banned permanently';
+                              $strError = "This user is already banned permanently";
                           }
                           break;
                           case 3:
@@ -100,14 +102,14 @@ if (isset($_POST['submit'])) {
                               if (!is_numeric($arrResult['isBanned'])) {                      
                                   if ($arrResult['isBanned'] > time()) {
                                       mysqli_query($mysql, "UPDATE users SET isBanned = '" . (time() + 172800)  . "' WHERE username = '$strUsername'");
-                                      $strMessage = 'You have banned $strUsername for 48 hours';
+                                      $strMessage = "You have banned $strUsername for 48 hours";
                                   }
                               } else {
                                   $intRemainingTime = round(($arrResult['isBanned'] - time()) / 3600);
-                                  $strError = 'This user is already banned for $intRemainingTime hours';
+                                  $strError = "This user is already banned for $intRemainingTime hours";
                               }
                           } else {
-                              $strError = 'This user is already banned permanently';
+                              $strError = "This user is already banned permanently";
                           }
                           break;
                           case 4:
@@ -115,35 +117,39 @@ if (isset($_POST['submit'])) {
                               if (!is_numeric($arrResult['isBanned'])) {                      
                                   if ($arrResult['isBanned'] > time()) {
                                       mysqli_query($mysql, "UPDATE users SET isBanned = '" . (time() + 259200)  . "' WHERE username = '$strUsername'");
-                                      $strMessage = 'You have banned $strUsername for 72 hours';
+                                      $strMessage = "You have banned $strUsername for 72 hours";
                                   }
                               } else {
                                   $intRemainingTime = round(($arrResult['isBanned'] - time()) / 3600);
-                                  $strError = 'This user is already banned for $intRemainingTime hours';
+                                  $strError = "This user is already banned for $intRemainingTime hours";
                               }
                           } else {
-                              $strError = 'This user is already banned permanently';
+                              $strError = "This user is already banned permanently";
                           }
                           break;
                           case 5:
                           if ($arrResult['isMuted'] != true) {
                               mysqli_query($mysql, "UPDATE users SET isMuted = '1' WHERE username = '$strUsername'");
-                              $strMessage = 'You have muted $strUsername';
+                              $strMessage = "You have muted $strUsername";
                           } else {
-                              $strError = '$strUsername is already muted';
+                              $strError = "$strUsername is already muted";
                           }
                           break;
                           case 6:
                           if ($arrResult['isMuted'] != false) {
                               mysqli_query($mysql, "UPDATE users SET isMuted = '0' WHERE username = '$strUsername'");
-                              $strMessage = 'You have unmuted $strUsername';
+                              $strMessage = "You have unmuted $strUsername";
                           } else {
-                              $strError = '$strUsername is already unmuted';
+                              $strError = "$strUsername is already unmuted";
                           }
                           break;
                 }
             }
+        } else {
+            $strError = "$strUsername does not exist in the database";
         }
+    } else {
+        $strError = "Please enter a username and select an action";
     }
 }
 
@@ -156,7 +162,7 @@ if (isset($_POST['submit'])) {
        <input type="text" name="username" maxlength="10" placeholder="Type a username">
        <div class="select">
        <span class="arr"></span>
-       <select name="action" id="action">
+       <select name="action_type" id="action_type">
                 <option value="0">Ban</option>
                 <option value="1">Unban</option>
                 <option value="2">Time Ban - 24h</option>

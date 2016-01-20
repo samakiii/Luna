@@ -44,6 +44,9 @@ include 'config.php';
 $strMessage = '';
 $strMessageTwo = '';
 
+$strError = '';
+$strErrorTwo = '';
+
 $mysql = mysqli_connect($strDBHost, $strDBUser, $strDBPass, $strDBName);
 
 if (isset($_POST['update_rank'])) {
@@ -52,47 +55,63 @@ if (isset($_POST['update_rank'])) {
     if (isset($strUsername) && isset($intRank)) {
         $strUsername = mysqli_real_escape_string($mysql, stripslashes($strUsername));
         $intRank = mysqli_real_escape_string($mysql, stripslashes($intRank));
-        $arrRanks = array(
+        $resQuery = mysqli_query($mysql, "SELECT username FROM users WHERE username = '$strUsername'");
+        $intPExists = mysqli_num_rows($resQuery);
+        if ($intPExists == 1) {
+            $arrRanks = array(
                 1 => 'Member',
                 2 => 'VIP',
                 3 => 'Mediator',
                 4 => 'Moderator',
                 5 => 'Administrator',
                 6 => 'Owner'
-        );
-        $arrStaffRanks = array(
+           );
+           $arrStaffRanks = array(
                 3 => 'Mediator',
                 4 => 'Moderator',
                 5 => 'Administrator',
                 6 => 'Owner'
-        );
-        $strRank = $arrRanks[$intRank];
-        if (array_key_exists($intRank, $arrStaffRanks)) {
-            mysqli_query($mysql, "UPDATE users SET rank = '$intRank' WHERE username = '$strUsername'");
-            mysqli_query($mysql, "UPDATE users SET isStaff = '1' WHERE username = '$strUsername'");
+           );
+           $strRank = $arrRanks[$intRank];
+           if (array_key_exists($intRank, $arrStaffRanks)) {
+               mysqli_query($mysql, "UPDATE users SET rank = '$intRank' WHERE username = '$strUsername'");
+               mysqli_query($mysql, "UPDATE users SET isStaff = '1' WHERE username = '$strUsername'");
+           } else {
+               mysqli_query($mysql, "UPDATE users SET rank = '$intRank' WHERE username = '$strUsername'");
+           }
+           $strMessage = "You have successfuly updated $strUsername rank to $strRank";
         } else {
-            mysqli_query($mysql, "UPDATE users SET rank = '$intRank' WHERE username = '$strUsername'");
+            $strError = "$strUsername does not exist in the database";
         }
-        $strMessage = 'You have successfuly updated $strUsername rank to $strRank';
+    } else {
+        $strError = "Please enter a username and select a rank";
     }
 }
 
 if (isset($_POST['update_active'])) {
-    $strUsername = $_POST['username'];
-    $intAction = $_POST['action'];
-    if (isset($strUsername) && isset($intRank)) {
-        $strUsername = mysqli_real_escape_string($mysql, stripslashes($strUsername));
+    $strUsernameTwo = $_POST['username_two'];
+    $intAction = $_POST['action_type'];
+    if (isset($strUsernameTwo) && isset($intAction)) {
+        $strUsernameTwo = mysqli_real_escape_string($mysql, stripslashes($strUsernameTwo));
         $intAction = mysqli_real_escape_string($mysql, stripslashes($intAction));
-        switch ($intAction) {
-                    case 0:
-                            mysqli_query($mysql, "UPDATE users SET active = '0' WHERE username = '$strUsername'");
-                            $strMessage = 'You have deactivated $strUsername account';
-                    break;
-                    case 1:
-                            mysqli_query($mysql, "UPDATE users SET active = '1' WHERE username = '$strUsername'");
-                            $strMessage = 'You have activated $strUsername account';
-                    break;
+        $resQueryTwo = mysqli_query($mysql, "SELECT username FROM users WHERE username = '$strUsernameTwo'");
+        $intPExistsTwo = mysqli_num_rows($resQueryTwo);
+        if ($intPExistsTwo == 1) {
+            switch ($intAction) {
+                       case 0:
+                            mysqli_query($mysql, "UPDATE users SET active = '0' WHERE username = '$strUsernameTwo'");
+                            $strMessageTwo = "You have deactivated $strUsernameTwo account";
+                       break;
+                       case 1:
+                            mysqli_query($mysql, "UPDATE users SET active = '1' WHERE username = '$strUsernameTwo'");
+                            $strMessageTwo = "You have activated $strUsernameTwo account";
+                       break;
+            }
+        } else {
+            $strErrorTwo = "$strUsernameTwo does not exist in the database";
         }
+    } else {
+        $strErrorTwo  = "Please enter a username and select an action";
     }
 }
 
@@ -114,13 +133,15 @@ if (isset($_POST['update_active'])) {
        <br>
        <input type="submit" id="login-button" name="update_rank" value="Update Rank">
        <span><?php echo $strMessage; ?></span>
+       <span><?php echo $strError; ?></span>
 </form>         
-
+<br>
+<br>
 <form class="form" name="form2" method="post" action="<?php echo $_SERVER['PHP_SELF']; ?>">
-       <input type="text" name="username" maxlength="10" placeholder="Type a username">
+       <input type="text" name="username_two" maxlength="10" placeholder="Type a username">
        <div class="select">
        <span class="arr"></span>
-       <select name="action" id="action">
+       <select name="action_type" id="action_type">
                 <option value="0">Deactivate</option>
                 <option value="1">Activate</option>
        </select>
@@ -129,6 +150,7 @@ if (isset($_POST['update_active'])) {
        <br>
        <input type="submit" id="login-button" name="update_active" value="Update Active">
        <span><?php echo $strMessageTwo; ?></span>
+       <span><?php echo $strErrorTwo; ?></span>
 </form>         
 
 </div>
