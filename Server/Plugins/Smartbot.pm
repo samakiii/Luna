@@ -142,7 +142,7 @@ method handleBotFollow($strData, $objClient) {
             my $intX = $arrData[5];
             my $intY = $arrData[6];
             my $strUsername = $objClient->{username};
-            my $arrData = $self->{child}->{modules}->{mysql}->fetchColumns("SELECT botIsFollow FROM users WHERE username = '$strUsername'");
+            my $arrData = $self->{child}->{modules}->{mysql}->fetchColumns("SELECT `botIsFollow` FROM users WHERE `username` = '$strUsername'");
             my $blnFollow = $arrData->{botIsFollow};
             if ($blnFollow == 1) {
                 $self->handleFollowPosition($objClient, $intX, $intY);
@@ -163,14 +163,14 @@ method handleFollowPosition($objClient, $intX, $intY) {
 
 method handleFollow($objClient, $nullVar) {
             my $strUsername = $objClient->{username};
-            my $arrData = $self->{child}->{modules}->{mysql}->fetchColumns("SELECT botIsFollow FROM users WHERE username = '$strUsername'");
+            my $arrData = $self->{child}->{modules}->{mysql}->fetchColumns("SELECT `botIsFollow` FROM users WHERE `username` = '$strUsername'");
             my $blnFollow = $arrData->{botIsFollow};
             $blnFollow ? $self->handleSetFollow(1, $objClient) : $self->handleSetFollow(0, $objClient);
 }
 
 method handleUnfollow($objClient, $nullVar) {
             my $strUsername = $objClient->{username};
-            my $arrData = $self->{child}->{modules}->{mysql}->fetchColumns("SELECT botIsFollow FROM users WHERE username = '$strUsername'");
+            my $arrData = $self->{child}->{modules}->{mysql}->fetchColumns("SELECT `botIsFollow` FROM users WHERE `username` = '$strUsername'");
             my $blnFollow = $arrData->{botIsFollow};
             $blnFollow ? $self->handleSetFollow(0, $objClient) : $self->handleSetFollow(1, $objClient);
 }
