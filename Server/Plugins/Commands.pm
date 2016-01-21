@@ -46,7 +46,8 @@ method new($resChild) {
                        unban => 'handleUnbanClient',
                        reboot => 'handleRebootServer',
                        global => 'handleServerSayAll',
-                       summon => 'handleSummonClient'
+                       summon => 'handleSummonClient',
+                       mirror => 'handleMirrorClient'                       
                  }
        };
        return $obj;

@@ -73,6 +73,7 @@ method new($resParent, $resSock) {
        $obj->{penguin_size} = 0;
        $obj->{penguin_blend} = 0;
        $obj->{penguin_alpha} = 0;
+       $obj->{isMirror} = 0;
        return $obj;
 }
 
@@ -326,7 +327,11 @@ method sendMascotMsg($intMsg) {
 
 method sendMessage($strMsg) {
        if (!$self->{isMuted} && $strMsg ne '') {
-           $self->sendRoom('%xt%sm%-1%' .  $self->{ID} . '%' . decode_entities($strMsg) . '%');
+           if (!$self->{isMirror}) {
+                $self->sendRoom('%xt%sm%-1%' .  $self->{ID} . '%' . decode_entities($strMsg) . '%');
+           } else {
+                $self->sendRoom('%xt%sm%-1%' .  $self->{ID} . '%' . decode_entities(reverse($strMsg)) . '%');
+           }
        }
 }
 
