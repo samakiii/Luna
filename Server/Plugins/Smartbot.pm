@@ -5,7 +5,6 @@ use warnings;
 
 use Method::Signatures;
 use Switch;
-use Lyrics::Fetcher;
 
 method new($resChild) {
        my $obj = bless {}, $self;
@@ -18,14 +17,14 @@ method new($resChild) {
               },
               'm#sm' => { 
                      handler => 'handleBotCommands',
-                     isEnabled => 1
+                    isEnabled => 1
               },
               'u#sp' => { 
                      handler => 'handleBotFollow',
                      isEnabled => 1
               }
        };
-       $self->{commands} = {
+       $obj->{bot_commands} = {
                    follow => 'handleFollow',
                    unfollow => 'handleUnfollow',
                    joke => 'handleJoke',
@@ -37,6 +36,7 @@ method new($resChild) {
        };
        return $obj;
 }
+
 
 method handleBotEmotions($strData, $objClient) {
        my @arrData = split('%', $strData);
@@ -131,8 +131,8 @@ method handleBotCommands($strData, $objClient) {
                my @arrParts = split(' ', substr($strMsg, 1), 2);
                my $strCmd = lc($arrParts[0]);
                my $strArg = $arrParts[1];
-               return if (!exists($self->{commands}->{$strCmd}));
-               my $strHandler = $self->{commands}->{$strCmd};
+               return if (!exists($self->{bot_commands}->{$strCmd}));
+               my $strHandler = $self->{bot_commands}->{$strCmd};
                $self->$strHandler($objClient, $strArg);
             }
 }
@@ -242,5 +242,6 @@ method handleDance($objClient, $nullVar) {
 
 method handleSing($objClient, $strArg) {}
 method handleWiki($objClient, $strArg) {}
+
 
 1;
