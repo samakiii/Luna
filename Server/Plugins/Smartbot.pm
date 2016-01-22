@@ -205,7 +205,7 @@ method handleMascot($objClient, $nullVar) {
                                 $strMascot = "5|1002|101|0|0|5025|0|0|0";
                        }
            }
-           my @arrMascotItems = split('|', $strMascot);
+           my @arrMascotItems = split('\\|', $strMascot);
            $objClient->sendRoom('%xt%upc%-1%0%' . $arrMascotItems[0] . '%');
            $objClient->sendRoom('%xt%uph%-1%0%' . $arrMascotItems[1] . '%');
            $objClient->sendRoom('%xt%upf%-1%0%' . $arrMascotItems[2] . '%');
