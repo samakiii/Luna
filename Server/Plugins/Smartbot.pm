@@ -218,12 +218,7 @@ method handleMascot($objClient, $nullVar) {
 }
 
 method handleMove($objClient, $strArg) {
-            my @arrParts = split(' ', $strArg);
-            my $intBotX = $arrParts[0];
-            my $intBotY = $arrParts[1];
-            if (int($intBotX) && int($intBotY)) {
-               $objClient->sendRoom('%xt%sp%-1%0%' . $intBotX . '%' . $intBotY . '%');
-            }
+            $objClient->sendRoom('%xt%sp%-1%0%' .  join('%', split(' ', $strArg)));
 }
 
 method handleDance($objClient, $nullVar) {        
