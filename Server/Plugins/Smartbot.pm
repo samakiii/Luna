@@ -156,9 +156,9 @@ method handleSetFollow($blnFollow, $objClient) {
 method handleFollowPosition($objClient, $intX, $intY) {
             $objClient->{xpos} = $intX;
             $objClient->{ypos} = $intY;
-            my $intBotX = $intX - 2;
-            my $intBotY = $intY - 1;
-            $objClient->sendRoom('%xt%sp%-1%0%' . $intBotX . '%' . $intBotY . '%');
+            $intX = $intX - 2;
+            $intY = $intY - 1;
+            $objClient->sendRoom('%xt%sp%-1%0%' . $intX . '%' . $intY . '%');
 }
 
 method handleFollow($objClient, $nullVar) {
