@@ -32,7 +32,8 @@ method new($resChild) {
                    sing => 'handleSing',
                    dance => 'handleDance',
                    move => 'handleMove',
-                   mascot => 'handleMascot'
+                   mascot => 'handleMascot',
+                   sit => 'handleSitDown'
        };
        return $obj;
 }
@@ -181,9 +182,8 @@ method handleJoke($objClient, $nullVar) {
             $objClient->sendRoom('%xt%sj%-1%0%' . $intJoke . '%');
 }
 
-method handleMascot($objClient, $nullVar) {
-           my @arrMascots = array('candence', 'rockhopper', 'gary', 'sensei', 'auntartic', 'stompin bob');
-           my $strMascotName = $arrMascots[rand(@arrMascots)];
+method handleMascot($objClient, $strMascotName) {
+           $strMascotName = lc($strMascotName);
            my $strMascot = "";
            switch ($strMascotName) {
                        case ('rockhopper') {
@@ -233,6 +233,10 @@ method handleDance($objClient, $nullVar) {
             $objClient->sendRoom('%xt%upp%-1%0%0%');
             $objClient->botSay('Watch me break the floor bitches');
             $objClient->sendRoom('%xt%sf%-1%0%26%');
+}
+
+method handleSitDown($objClient, $nullVar) {
+            $objClient->sendRoom('%xt%sf%-1%0%24%');
 }
 
 method handleSing($objClient, $strArg) {}
