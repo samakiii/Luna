@@ -45,8 +45,8 @@ method new($resParent, $resSock) {
        $obj->{fieldOPStatus} = 0;
        $obj->{room} = 0;
        $obj->{frame} = 0;
-       $obj->{xpos} = 100;
-       $obj->{ypos} = 100;
+       $obj->{xpos} = 0;
+       $obj->{ypos} = 0;
        $obj->{igloo} = 0;
        $obj->{floor} = 0;
        $obj->{music} = 0;
@@ -372,7 +372,7 @@ method removePlayer {
        $self->sendRoom('%xt%rp%-1%' . $self->{ID} . '%');
 }
 
-method joinRoom($intRoom, $intX = 330, $intY = 330) {
+method joinRoom($intRoom, $intX = 0, $intY = 0) {
        return if (!int($intRoom) && !int($intX) && !int($intY));
        $self->removePlayer;
        if (exists($self->{parent}->{modules}->{crumbs}->{gameRoomCrumbs}->{$intRoom})) {  

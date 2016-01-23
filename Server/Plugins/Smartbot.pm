@@ -187,22 +187,22 @@ method handleMascot($objClient, $strMascotName) {
            my $strMascot = "";
            switch ($strMascotName) {
                        case ('rockhopper') {
-                                $strMascot = "5|442|152|161|0|5020|0|0|0";
+                                $strMascot .= "5|442|152|161|0|5020|0|0|0";
                        }
                        case ('auntartic') {
-                                $strMascot = "2|1044|2007|0|0|0|0|0|0";
+                                $strMascot .= "2|1044|2007|0|0|0|0|0|0";
                        }
                        case ('gary') {
-                                $strMascot = "1|0|115|4022|0|0|0|0|0";
+                                $strMascot .= "1|0|115|4022|0|0|0|0|0";
                        }
                        case ('candence') {
-                                $strMascot = "10|1032|0|3011|0|5023|1033|0|0";
+                                $strMascot .= "10|1032|0|3011|0|5023|1033|0|0";
                        }
                        case ('sensei') {
-                                $strMascot = "14|1068|2009|0|0|0|0|0|0";
+                                $strMascot .= "14|1068|2009|0|0|0|0|0|0";
                        }
                        case ('stompin bob') {
-                                $strMascot = "5|1002|101|0|0|5025|0|0|0";
+                                $strMascot .= "5|1002|101|0|0|5025|0|0|0";
                        }
            }
            my @arrMascotItems = split('\\|', $strMascot);
