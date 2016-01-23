@@ -68,6 +68,9 @@ If you are using Windows, you can use <b>Run.bat</b>
  <li> Switch</li>
  <li> File::Basename</li>
  <li> File::Fetch</li>
+ <li> Lyrics::Fetcher</li>
+ <li> Lyrics::Fetcher::LyricWiki</li>
+ <li> Lyrics::Fetcher::AstraWeb</li>
 </ul>
 
 ### Tutorials:

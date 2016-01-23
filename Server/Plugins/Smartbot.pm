@@ -5,6 +5,7 @@ use warnings;
 
 use Method::Signatures;
 use Switch;
+use Lyrics::Fetcher;
 
 method new($resChild) {
        my $obj = bless {}, $self;
@@ -184,6 +185,7 @@ method handleJoke($objClient, $nullVar) {
 }
 
 method handleMascot($objClient, $strMascotName) {
+           return if ($strMascotName eq '');
            $strMascotName = lc($strMascotName);
            my $strMascot = "";
            switch ($strMascotName) {
@@ -244,7 +246,20 @@ method handleThrowSnowball($objClient, $strArg) {
             $objClient->sendRoom('%xt%sb%-1%0%' .  join('%', split(' ', $strArg)));
 }
 
-method handleSing($objClient, $strArg) {}
+method handleSing($objClient, $strArg) {
+            return if ($strArg eq '');
+            my ($strArtist, $strSong) = split("-", $strArg);
+            my $strLyrics = Lyrics::Fetcher->fetch($strArtist, $strSong, [qw(LyricWiki AstraWeb)]);
+            if (!$strLyrics) {
+                return $objClient->botSay('I unfortunately cannot sing this song, try another song');
+            }
+            my @arrLines = split(/\r\n|\n|\r/, $strLyrics);
+            foreach my $strLine (@arrLines) {
+                         sleep(5);
+                         $objClient->botSay($strLine);
+            }
+}
+
 method handleWiki($objClient, $strArg) {}
 
 
