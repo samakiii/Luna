@@ -22,8 +22,12 @@ if ($_SESSION['isStaff'] == false) {
 <li><a href="profile.php">Home</a></li>
 <li><a href="settings.php">Settings</a></li>
 <li><a href="search.php">Search</a></li>
+<?php if ($_SESSION['isVIP'] == true) { ?>
 <li><a href="glows.php">Glow Panel</a></li>
-<?php if ($_SESSION['isStaff'] == true) { ?>
+<?php 
+} 
+if ($_SESSION['isStaff'] == true) { 
+?>
  <li><a href="moderator.php">Mod Panel</a></li>
 <?php if ($_SESSION['isAdmin'] == true) { ?>
 <li><a class="active" href="admin.php">Admin Panel</a></li>

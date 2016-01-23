@@ -24,6 +24,7 @@ method new($resParent, $resSock) {
        $obj->{active} = 0;
        $obj->{isMuted} = 0;
        $obj->{isBanned} = 0;
+       $obj->{isVIP} = 0;
        $obj->{isStaff} = 0;
        $obj->{isAdmin} = 0;
        $obj->{isAuth} = 0;

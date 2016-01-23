@@ -105,6 +105,7 @@ CREATE TABLE IF NOT EXISTS `users` (
   `colour` int(10) NOT NULL DEFAULT '1',
   `coins` int(11) NOT NULL,
   `isMuted` int(1) NOT NULL DEFAULT '0',
+  `isVIP` int(1) NOT NULL DEFAULT '0',
   `isStaff` int(1) NOT NULL DEFAULT '0',
   `isAdmin` int(1) NOT NULL DEFAULT '0',
   `rank` int(1) NOT NULL DEFAULT '1',  

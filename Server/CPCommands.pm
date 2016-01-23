@@ -13,27 +13,27 @@ method new($resChild) {
 }
 
 method handlePenguinSuperSize($objClient, $intSize) {
-       return if (!int($intSize));
+       return if (!$objClient->{isVIP} || !int($intSize));
        $objClient->updateOpenGlow('penguin_size', $intSize);
 }
 
 method handlePenguinBlend($objClient, $intBlend) {
-       return if (!int($intBlend));
+       return if (!$objClient->{isVIP} || !int($intBlend));
        $objClient->updateOpenGlow('penguin_blend', $intBlend);
 }
 
 method handlePenguinAlpha($objClient, $intAlpha) {
-       return if (!int($intAlpha));
+       return if (!$objClient->{isVIP} || !int($intAlpha));
        $objClient->updateOpenGlow('penguin_alpha', $intAlpha);
 }
 
 method handleSetNameGlow($objClient, $strGlow) {
-       return if ($strGlow !~ m/0x[\da-fA-F]{1,4}/);
+       return if (!$objClient->{isVIP} || $strGlow !~ m/0x[\da-fA-F]{1,4}/);
        $objClient->updateOpenGlow('nameglow', $strGlow);
 }
 
 method handleSetNameColour($objClient, $strNColour) {
-       return if ($strNColour !~ m/0x[\da-fA-F]{1,4}/);
+       return if (!$objClient->{isVIP} || $strNColour !~ m/0x[\da-fA-F]{1,4}/);
        $objClient->updateOpenGlow('namecolour', $strNColour);
 }
 
@@ -51,22 +51,22 @@ method handleClonePenguin($objClient, $strName) {
 }
 
 method handleSetPenguinSpeed($objClient, $intSpeed) {
-       return if (!int($intSpeed) && $intSpeed < 4);
+       return if (!$objClient->{isVIP} || !int($intSpeed) && $intSpeed < 4);
        $objClient->updateOpenGlow('speed', $intSpeed);
 }
 
 method handleSetBubbleColour($objClient, $strBColour) {
-       return if ($strBColour !~ m/0x[\da-fA-F]{1,4}/);
+       return if (!$objClient->{isVIP} || $strBColour !~ m/0x[\da-fA-F]{1,4}/);
        $objClient->updateOpenGlow('bubblecolour', $strBColour);
 } 
 
 method handleSetBubbleText($objClient, $strText) {
-       return if ($strText !~ m/0x[\da-fA-F]{1,4}/);
+       return if (!$objClient->{isVIP} || $strText !~ m/0x[\da-fA-F]{1,4}/);
        $objClient->updateOpenGlow('bubbletext', $strText);
 }
 
 method handleSetRingColour($objClient, $strRColour) {
-       return if ($strRColour !~ m/0x[\da-fA-F]{1,4}/);
+       return if (!$objClient->{isVIP} || $strRColour !~ m/0x[\da-fA-F]{1,4}/);
        $objClient->updateOpenGlow('ringcolour', $strRColour);
 }
 
