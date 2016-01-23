@@ -33,7 +33,8 @@ method new($resChild) {
                    dance => 'handleDance',
                    move => 'handleMove',
                    mascot => 'handleMascot',
-                   sit => 'handleSitDown'
+                   sit => 'handleSitDown',
+                   tsb => 'handleThrowSnowball'
        };
        return $obj;
 }
@@ -237,6 +238,10 @@ method handleDance($objClient, $nullVar) {
 
 method handleSitDown($objClient, $nullVar) {
             $objClient->sendRoom('%xt%sf%-1%0%24%');
+}
+
+method handleThrowSnowball($objClient, $strArg) {
+            $objClient->sendRoom('%xt%sb%-1%0%' .  join('%', split(' ', $strArg)));
 }
 
 method handleSing($objClient, $strArg) {}
