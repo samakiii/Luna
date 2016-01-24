@@ -59,8 +59,9 @@ method runCrons {
 method updateServPop {
        if ($self->{child}->{servConfig}->{servType} eq 'game') {
            my $strName = $self->{child}->{servConfig}->{servName};
+           my $intPort = $self->{child}->{servConfig}->{servPort};
            my $intPop = scalar(keys %{$self->{child}->{clients}});
-           $self->{child}->{modules}->{mysql}->updateTable('servers', 'servName', $strName, 'curPop', $intPop);
+           $self->{child}->{modules}->{mysql}->updateTable('servers', 'servPort', $intPort, 'curPop', $intPop);
            $self->{child}->{modules}->{logger}->output('Server: ' . $strName . '|Population: ' . $intPop, Logger::LEVELS->{inf});
        }
 }
