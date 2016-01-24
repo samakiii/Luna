@@ -10,8 +10,8 @@ DROP TABLE IF EXISTS `postcards`;
 DROP TABLE IF EXISTS `puffles`;
 DROP TABLE IF EXISTS `users`;
 DROP TABLE IF EXISTS `igloos`;
-DROP TABLE IF EXISTS `paypal_payments`;
-DROP TABLE IF EXISTS `paypal_products`;
+DROP TABLE IF EXISTS `sales`;
+DROP TABLE IF EXISTS `products`;
 
 CREATE TABLE IF NOT EXISTS `servers` (
   `servType` varchar(10) NOT NULL DEFAULT 'game',
@@ -22,21 +22,25 @@ CREATE TABLE IF NOT EXISTS `servers` (
   PRIMARY KEY (`servType`)
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
-CREATE TABLE IF NOT EXISTS `paypal_payments` (
- `payment_id` int(6) NOT NULL,
- `product_id` int(6) NOT NULL,
- PRIMARY KEY (`payment_id`)
-) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+CREATE TABLE IF NOT EXISTS `products` (
+  `pid` int(11) NOT NULL AUTO_INCREMENT,
+  `product` varchar(255) NOT NULL,
+  `price` int(11) NOT NULL,
+  `currency` varchar(10) NOT NULL,
+  PRIMARY KEY (`pid`) 
+) ENGINE=InnoDB DEFAULT CHARSET=latin1 AUTO_INCREMENT=1;
 
-CREATE TABLE IF NOT EXISTS `paypal_products` (
- `itemprice` int(6) NOT NULL,
- `shipping` int(6) NOT NULL,
- `product_id` int(6) NOT NULL,
- `tax` int(6) NOT NULL,
- `currencycode` varchar(5) NOT NULL,
- PRIMARY KEY (`product_id`)
-) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+INSERT INTO `products` (`product`, `price`, `currency`) VALUES ('isVIP', '3', 'USD');
 
+CREATE TABLE IF NOT EXISTS `sales` (
+   `sid` int(11) NOT NULL AUTO_INCREMENT, PRIMARY KEY,
+   `pid` int(11) NOT NULL,
+   `uid` int(11) NOT NULL,
+   `saledate` date NOT NULL,
+   `transactionid` varchar(125) NOT NULL,
+   FOREIGN KEY (uid) REFERENCES users(ID),
+   FOREIGN KEY (pid) REFERENCES products(pid)
+) ENGINE=InnoDB DEFAULT CHARSET=latin1 AUTO_INCREMENT=1;
 
 CREATE TABLE IF NOT EXISTS `puffles` (
   `puffleID` int(11) NOT NULL AUTO_INCREMENT,
