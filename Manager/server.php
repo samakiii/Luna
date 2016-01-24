@@ -47,7 +47,7 @@ $resQuery = mysqli_query($mysql, "SELECT * FROM users");
 
 $intRegistered = mysqli_num_rows($resQuery);
 
-$resQueryTwo = mysqli_query($mysql, "SELECT curPop FROM servers WHERE servPort = '$intGamePort' AND servIP = '$strServerHost'");
+$resQueryTwo = mysqli_query($mysql, "SELECT curPop FROM servers WHERE servPort = '$intGamePort'");
 
 $arrData = mysqli_fetch_assoc($resQueryTwo);
 
