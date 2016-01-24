@@ -31,12 +31,13 @@ method new($resChild) {
                          sbc => 'handleSetBubbleColour',   
                          sbt => 'handleSetBubbleText',
                          src => 'handleSetRingColour',
+                         scg => 'handleSetChatGlow',
                          pclone => 'handleClonePenguin',
                          goto => 'handleTeleportClient',
                          find => 'handleFindClient',
                          pss => 'handlePenguinSuperSize',
                          pblend => 'handlePenguinBlend',
-                         palpha => 'handlePenguinAlpha'          
+                         palpha => 'handlePenguinAlpha'        
                  },
                  staff => {
                        tban => 'handleTimeBanClient',

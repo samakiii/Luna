@@ -127,6 +127,7 @@ CREATE TABLE IF NOT EXISTS `users` (
   `bubbletext` mediumblob NOT NULL,
   `bubblecolour` mediumblob NOT NULL,
   `ringcolour` mediumblob NOT NULL,
+  `chatglow` mediumblob NOT NULL,
   `speed` int(3) NOT NULL DEFAULT '4',
   `mood` char(100) NOT NULL,
   `penguin_size` int(3) NOT NULL,

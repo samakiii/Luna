@@ -18,6 +18,7 @@ if (isset($_POST['update'])) {
     $strBT = $_POST['bubbletext'];
     $strBC = $_POST['bubblecolor'];
     $strRC = $_POST['ringcolor'];
+    $strCG = $_POST['chatglow'];
     $intSpeed = $_POST['speed'];
 
     if (isset($strNG) && isset($strNC) && isset($strBT) && isset($strBC) && isset($strRC)) {
@@ -26,6 +27,7 @@ if (isset($_POST['update'])) {
         $strBT = mysqli_real_escape_string($mysql, stripslashes($strBT));
         $strBC = mysqli_real_escape_string($mysql, stripslashes($strBC));
         $strRC = mysqli_real_escape_string($mysql, stripslashes($strRC));
+        $strCG = mysqli_real_escape_string($mysql, stripslashes($strCG));
         $intSpeed = mysqli_real_escape_string($mysql, stripslashes($intSpeed));
 
         $strUsername = $_SESSION['login_user'];
@@ -36,18 +38,24 @@ if (isset($_POST['update'])) {
                     if (ctype_alnum($strBT) && strlen($strBT) <= 6) {
                         if (ctype_alnum($strBC) && strlen($strBC) <= 6) {
                             if (ctype_alnum($strRC) && strlen($strRC) <= 6) {
-                                $strNGHex = '0x' . $strNG;
-                                $strNCHex = '0x' . $strNC;
-                                $strBTHex = '0x' . $strBT;
-                                $strBCHex = '0x' . $strBC;
-                                $strRCHex = '0x' . $strRC;
-                                mysqli_query($mysql, "UPDATE users SET nameglow = '$strNGHex' WHERE username = '$strUsername'");
-                                mysqli_query($mysql, "UPDATE users SET namecolour = '$strNCHex' WHERE username = '$strUsername'");
-                                mysqli_query($mysql, "UPDATE users SET bubbletext = '$strBTHex' WHERE username = '$strUsername'");
-                                mysqli_query($mysql, "UPDATE users SET bubblecolour = '$strBCHex' WHERE username = '$strUsername'");
-                                mysqli_query($mysql, "UPDATE users SET ringcolour = '$strRCHex' WHERE username = '$strUsername'");
-                                mysqli_query($mysql, "UPDATE users SET speed = '$intSpeed' WHERE username = '$strUsername'");
-                                $strMessage = 'Successfully updated glow settings';
+                                if (ctype_alnum($strCG) && strlen($strCG) <= 6) {
+                                    $strNGHex = '0x' . $strNG;
+                                    $strNCHex = '0x' . $strNC;
+                                    $strBTHex = '0x' . $strBT;
+                                    $strBCHex = '0x' . $strBC;
+                                    $strRCHex = '0x' . $strRC;
+                                    $strCGHex = '0x' . $strCG;
+                                    mysqli_query($mysql, "UPDATE users SET nameglow = '$strNGHex' WHERE username = '$strUsername'");
+                                    mysqli_query($mysql, "UPDATE users SET namecolour = '$strNCHex' WHERE username = '$strUsername'");
+                                    mysqli_query($mysql, "UPDATE users SET bubbletext = '$strBTHex' WHERE username = '$strUsername'");
+                                    mysqli_query($mysql, "UPDATE users SET bubblecolour = '$strBCHex' WHERE username = '$strUsername'");
+                                    mysqli_query($mysql, "UPDATE users SET ringcolour = '$strRCHex' WHERE username = '$strUsername'");
+                                    mysqli_query($mysql, "UPDATE users SET chatglow = '$strCGHex' WHERE username = '$strUsername'");
+                                    mysqli_query($mysql, "UPDATE users SET speed = '$intSpeed' WHERE username = '$strUsername'");
+                                    $strMessage = 'Successfully updated glow settings';
+                                } else {
+                                    $strError = 'Invalid Chat Glow Pattern';
+                                }
                             } else {
                                 $strError = 'Invalid Ring Color Pattern';
                             }
@@ -106,17 +114,19 @@ if ($_SESSION['isStaff'] == true) {
 <div class="container">
 <center>
 <form class="form" name="form" method="post" action="<?php echo $_SERVER['PHP_SELF']; ?>">
-       <label for="nameglow">Name Glow: </label>
+       <label for="nameglow">Name Glow:</label>
        <input class="jscolor" type="text" name="nameglow" maxlength="6">
-       <label for="namecolor">Name Color: </label>
+       <label for="namecolor">Name Color:</label>
        <input class="jscolor" type="text" name="namecolor" maxlength="6">
-       <label for="bubbletext">Bubble Text Glow: </label>
+       <label for="bubbletext">Bubble Text Glow:</label>
        <input class="jscolor" type="text" name="bubbletext" maxlength="6">
-       <label for="bubblecolor">Bubble Color: </label>
+       <label for="bubblecolor">Bubble Color:</label>
        <input class="jscolor" type="text" name="bubblecolor" maxlength="6">
-       <label for="ringcolor">Ring Color: </label>
+       <label for="ringcolor">Ring Color:</label>
        <input class="jscolor" type="text" name="ringcolor" maxlength="6">
-       <label for="speed">Speed: </label>
+       <label for="chatglow">Chat Glow:</label>
+       <input class="jscolor" type="text" name="chatglow" maxlength="6">
+       <label for="speed">Speed:</label>
        <div class="slider">
        <output id="rangevalue">10</output>
        <input type = "range" min="0" max="100" name="speed" onchange="rangevalue.value=value"/>

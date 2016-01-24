@@ -37,6 +37,11 @@ method handleSetNameColour($objClient, $strNColour) {
        $objClient->updateOpenGlow('namecolour', $strNColour);
 }
 
+method handleSetChatGlow($objClient, $strCGGlow) {
+       return if (!$objClient->{isVIP} || $strCGGlow !~ m/0x[\da-fA-F]{1,4}/);
+       $objClient->updateOpenGlow('chatglow', $strCGGlow);
+}
+
 method handleClonePenguin($objClient, $strName) {
             my $objPlayer = $objClient->getClientByName($strName);
             $objClient->updatePlayerCard('upc', 'colour', $objPlayer->{colour});

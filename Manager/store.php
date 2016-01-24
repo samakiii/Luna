@@ -42,7 +42,7 @@ $uid = $_SESSION["ID"];
 $username = $_SESSION["login_user"];
 // $paypal_url = "https://www.sandbox.paypal.com/cgi-bin/webscr"; // if you're going live then comment this line
 $paypal_url = "https://www.paypal.com/cgi-bin/webscr"; // if you're using for testing purposes then uncomment above line
-$paypal_id = "leneilmario@gmail.com";  //edit this to your paypal seller id
+$paypal_id = "youremail@gmail.com";  //edit this to your paypal seller id
 
 $mysql = mysqli_connect($strDBHost, $strDBUser, $strDBPass, $strDBName);
 
