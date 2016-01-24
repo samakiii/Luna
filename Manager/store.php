@@ -57,9 +57,9 @@ while ($row = mysqli_fetch_assoc($result)) {
 <form name="form" method="post" action="<?php echo $paypal_url; ?>">
 <input type="hidden" name="business" value="<?php echo $paypal_id; ?>">
 <input type="hidden" name="cmd" value="_xclick">
-<input type="hidden" name="item_name" value="<?php echo $row["product"];?>">
-<input type="hidden" name="item_number" value="<?php echo $row["pid"];?>">
-<input type="hidden" name="amount" value="<?php echo $row["price"];?>">
+<input type="hidden" name="item_name" value="<?php echo $row["product"]; ?>">
+<input type="hidden" name="item_number" value="<?php echo $row["pid"]; ?>">
+<input type="hidden" name="amount" value="<?php echo $row["price"]; ?>">
 <input type="hidden" name="no_shipping" value="1">
 <input type="hidden" name="currency_code" value="USD">
 <input type="hidden" name="cancel_return" value="http://frosty.us/manager/paypal/cancel.php">
