@@ -47,7 +47,7 @@ method serverLoop {
 
 method runCrons {
        my $intTime = time;
-       my $intStamp = $intTime + 150;
+       my $intStamp = $intTime + 30;
        if (!$self->{jobStamp}) {
            $self->{jobStamp} = $intStamp;
        } elsif ($intTime > $self->{jobStamp}) {
