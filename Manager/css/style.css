@@ -140,6 +140,10 @@ input[type="submit"] {
 input[type="submit"]:hover {
   background-color: #f5f7f9;
 }
+input[type="hidden"] {
+  text-align: center;
+  font-size: 18px;
+}
 .select {
   font-size: 16px;
   position: relative;

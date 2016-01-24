@@ -33,14 +33,14 @@ CREATE TABLE IF NOT EXISTS `products` (
 INSERT INTO `products` (`product`, `price`, `currency`) VALUES ('isVIP', '3', 'USD');
 
 CREATE TABLE IF NOT EXISTS `sales` (
-   `sid` int(11) AUTO_INCREMENT,
-   `pid` int(11) NOT NULL,
-   `uid` int(11) NOT NULL,
-   `saledate` date NOT NULL,
-   `transactionid` varchar(125) NOT NULL,
-   FOREIGN KEY (uid) REFERENCES users(ID),
-   FOREIGN KEY (pid) REFERENCES products(pid)
-) ENGINE=InnoDB DEFAULT CHARSET=latin1 AUTO_INCREMENT=1;
+   `sid` INT(11) AUTO_INCREMENT PRIMARY KEY,
+   `pid` INT(11),
+   `uid` INT(11),
+   `saledate` DATE,
+   `transactionid` VARCHAR(125),
+   FOREIGN KEY(uid) REFERENCES users(ID),
+   FOREIGN KEY(pid) REFERENCES products(pid)
+) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
 CREATE TABLE IF NOT EXISTS `puffles` (
   `puffleID` int(11) NOT NULL AUTO_INCREMENT,
