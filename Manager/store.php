@@ -51,10 +51,10 @@ $result = mysqli_query($mysql, "SELECT * FROM products");
 while ($row = mysqli_fetch_assoc($result)) {
 	
 ?>
-<p>Name: </p><?php echo $row["product"];?>
-<p>Price: </p><?php echo $row["price"] . "$"; ?>
+<p>Name: <?php echo $row["product"]; ?></p>
+<p>Price: <?php echo $row["price"] . "$"; ?></p>
  
-<form class="form" name="form" method="post" action="<?php echo $paypal_url; ?>">
+<form name="form" method="post" action="<?php echo $paypal_url; ?>">
 <input type="hidden" name="business" value="<?php echo $paypal_id; ?>">
 <input type="hidden" name="cmd" value="_xclick">
 <input type="hidden" name="item_name" value="<?php echo $row["product"];?>">
