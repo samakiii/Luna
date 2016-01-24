@@ -33,7 +33,7 @@ CREATE TABLE IF NOT EXISTS `products` (
 INSERT INTO `products` (`product`, `price`, `currency`) VALUES ('isVIP', '3', 'USD');
 
 CREATE TABLE IF NOT EXISTS `sales` (
-   `sid` int(11) NOT NULL AUTO_INCREMENT, PRIMARY KEY,
+   `sid` int(11) AUTO_INCREMENT,
    `pid` int(11) NOT NULL,
    `uid` int(11) NOT NULL,
    `saledate` date NOT NULL,
