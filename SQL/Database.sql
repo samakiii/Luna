@@ -126,7 +126,7 @@ CREATE TABLE IF NOT EXISTS `users` (
   `speed` int(3) NOT NULL DEFAULT '4',
   `mood` char(100) NOT NULL,
   `penguin_size` int(3) NOT NULL,
-  `penguin_blend` int(3) NOT NULL,
+  `penguin_blend` mediumblob NOT NULL,
   `penguin_alpha` int(3) NOT NULL,
   `botIsFollow` int(1) NOT NULL DEFAULT '0',
   `isMirror` int(1) NOT NULL DEFAULT '0',

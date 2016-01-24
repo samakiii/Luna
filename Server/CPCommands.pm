@@ -17,9 +17,9 @@ method handlePenguinSuperSize($objClient, $intSize) {
        $objClient->updateOpenGlow('penguin_size', $intSize);
 }
 
-method handlePenguinBlend($objClient, $intBlend) {
-       return if (!$objClient->{isVIP} || !int($intBlend));
-       $objClient->updateOpenGlow('penguin_blend', $intBlend);
+method handlePenguinBlend($objClient, $strBlend) {
+       return if (!$objClient->{isVIP});
+       $objClient->updateOpenGlow('penguin_blend', $strBlend);
 }
 
 method handlePenguinAlpha($objClient, $intAlpha) {

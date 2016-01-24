@@ -72,7 +72,7 @@ method new($resParent, $resSock) {
        $obj->{bubblecolour} = '';
        $obj->{ringcolour} = '';      
        $obj->{penguin_size} = 0;
-       $obj->{penguin_blend} = 0;
+       $obj->{penguin_blend} = '';
        $obj->{penguin_alpha} = 0;
        $obj->{isMirror} = 0;
        return $obj;
