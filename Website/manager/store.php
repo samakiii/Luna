@@ -64,8 +64,9 @@ while ($row = mysqli_fetch_assoc($result)) {
 <input type="hidden" name="amount" value="<?php echo $row["price"]; ?>">
 <input type="hidden" name="no_shipping" value="1">
 <input type="hidden" name="currency_code" value="USD">
-<input type="hidden" name="cancel_return" value="http://frosty.us/test/Website/manager/paypal/cancel.php">
-<input type="hidden" name="return" value="http://frosty.us/test/Website/manager/paypal/success.php">
+<!-- Edit the cancel and return url to the one you added in your paypal -->
+<input type="hidden" name="cancel_return" value="http://127.0.0.1/Website/manager/paypal/cancel.php">
+<input type="hidden" name="return" value="http://127.0.0.1/Website/manager/paypal/success.php">
 <input type="submit" id="login-button" name="submit" value="Buy Now">
 </form> 
 
