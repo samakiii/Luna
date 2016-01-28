@@ -95,4 +95,4 @@ The source now comes with a default account, this account is created when you im
 
 ### Paypal:
 
-*<b>Note:</b>* If you are setting up PayPal, make sure to enable auto return so that once the payment is gone through it will take you the the apprpriate url. Click <a href="http://stackoverflow.com/questions/7642895/setting-paypal-return-url-and-making-it-auto-return">here</a> to know more
+*<b>Note:</b>* Click the "return to the merchant site" button after you have paid in order for the payment to go through successfully.
