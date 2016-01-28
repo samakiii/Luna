@@ -25,12 +25,12 @@ CREATE TABLE IF NOT EXISTS `servers` (
 CREATE TABLE IF NOT EXISTS `products` (
   `pid` int(11) NOT NULL AUTO_INCREMENT,
   `product` varchar(255) NOT NULL,
-  `price` int(11) NOT NULL,
+  `price` mediumblob NOT NULL,
   `currency` varchar(10) NOT NULL,
   PRIMARY KEY (`pid`) 
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1 AUTO_INCREMENT=1;
 
-INSERT INTO `products` (`product`, `price`, `currency`) VALUES ('isVIP', '3', 'USD');
+INSERT INTO `products` (`product`, `price`, `currency`) VALUES ('isVIP', '3.00', 'USD');
 
 CREATE TABLE IF NOT EXISTS `sales` (
    `sid` INT(11) AUTO_INCREMENT PRIMARY KEY,
