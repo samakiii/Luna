@@ -92,3 +92,7 @@ The source now comes with a default account, this account is created when you im
 
 <b>Username:</b> Isis<br>
 <b>Password:</b> imfuckinggay<br>
+
+### Paypal:
+
+*<b>Note:</b>* If you are setting up PayPal, make sure to enable auto return so that once the payment is gone through it will take you the the apprpriate url. Click <a href="http://stackoverflow.com/questions/7642895/setting-paypal-return-url-and-making-it-auto-return">here</a> to know more
