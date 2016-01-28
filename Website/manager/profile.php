@@ -66,7 +66,7 @@ if ($arrResults['isBanned'] == 'PERM') {
 }
 
 echo '<center>';
-echo '<img  src="avatar.php?avatarInfo=' . implode('|', array($arrResults['colour'], $arrResults['head'], $arrResults['face'], $arrResults['body'], $arrResults['neck'], $arrResults['hands'], $arrResults['feet'])) . '&avatarSize=300">';
+echo '<img  src="avatar.php?avatarInfo=' . implode('|', array($arrResults['colour'], $arrResults['head'], $arrResults['face'], $arrResults['body'], $arrResults['neck'], $arrResults['hand'], $arrResults['feet'])) . '&avatarSize=300">';
 echo '<br><br>';
 echo '<p>Username: ' . $arrResults['username'] . '</p>';
 echo '<p>Email: ' . $arrResults['email'] . '</p>';
