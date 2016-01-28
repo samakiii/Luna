@@ -10,15 +10,9 @@ $username = $_SESSION['login_user'];
 
 $item_no = $_GET['item_number'];
 $item_transaction = $_GET['tx']; 
-$item_price = $_GET['amt'];
-$item_currency = $_GET['cc'];
+$item_status = $_GET['st'];
 
-$sql = mysqli_query($mysql, "SELECT product, price, currency FROM products WHERE pid = '$item_no'");
-$row = mysqli_fetch_assoc($sql);
-$price = $row['price'];
-$currency = $row['currency'];
-
-if ($item_price == $price && item_currency == $currency) {
+if ($item_status == "Completed") {
     $result = mysqli_query($mysql, "INSERT INTO sales (`pid`, `uid`, `saledate`, `transactionid`) VALUES ('" . $item_no . "', '" . $uid . "', NOW(), '" . $item_transaction . "')");
     if ($result) {
         mysqli_query($mysql, "UPDATE users SET isVIP = '1' WHERE username = '$username'");
