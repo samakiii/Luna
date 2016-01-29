@@ -96,3 +96,79 @@ The source now comes with a default account, this account is created when you im
 ### Paypal:
 
 *<b>Note:</b>* Click the "return to the merchant site" button after you have paid in order for the payment to go through successfully.
+
+### Contact Page Setup
+
+Make sure to setup a mail server, you can do so by following this:
+
+Open your terminal and run this command:
+
+<code>sudo apt-get install ssmpt</code>
+
+Then edit <b>/etc/ssmtp/ssmtp.conf</b> file, comment out existing <code>mailhub</code> line and add the following lines (this example is for gmail smtp server):
+
+<code>
+mailhub=smtp.gmail.com:587
+UseSTARTTLS=YES
+AuthUser=youremail@gmail.com
+AuthPass=yourpasswordgoeshere
+</code>
+
+So you will end up having something like:
+
+<code>
+#
+# Config file for sSMTP sendmail
+#
+# The person who gets all mail for userids < 1000
+# Make this empty to disable rewriting.
+root=postmaster
+
+# The place where the mail goes. The actual machine name is required no 
+# MX records are consulted. Commonly mailhosts are named mail.domain.com
+
+mailhub=smtp.mail.com:587
+UseSTARTTLS=YES
+UseTLS=yes
+AuthUser=youremail@gmail.com
+AuthPass=yourpasswordgoeshere
+
+# Where will the mail seem to come from?
+#rewriteDomain=
+
+# The full hostname
+hostname=vps42271.ovh.net
+
+# Are users allowed to set their own From: address?
+# YES - Allow the user to specify their own From: address
+# NO - Use the system generated From: address
+#FromLineOverride=YES
+</code>
+
+Open your <b>php.ini</b> file which usually can be located at: <b>/etc/php5/apache2/</b>
+
+Search for this line: 
+
+<code>;sendmail_path = </code>
+
+Replace it with: 
+
+<code>sendmail_path = /usr/sbin/ssmtp -t</code>
+
+Now go back to the source and open to <b>/Website/contact.php</b>
+
+Find this line: 
+
+<code>$strContactEmail = "you@yourdomain.com";</code>
+
+Edit that to match the one in <b>ssmpt.conf</b> and save it all
+
+Open your terminal once again and reload the apache configuration by typing the following command:
+
+<code>
+sudo /etc/init.d/apache2 reload
+</code>
+
+Last but not the least, login to your gmail account and once you're done, click this link: https://www.google.com/settings/security/lesssecureapps
+
+Once you're at that page, turn ON the lesssecureapps settings and go back to the contact page and voila!
