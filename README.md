@@ -114,52 +114,27 @@ AuthUser=youremail@gmail.com
 AuthPass=yourpasswordgoeshere
 </code>
 
-So you will end up having something like:
-
-<code>
-#
-# Config file for sSMTP sendmail
-#
-# The person who gets all mail for userids < 1000
-# Make this empty to disable rewriting.
-root=postmaster
-
-# The place where the mail goes. The actual machine name is required no 
-# MX records are consulted. Commonly mailhosts are named mail.domain.com
-
-mailhub=smtp.mail.com:587
-UseSTARTTLS=YES
-UseTLS=yes
-AuthUser=youremail@gmail.com
-AuthPass=yourpasswordgoeshere
-
-# Where will the mail seem to come from?
-#rewriteDomain=
-
-# The full hostname
-hostname=vps42271.ovh.net
-
-# Are users allowed to set their own From: address?
-# YES - Allow the user to specify their own From: address
-# NO - Use the system generated From: address
-#FromLineOverride=YES
-</code>
-
 Open your <b>php.ini</b> file which usually can be located at: <b>/etc/php5/apache2/</b>
 
 Search for this line: 
 
-<code>;sendmail_path = </code>
+<code>
+;sendmail_path = 
+</code>
 
 Replace it with: 
 
-<code>sendmail_path = /usr/sbin/ssmtp -t</code>
+<code>
+sendmail_path = /usr/sbin/ssmtp -t
+</code>
 
 Now go back to the source and open to <b>/Website/contact.php</b>
 
 Find this line: 
 
-<code>$strContactEmail = "you@yourdomain.com";</code>
+<code>
+$strContactEmail = "you@yourdomain.com";
+</code>
 
 Edit that to match the one in <b>ssmpt.conf</b> and save it all
 
