@@ -26,6 +26,11 @@
 require 'recaptcha/src/autoload.php';
 require 'config.php';
 
+function domain_exists($strEmail, $strRecord = 'MX'){
+	         list($strUser, $strDomain) = split('@', $strEmail);
+	         return checkdnsrr($strDomain, $strRecord);
+}
+
 function sendError($strErr) {
              $strMsg = "<center><h2>Error: " . $strErr . "</h2></center>"; 
              die($strMsg);
@@ -61,6 +66,8 @@ if (isset($_POST['submit'])) {
      
     if (!filter_var($strEmail, FILTER_VALIDATE_EMAIL)) {
         sendError('Invalid email address! Please recheck your email');
+    } elseif (!domain_exists($strEmail)) {
+        sendError('Invalid domain for email address! Please use a valid domain');
     } elseif (!ctype_alnum($strUsername) && strlen($strUsername) > 10 && strlen($strUsername) <= 3) {
         sendError('Invalid username! Please make sure the username is alphanumeric and not too long or short');
     } elseif ($intColor > 15 && $intColor < 0 && !is_numeric($intColor)) {
