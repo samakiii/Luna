@@ -23,6 +23,7 @@
 	
 <?php
 
+require 'recaptcha/src/autoload.php';
 require 'config.php';
 
 $strContactEmail = "your@yourdomain.com"; //edit this to your email
@@ -64,26 +65,33 @@ if (isset($_POST['submit'])) {
         sendError('Invalid message! Please enter a valid message, make sure it is alphanumeric and more than 5 and lesser than 500 characters long');
     }
 
-    $strHeaders  = "From: " . $strUsername  . "<" . $strEmail . ">\n";
-    $strHeaders .= "Reply-To: " . $strUsername . "<" . $strEmail . ">\n";
-    $strHeaders .= "Cc: " . $strUsername . "<" . $strEmail . ">\n"; 
-    $strHeaders .= "X-Sender: " . $strUsername . "<" . $strEmail . ">\n";
-    $strHeaders .= "X-Mailer: PHP/" . phpversion();
-    $strHeaders .= "X-Priority: 1\n";
-    $strHeaders .= "Return-Path: " . $strEmail . "\n";
-    $strHeaders .= "MIME-Version: 1.0\r\n";
-    $strHeaders .= "Content-Type: text/html; charset=iso-8859-1\n";
-
-	$strMessage = wordwrap($strMessage, 70);
-	
-    $blnSent = mail($strContactEmail, $strSubject, $strMessage, $strHeaders);  
-    
-    if ($blnSent) {
-        echo "<center><h2>Thank you for contacting us, you will receive an email from us within the next 48 hours</h2></center>";
+    $strSecretKey = '6Lee7RMTAAAAAD_B4-4nEt2Amni4XC3EfGmKEI_K'; //edit this, its your secret/private key for the captcha
+    $recaptcha = new \ReCaptcha\ReCaptcha($strSecretKey);
+    $resp = $recaptcha->verify($_POST['g-recaptcha-response'], $strIP);
+     
+    if (!$resp->isSuccess()) {
+        sendError('You are a bot, get the fuck out');
     } else {
-        sendError('Failed to send email');
-    }
+        $strHeaders  = "From: " . $strUsername  . "<" . $strEmail . ">\n";
+        $strHeaders .= "Reply-To: " . $strUsername . "<" . $strEmail . ">\n";
+        $strHeaders .= "Cc: " . $strUsername . "<" . $strEmail . ">\n"; 
+        $strHeaders .= "X-Sender: " . $strUsername . "<" . $strEmail . ">\n";
+        $strHeaders .= "X-Mailer: PHP/" . phpversion();
+        $strHeaders .= "X-Priority: 1\n";
+        $strHeaders .= "Return-Path: " . $strEmail . "\n";
+        $strHeaders .= "MIME-Version: 1.0\r\n";
+        $strHeaders .= "Content-Type: text/html; charset=iso-8859-1\n";
+
+	    $strMessage = wordwrap($strMessage, 70);
+	
+        $blnSent = mail($strContactEmail, $strSubject, $strMessage, $strHeaders);  
     
+        if ($blnSent) {
+            echo "<center><h2>Thank you for contacting us, you will receive an email from us within the next 48 hours</h2></center>";
+        } else {
+            sendError('Failed to send email');
+        }
+    }
 } else {
 	
 ?>
@@ -94,6 +102,10 @@ if (isset($_POST['submit'])) {
        <input type="text" name="email" maxlength="25" placeholder="Enter A Valid Email">
        <input type="text" name="subject" maxlength="20" placeholder="Enter Your Subject">
        <textarea  name="comments" maxlength="500" cols="25" rows="6" placeholder="Enter Your Message"></textarea>
+       <!--edit the site key to match yours for the captcha -->
+       <div class="g-recaptcha" data-sitekey="6Lee7RMTAAAAANDR7uPCUyEE323E9aY9n3a6yuLS"></div>
+       <script type="text/javascript" src='https://www.google.com/recaptcha/api.js?hl=en'></script>
+       <br>
        <input type="submit" id="login-button" name="submit" value="Submit">
 </form>
 </center>
