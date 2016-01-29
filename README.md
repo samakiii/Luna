@@ -128,7 +128,7 @@ Replace it with:
 sendmail_path = /usr/sbin/ssmtp -t
 </code>
 
-Now go back to the source and open to <b>/Website/contact.php</b>
+Now go back to the source and open <b>/Website/contact.php</b>
 
 Find this line: 
 
