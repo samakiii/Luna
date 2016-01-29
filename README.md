@@ -111,7 +111,7 @@ Open your terminal and run this command:
 sudo apt-get install ssmpt
 ```
 
-Then edit <b>/etc/ssmtp/ssmtp.conf</b> file, comment out existing <code>mailhub</code> line and add the following lines (this example is for gmail smtp server):
+Then edit <b>/etc/ssmtp/ssmtp.conf</b> file, comment out existing ```mailhub``` line and add the following lines (this example is for gmail smtp server):
 
 ```
 mailhub=smtp.gmail.com:587
