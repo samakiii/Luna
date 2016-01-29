@@ -64,7 +64,16 @@ if (isset($_POST['submit'])) {
         sendError('Invalid message! Please enter a valid message, make sure it is alphanumeric and more than 5 and lesser than 500 characters long');
     }
 
-    $strHeaders = "From: $strEmail" . "\r\n" . "CC: $strContactEmail";    
+    $strHeaders  = "From: " . $strUsername  . "<" . $strEmail . ">\n";
+    $strHeaders .= "Reply-To: " . $strUsername . "<" . $strEmail . ">\n";
+    $strHeaders .= "Cc: " . $strUsername . "<" . $strEmail . ">\n"; 
+    $strHeaders .= "X-Sender: " . $strUsername . "<" . $strEmail . ">\n";
+    $strHeaders .= "X-Mailer: PHP/" . phpversion();
+    $strHeaders .= "X-Priority: 1\n";
+    $strHeaders .= "Return-Path: " . $strEmail . "\n";
+    $strHeaders .= "MIME-Version: 1.0\r\n";
+    $strHeaders .= "Content-Type: text/html; charset=iso-8859-1\n";
+
 	$strMessage = wordwrap($strMessage, 70);
 	
     $blnSent = mail($strContactEmail, $strSubject, $strMessage, $strHeaders);  
