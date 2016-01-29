@@ -28,6 +28,11 @@ require 'config.php';
 
 $strContactEmail = "your@yourdomain.com"; //edit this to your email
 
+function domain_exists($strEmail, $strRecord = 'MX'){
+	         list($strUser, $strDomain) = split('@', $strEmail);
+	         return checkdnsrr($strDomain, $strRecord);
+}
+
 function sendError($strErr) {
              $strMsg = "<center><h2>Error: " . $strErr . "</h2></center>"; 
              die($strMsg);
