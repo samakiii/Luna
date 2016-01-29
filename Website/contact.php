@@ -25,13 +25,7 @@
 
 require 'config.php';
 
-$strContactEmail = "you@yourdomain.com"; //edit this to your email
-
-function cleanString($strType) {
-             $arrBad = array("content-type","bcc:","to:","cc:","href");
-             return str_replace($arrBad, "", $strType);
-}
-
+$strContactEmail = "your@yourdomain.com"; //edit this to your email
 
 function sendError($strErr) {
              $strMsg = "<center><h2>Error: " . $strErr . "</h2></center>"; 
@@ -69,18 +63,17 @@ if (isset($_POST['submit'])) {
     } elseif (!ctype_alnum($strMessage) && strlen($strMessage) < 5 && strlen($strMessage) > 500) {
         sendError('Invalid message! Please enter a valid message, make sure it is alphanumeric and more than 5 and lesser than 500 characters long');
     }
-	
-	$strEmailMessage = '';
-	
-	$strEmailMessage .= "Username: ". cleanString($strUsername) . chr(10);
-	$strEmailMessage .= "Email: ". cleanString($strEmail) . chr(10);
-	$strEmailMessage .= "Subject: ". cleanString($strSubject) . chr(10);
-	$strEmailMessage .= "Message: ". cleanString($strMessage) . chr(10);
 
-    $strHeaders = 'From: '. $strEmail . PHP_EOL . 'Reply-To: '. $strEmail . PHP_EOL . 'X-Mailer: PHP/' . phpversion();
+    $strHeaders = "From: $strEmail" . "\r\n" . "CC: $strContactEmail";    
+	$strMessage = wordwrap($strMessage, 70);
+	
+    $blnSent = mail($strContactEmail, $strSubject, $strMessage, $strHeaders);  
     
-    @mail($strContactEmail, $strSubject, $strEmailMessage, $strHeaders);  
-    echo "<center><h2>Thank you for contacting us, you will receive an email from us within the next 48 hours</h2></center>";
+    if ($blnSent) {
+        echo "<center><h2>Thank you for contacting us, you will receive an email from us within the next 48 hours</h2></center>";
+    } else {
+        sendError('Failed to send email');
+    }
     
 } else {
 	
