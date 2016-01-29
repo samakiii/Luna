@@ -58,7 +58,7 @@ if (isset($_POST['submit'])) {
         sendError('Invalid email address! Please recheck your email');
     } elseif (!ctype_alnum($strUsername) && strlen($strUsername) > 10 && strlen($strUsername) <= 3) {
         sendError('Invalid username! Please make sure the username is alphanumeric and not too long or short');
-    } elseif (!ctype_alnum($strSubject) && strlen($strSubject) < 5 && strlen($strSubject) > 10) {
+    } elseif (!ctype_alnum($strSubject) && strlen($strSubject) < 5 && strlen($strSubject) > 20) {
         sendError('Invalid title! Please enter a valid subject, make sure it is alphanumeric and more than 5 and lesser than 10 characters long');
     } elseif (!ctype_alnum($strMessage) && strlen($strMessage) < 5 && strlen($strMessage) > 500) {
         sendError('Invalid message! Please enter a valid message, make sure it is alphanumeric and more than 5 and lesser than 500 characters long');
@@ -83,7 +83,7 @@ if (isset($_POST['submit'])) {
 <form class="form" name="form" method="post" action="<?php echo $_SERVER['PHP_SELF']; ?>">
        <input type="text" name="username" maxlength="10" placeholder="Enter Your Username">
        <input type="text" name="email" maxlength="25" placeholder="Enter A Valid Email">
-       <input type="text" name="subject" maxlength="10" placeholder="Enter Your Subject">
+       <input type="text" name="subject" maxlength="20" placeholder="Enter Your Subject">
        <textarea  name="comments" maxlength="500" cols="25" rows="6" placeholder="Enter Your Message"></textarea>
        <input type="submit" id="login-button" name="submit" value="Submit">
 </form>
