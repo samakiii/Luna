@@ -27,7 +27,7 @@ require 'recaptcha/src/autoload.php';
 require 'config.php';
 
 function domain_exists($strEmail, $strRecord = 'MX'){
-	         list($strUser, $strDomain) = split('@', $strEmail);
+	         list($strUser, $strDomain) = explode('@', $strEmail);
 	         return checkdnsrr($strDomain, $strRecord);
 }
 
