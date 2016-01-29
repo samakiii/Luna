@@ -33,15 +33,19 @@ Club Penguin Server Emulator - AS2 Protocol
 
 Open <b>Terminal/Cmd</b> and type the following:
 
-<code>cd /tmp/Luna</code>
+```
+cd /tmp/Luna
+```
 
 and then type:
 
-<code>perl Run.pm</code>
+```
+perl Run.pm
+```
 
 If you are using Windows, you can use <b>Run.bat</b>
 
-*<b>Important Note:</b>* First install <b>CPAN</b> and after that type: <code>reload cpan</code> and then continue installing the other modules.
+*<b>Important Note:</b>* First install <b>CPAN</b> and after that type: ```reload cpan``` and then continue installing the other modules.
 
 ### Modules: 
 <ul>
@@ -95,7 +99,7 @@ The source now comes with a default account, this account is created when you im
 
 ### Paypal:
 
-*<b>Note:</b>* Click the "return to the merchant site" button after you have paid in order for the payment to go through successfully.
+*<b>Note:</b>* Click the <b>return to the merchant site</b> button after you have paid in order for the payment to go through successfully.
 
 ### Contact Page Setup:
 
@@ -103,47 +107,49 @@ Make sure to setup a mail server, you can do so by following this:
 
 Open your terminal and run this command:
 
-<code>sudo apt-get install ssmpt</code>
+```
+sudo apt-get install ssmpt
+```
 
 Then edit <b>/etc/ssmtp/ssmtp.conf</b> file, comment out existing <code>mailhub</code> line and add the following lines (this example is for gmail smtp server):
 
-<code>
+```
 mailhub=smtp.gmail.com:587
 UseSTARTTLS=YES
 useTLS=YES
 AuthUser=youremail@gmail.com
 AuthPass=yourpasswordgoeshere
-</code>
+```
 
 Open your <b>php.ini</b> file which usually can be located at: <b>/etc/php5/apache2/</b>
 
 Search for this line: 
 
-<code>
+```
 ;sendmail_path = 
-</code>
+```
 
 Replace it with: 
 
-<code>
+```
 sendmail_path = /usr/sbin/ssmtp -t
-</code>
+```
 
 Now go back to the source and open <b>/Website/contact.php</b>
 
 Find this line: 
 
-<code>
+```
 $strContactEmail = "you@yourdomain.com";
-</code>
+```
 
 Edit that to match the one in <b>ssmpt.conf</b> and save it all
 
 Open your terminal once again and reload the apache configuration by typing the following command:
 
-<code>
+```
 sudo /etc/init.d/apache2 reload
-</code>
+```
 
 Last but not the least, login to your gmail account and once you're done, click this link: https://www.google.com/settings/security/lesssecureapps
 
