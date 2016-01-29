@@ -110,6 +110,7 @@ Then edit <b>/etc/ssmtp/ssmtp.conf</b> file, comment out existing <code>mailhub<
 <code>
 mailhub=smtp.gmail.com:587
 UseSTARTTLS=YES
+useTLS=YES
 AuthUser=youremail@gmail.com
 AuthPass=yourpasswordgoeshere
 </code>
