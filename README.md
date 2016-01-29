@@ -97,7 +97,7 @@ The source now comes with a default account, this account is created when you im
 
 *<b>Note:</b>* Click the "return to the merchant site" button after you have paid in order for the payment to go through successfully.
 
-### Contact Page Setup
+### Contact Page Setup:
 
 Make sure to setup a mail server, you can do so by following this:
 
