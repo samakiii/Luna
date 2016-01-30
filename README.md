@@ -121,6 +121,7 @@ mailhub=
 
 With this:
 
+```
 # The place where the mail goes. The actual machine name is required no 
 # MX records are consulted. Commonly mailhosts are named mail.domain.com
 mailhub=smtp.gmail.com:587
