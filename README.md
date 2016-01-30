@@ -103,25 +103,46 @@ The source now comes with a default account, this account is created when you im
 
 ### Contact Page Setup:
 
-Make sure to setup a mail server, you can do so by following this:
+Make sure to setup a mail server, you can do so by following these instructions below.
 
-Open your terminal and run this command:
-
-```
-sudo apt-get install ssmpt
-```
-
-Then edit <b>/etc/ssmtp/ssmtp.conf</b> file, comment out existing ```mailhub``` line and add the following lines (this example is for gmail smtp server):
+Open your terminal and run these commands:
 
 ```
-mailhub=smtp.gmail.com:587
-UseSTARTTLS=YES
-useTLS=YES
-AuthUser=youremail@gmail.com
-AuthPass=yourpasswordgoeshere
+sudo apt-get install msmtp ca-certificates
+sudo mkdir /etc/msmtp
+sudo mkdir /var/log/msmtp
+sudo touch /etc/msmtp/cpps
+sudo nano /etc/msmtp/cpps
 ```
 
-Open your <b>php.ini</b> file which usually can be located at: <b>/etc/php5/apache2/</b>
+Then edit <b>/etc/msmtp/cpps</b> config file and add this:
+
+```
+# Define here some setting that can be useful for every account
+defaults
+        logfile /var/log/msmtp/general.log
+
+# Settings for cpps account
+account cpps
+        protocol smtp
+        host smtp.gmail.com
+        tls on
+        tls_trust_file /usr/share/ca-certificates/mozilla/Equifax_Secure_CA.crt
+        port 587
+        auth login
+        user youremailgoeshere@gmail.com
+        password yourpasswordgoeshere
+        from youremailgoeshereagain@gmail.com
+        logfile /var/log/msmtp/cpps.log
+
+# If you don't use any "-a" parameter in your command line,
+# the default account "cpps" will be used.
+account default: cpps
+```
+
+We are going to be using gmail here as an example. If you want to change the domain, feel free to.
+
+Now open your <b>php.ini</b> file which usually can be located at: <b>/etc/php5/apache2/</b>
 
 Search for this line: 
 
@@ -132,7 +153,7 @@ Search for this line:
 Replace it with: 
 
 ```
-sendmail_path = /usr/sbin/ssmtp -t
+sendmail_path = /usr/sbin/msmtp -t
 ```
 
 Now go back to the source and open <b>/Website/contact.php</b>
@@ -143,7 +164,7 @@ Find this line:
 $strContactEmail = "you@yourdomain.com";
 ```
 
-Edit that to match the one in <b>ssmpt.conf</b> and save it all
+Edit that to match the one in the msmtp config file and save it all.
 
 Open your terminal once again and reload the apache configuration by typing the following command:
 
@@ -153,4 +174,4 @@ sudo /etc/init.d/apache2 reload
 
 Last but not the least, login to your gmail account and once you're done, click this link: https://www.google.com/settings/security/lesssecureapps
 
-Once you're at that page, turn ON the lesssecureapps settings and go back to the contact page and voila!
+Once you're at that page, turn ON the <b>lesssecureapps</b> settings and go back to the contact page and voila!
