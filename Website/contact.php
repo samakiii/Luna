@@ -33,6 +33,11 @@ function domain_exists($strEmail, $strRecord = 'MX'){
 	         return checkdnsrr($strDomain, $strRecord);
 }
 
+function cleanString($resStr) {
+	         $arrBad = array("content-type","bcc:","to:","cc:","href");
+	         return str_replace($arrBad, "", $resStr);
+}
+
 function sendError($strErr) {
              $strMsg = "<center><h2>Error: " . $strErr . "</h2></center>"; 
              die($strMsg);
@@ -59,7 +64,12 @@ if (isset($_POST['submit'])) {
     $strEmail = stripslashes($strEmail);
     $strSubject = stripslashes($strSubject);
     $strMessage = stripslashes($strMessage);
-     
+    
+    $strUsername = cleanString($strUsername);
+    $strEmail = cleanString($strEmail);
+    $strSubject = cleanString($strSubject);
+    $strMessage = cleanString($strMessage);
+         
     if (!filter_var($strEmail, FILTER_VALIDATE_EMAIL)) {
         sendError('Invalid email address! Please recheck your email');
     } elseif (!domain_exists($strEmail)) {
@@ -78,7 +88,8 @@ if (isset($_POST['submit'])) {
      
     if (!$resp->isSuccess()) {
         sendError('You are a bot, get the fuck out');
-    } else {
+    } else {        
+        
         $strHeaders  = "From: " . $strUsername  . "<" . $strEmail . ">\n";
         $strHeaders .= "Reply-To: " . $strUsername . "<" . $strEmail . ">\n";
         $strHeaders .= "Cc: " . $strUsername . "<" . $strEmail . ">\n"; 
