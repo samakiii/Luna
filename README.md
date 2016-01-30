@@ -105,42 +105,32 @@ The source now comes with a default account, this account is created when you im
 
 Make sure to setup a mail server, you can do so by following these instructions below.
 
-Open your terminal and run these commands:
+Open your terminal and run this command:
 
 ```
-sudo apt-get install msmtp ca-certificates
-sudo mkdir /etc/msmtp
-sudo mkdir /var/log/msmtp
-sudo touch /etc/msmtp/cpps
-sudo nano /etc/msmtp/cpps
+sudo apt-get install ssmtp
 ```
 
-Then edit <b>/etc/msmtp/cpps</b> config file and add this:
+Then open <b>/etc/ssmtp/ssmtp.conf</b> file and find and replace these lines:
 
 ```
-# Define here some setting that can be useful for every account
-defaults
-        logfile /var/log/msmtp/general.log
-
-# Settings for cpps account
-account cpps
-        protocol smtp
-        host smtp.gmail.com
-        tls on
-        tls_trust_file /usr/share/ca-certificates/mozilla/Equifax_Secure_CA.crt
-        port 587
-        auth login
-        user youremailgoeshere@gmail.com
-        password yourpasswordgoeshere
-        from youremailgoeshereagain@gmail.com
-        logfile /var/log/msmtp/cpps.log
-
-# If you don't use any "-a" parameter in your command line,
-# the default account "cpps" will be used.
-account default: cpps
+# The place where the mail goes. The actual machine name is required no 
+# MX records are consulted. Commonly mailhosts are named mail.domain.com
+mailhub=
 ```
 
-We are going to be using gmail here as an example. If you want to change the domain, feel free to.
+With this:
+
+# The place where the mail goes. The actual machine name is required no 
+# MX records are consulted. Commonly mailhosts are named mail.domain.com
+mailhub=smtp.gmail.com:587
+UseSTARTTLS=YES
+UseTLS=YES
+AuthUser=youremailgoeshere@gmail.com
+AuthPass=yourpasswordgoeshere
+```
+
+We are going to be using gmail here as an example. If you want to change the domain, feel free to. Also dont forget to edit the AuthUser and AuthPass in the ssmtp config.
 
 Now open your <b>php.ini</b> file which usually can be located at: <b>/etc/php5/apache2/</b>
 
@@ -153,7 +143,7 @@ Search for this line:
 Replace it with: 
 
 ```
-sendmail_path = /usr/sbin/msmtp -t
+sendmail_path = /usr/sbin/ssmtp -t
 ```
 
 Next go back to the source and open <b>/Website/contact.php</b>
@@ -164,20 +154,12 @@ Find this line:
 $strContactEmail = "you@yourdomain.com";
 ```
 
-Edit that to match the one in the msmtp config file and save it all.
+Edit that to match the one in the ssmtp config file and save it all.
 
 Open your terminal once again and reload the apache configuration by typing the following command:
 
 ```
 sudo /etc/init.d/apache2 reload
-```
-
-And also run these commands:
-
-```
-sudo chmod 600 /etc/msmtp/cpps
-sudo chown -R www-data:www-data /var/log/msmtp 
-sudo chown -R www-data:www-data /etc/msmtp/
 ```
 
 Last but not the least, login to your gmail account and once you're done, click this link: https://www.google.com/settings/security/lesssecureapps
