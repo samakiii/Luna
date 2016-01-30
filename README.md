@@ -156,7 +156,7 @@ Replace it with:
 sendmail_path = /usr/sbin/msmtp -t
 ```
 
-Now go back to the source and open <b>/Website/contact.php</b>
+Next go back to the source and open <b>/Website/contact.php</b>
 
 Find this line: 
 
@@ -170,6 +170,14 @@ Open your terminal once again and reload the apache configuration by typing the 
 
 ```
 sudo /etc/init.d/apache2 reload
+```
+
+And also run these commands:
+
+```
+sudo chmod 600 /etc/msmtp/cpps
+sudo chown -R www-data:www-data /var/log/msmtp 
+sudo chown -R www-data:www-data /etc/msmtp/
 ```
 
 Last but not the least, login to your gmail account and once you're done, click this link: https://www.google.com/settings/security/lesssecureapps
