@@ -161,7 +161,7 @@ method handleFollowPosition($objClient, $intX, $intY) {
             $objClient->{ypos} = $intY;
             $intX = $intX - 2;
             $intY = $intY - 1;
-            $objClient->sendRoom('%xt%sp%-1%0%' . $intX . '%' . $intY . '%');
+            $objClient->write('%xt%sp%-1%0%' . $intX . '%' . $intY . '%');
 }
 
 method handleFollow($objClient, $nullVar) {
@@ -221,7 +221,7 @@ method handleMascot($objClient, $strMascotName) {
 }
 
 method handleMove($objClient, $strArg) {
-            $objClient->sendRoom('%xt%sp%-1%0%' .  join('%', split(' ', $strArg)) . '%');
+            $objClient->write('%xt%sp%-1%0%' .  join('%', split(' ', $strArg)));
 }
 
 method handleDance($objClient, $nullVar) {        
