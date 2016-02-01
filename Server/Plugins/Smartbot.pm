@@ -221,7 +221,7 @@ method handleMascot($objClient, $strMascotName) {
 }
 
 method handleMove($objClient, $strArg) {
-            $objClient->sendRoom('%xt%sp%-1%0%' .  join('%', split(' ', $strArg)));
+            $objClient->sendRoom('%xt%sp%-1%0%' .  join('%', split(' ', $strArg)) . '%');
 }
 
 method handleDance($objClient, $nullVar) {        
