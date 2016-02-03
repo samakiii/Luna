@@ -117,7 +117,6 @@ if (isset($_POST['submit'])) {
        <input type="text" name="email" maxlength="25" placeholder="Enter A Valid Email">
        <input type="text" name="subject" maxlength="20" placeholder="Enter Your Subject">
        <textarea  name="comments" maxlength="500" cols="25" rows="6" placeholder="Enter Your Message"></textarea>
-       <!--edit the site key to match yours for the captcha -->
        <div class="g-recaptcha" data-sitekey="<?php echo $strSiteKey; ?>"></div>
        <script type="text/javascript" src='https://www.google.com/recaptcha/api.js?hl=en'></script>
        <br>

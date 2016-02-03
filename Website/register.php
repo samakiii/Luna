@@ -148,7 +148,6 @@ if (isset($_POST['submit'])) {
                 <option value="15">Aqua</option>
        </select>
        <br><br>
-       <!--edit the site key to match yours for the captcha -->
        <div class="g-recaptcha" data-sitekey="<?php echo $strSiteKey; ?>"></div>
        <script type="text/javascript" src='https://www.google.com/recaptcha/api.js?hl=en'></script>
        <br>
