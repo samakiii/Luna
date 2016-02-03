@@ -57,12 +57,12 @@ if (isset($_POST['submit'])) {
     $strEmail = mysqli_real_escape_string($resDBCon, $strEmail);
     $intPin = mysqli_real_escape_string($resDBCon, $intPin);
     
-    $strUsername = stripslashes($strUsername);
-    $strPassword = stripslashes($strPassword);
-    $strPasswordTwo = stripslashes($strPasswordTwo);
-    $intColor = stripslashes($intColor);
-    $strEmail = stripslashes($strEmail);
-    $intPin = stripslashes($intPin);
+    $strUsername = addslashes($strUsername);
+    $strPassword = addslashes($strPassword);
+    $strPasswordTwo = addslashes($strPasswordTwo);
+    $intColor = addslashes($intColor);
+    $strEmail = addslashes($strEmail);
+    $intPin = addslashes($intPin);
      
     if (!filter_var($strEmail, FILTER_VALIDATE_EMAIL)) {
         sendError('Invalid email address! Please recheck your email');
@@ -105,7 +105,6 @@ if (isset($_POST['submit'])) {
      
     $strMD5 = md5($strPassword);
      
-    $strSecretKey = '6Lee7RMTAAAAAD_B4-4nEt2Amni4XC3EfGmKEI_K'; //edit this, its your secret/private key for the captcha
     $recaptcha = new \ReCaptcha\ReCaptcha($strSecretKey);
     $resp = $recaptcha->verify($_POST['g-recaptcha-response'], $strIP);
      
@@ -150,7 +149,7 @@ if (isset($_POST['submit'])) {
        </select>
        <br><br>
        <!--edit the site key to match yours for the captcha -->
-       <div class="g-recaptcha" data-sitekey="6Lee7RMTAAAAANDR7uPCUyEE323E9aY9n3a6yuLS"></div>
+       <div class="g-recaptcha" data-sitekey="<?php echo $strSiteKey; ?>"></div>
        <script type="text/javascript" src='https://www.google.com/recaptcha/api.js?hl=en'></script>
        <br>
        <input type="submit" id="login-button" name="submit" value="Sign Up">

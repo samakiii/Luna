@@ -52,8 +52,10 @@ if (isset($_POST['submit'])) {
     $strUsername = $_POST['username'];
     $intAction = $_POST['action_type'];
     if (isset($strUsername) && isset($intAction)) {
-        $strUsername = mysqli_real_escape_string($mysql, stripslashes($strUsername));
-        $intAction = mysqli_real_escape_string($mysql, stripslashes($intAction));
+        $strUsername = mysqli_real_escape_string($mysql, $strUsername);
+        $intAction = mysqli_real_escape_string($mysql, $intAction);
+        $strUsername = addslashes($strUsername);
+        $intAction = addslashes($intAction);
         $resQuery = mysqli_query($mysql, "SELECT username FROM users WHERE username = '$strUsername'");
         $intPExists = mysqli_num_rows($resQuery);
         if ($intPExists == 1) {

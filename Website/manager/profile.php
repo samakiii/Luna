@@ -60,7 +60,7 @@ if ($arrResults['isBanned'] == 'PERM') {
     $strStatus = 'Permanently Banned';
 } elseif (is_numeric($arrResults['isBanned']) && $arrResults['isBanned'] > time()) {
     $intRemainingTime = round(($arrResults['isBanned'] - time()) / 3600);
-    $strStatus = 'Temporarily Banned For $intRaminingTime hours';
+    $strStatus = "Temporarily Banned For $intRaminingTime hours";
 } else {
     $strStatus = 'Active';
 }

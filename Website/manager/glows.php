@@ -22,13 +22,21 @@ if (isset($_POST['update'])) {
     $intSpeed = $_POST['speed'];
 
     if (isset($strNG) && isset($strNC) && isset($strBT) && isset($strBC) && isset($strRC)) {
-        $strNG = mysqli_real_escape_string($mysql, stripslashes($strNG));
-        $strNC = mysqli_real_escape_string($mysql, stripslashes($strNC));
-        $strBT = mysqli_real_escape_string($mysql, stripslashes($strBT));
-        $strBC = mysqli_real_escape_string($mysql, stripslashes($strBC));
-        $strRC = mysqli_real_escape_string($mysql, stripslashes($strRC));
-        $strCG = mysqli_real_escape_string($mysql, stripslashes($strCG));
-        $intSpeed = mysqli_real_escape_string($mysql, stripslashes($intSpeed));
+        $strNG = mysqli_real_escape_string($mysql, $strNG);
+        $strNC = mysqli_real_escape_string($mysql, $strNC);
+        $strBT = mysqli_real_escape_string($mysql, $strBT);
+        $strBC = mysqli_real_escape_string($mysql, $strBC);
+        $strRC = mysqli_real_escape_string($mysql, $strRC);
+        $strCG = mysqli_real_escape_string($mysql, $strCG);
+        $intSpeed = mysqli_real_escape_string($mysql, $intSpeed);
+        
+        $strNG = addslashes($strNG);
+        $strNC = addslashes($strNC);
+        $strBT = addslashes($strBT);
+        $strBC = addslashes($strBC);
+        $strRC = addslashes($strRC);
+        $strCG = addslashes($strCG);
+        $intSpeed = addslashes($intSpeed);
 
         $strUsername = $_SESSION['login_user'];
         

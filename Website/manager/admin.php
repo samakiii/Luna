@@ -55,8 +55,10 @@ if (isset($_POST['update_rank'])) {
     $strUsername = $_POST['username'];
     $intRank = $_POST['rank'];
     if (isset($strUsername) && isset($intRank)) {
-        $strUsername = mysqli_real_escape_string($mysql, stripslashes($strUsername));
-        $intRank = mysqli_real_escape_string($mysql, stripslashes($intRank));
+        $strUsername = mysqli_real_escape_string($mysql, $strUsername);
+        $intRank = mysqli_real_escape_string($mysql, $intRank);
+        $strUsername = addslashes($strUsername);
+        $intRank = addslashes($intRank);
         $resQuery = mysqli_query($mysql, "SELECT username FROM users WHERE username = '$strUsername'");
         $intPExists = mysqli_num_rows($resQuery);
         if ($intPExists == 1) {
@@ -94,8 +96,10 @@ if (isset($_POST['update_active'])) {
     $strUsernameTwo = $_POST['username_two'];
     $intAction = $_POST['action_type'];
     if (isset($strUsernameTwo) && isset($intAction)) {
-        $strUsernameTwo = mysqli_real_escape_string($mysql, stripslashes($strUsernameTwo));
-        $intAction = mysqli_real_escape_string($mysql, stripslashes($intAction));
+        $strUsernameTwo = mysqli_real_escape_string($mysql, $strUsernameTwo);
+        $intAction = mysqli_real_escape_string($mysql, $intAction);
+        $strUsernameTwo = addslashes($strUsernameTwo);
+        $intAction = addslashes($intAction);
         $resQueryTwo = mysqli_query($mysql, "SELECT username FROM users WHERE username = '$strUsernameTwo'");
         $intPExistsTwo = mysqli_num_rows($resQueryTwo);
         if ($intPExistsTwo == 1) {

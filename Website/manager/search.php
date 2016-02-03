@@ -46,7 +46,8 @@ $mysql = mysqli_connect($strDBHost, $strDBUser, $strDBPass, $strDBName);
 if (isset($_POST['submit'])) {
     $strSearch = $_POST['search'];
     if (isset($strSearch)) {
-       $strSearch = mysqli_real_escape_string($mysql, stripslashes($strSearch));
+       $strSearch = mysqli_real_escape_string($mysql, $strSearch);
+       $strSearch = addslashes($strSearch);
        $resQuery = mysqli_query($mysql, "SELECT * FROM users WHERE username = '$strSearch'");
        $arrResults = mysqli_fetch_assoc($resQuery);
        if (!empty($arrResults)) {

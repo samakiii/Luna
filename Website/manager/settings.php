@@ -12,36 +12,49 @@ $strUsername = $_SESSION['login_user'];
 
 $mysql = mysqli_connect($strDBHost, $strDBUser, $strDBPass, $strDBName);
 
+function domain_exists($strEmail, $strRecord = 'MX'){
+	         list($strUser, $strDomain) = explode('@', $strEmail);
+	         return checkdnsrr($strDomain, $strRecord);
+}
+
 if (isset($_POST['submit'])) {
     $strOldEmail = $_POST['oldemail'];
     $strNewEmail = $_POST['newemail'];
     if (!empty($strOldEmail) && !empty($strNewEmail)) {
-        $strOldEmail = mysqli_real_escape_string($mysql, stripslashes($strOldEmail));
-        $strNewEmail = mysqli_real_escape_string($mysql, stripslashes($strNewEmail));
+        $strOldEmail = mysqli_real_escape_string($mysql, $strOldEmail);
+        $strNewEmail = mysqli_real_escape_string($mysql, $strNewEmail);
+        $strOldEmail = addslashes($strOldEmail);
+        $strNewEmail = addslashes($strNewEmail);
         if (filter_var($strNewEmail, FILTER_VALIDATE_EMAIL) && filter_var($strOldEmail, FILTER_VALIDATE_EMAIL)) {
-            $resQuery = mysqli_query($mysql, "SELECT email FROM users WHERE username = '$strUsername'");
-            $arrResults = mysqli_fetch_assoc($resQuery);
-            $strCurEmail = $arrResults['email'];  
-            if ($strCurEmail != $strOldEmail) {
-                $strForm1Error = 'Old email does not match with supplied email!';
-            } else {
-                mysqli_query($mysql, "UPDATE users SET email = '$strNewEmail' WHERE username = '$strUsername'");
-                $strForm1Message = 'Successfully updated to your new email';
-            }
-       } else {
-            $strForm1Error = 'The email you have provided is invalid!';
-       }
-   } else {
-            $strForm1Error = 'Please fill in the desired fields for changing the email!';
-   }
+            if (domain_exists($strNewEmail)) {
+                $resQuery = mysqli_query($mysql, "SELECT email FROM users WHERE username = '$strUsername'");
+                $arrResults = mysqli_fetch_assoc($resQuery);
+                $strCurEmail = $arrResults['email'];  
+                if ($strCurEmail != $strOldEmail) {
+                    $strForm1Error = 'Old email does not match with supplied email!';
+                } else {
+                    mysqli_query($mysql, "UPDATE users SET email = '$strNewEmail' WHERE username = '$strUsername'");
+                    $strForm1Message = 'Successfully updated to your new email';
+                }
+           } else {
+               $strForm1Error = 'The domain you provided for the email is invalid!';
+           }
+      } else {
+           $strForm1Error = 'The email you have provided is invalid!';
+      }
+  } else {
+      $strForm1Error = 'Please fill in the desired fields for changing the email!';
+  }
 }
 
 if (isset($_POST['submit2'])) {
     $strNewPass = $_POST['newpass'];
     $strNewPassTwo = $_POST['newpasstwo'];
     if (!empty($strNewPass) && !empty($strNewPassTwo)) {
-        $strNewPass = mysqli_real_escape_string($mysql, stripslashes($strNewPass));
-        $strNewPassTwo = mysqli_real_escape_string($mysql, stripslashes($strNewPassTwo));
+        $strNewPass = mysqli_real_escape_string($mysql, $strNewPass);
+        $strNewPassTwo = mysqli_real_escape_string($mysql, $strNewPassTwo);
+        $strNewPass = addslashes($strNewPass);
+        $strNewPassTwo = addslashes($strNewPassTwo);
         if ($strNewPass == $strNewPassTwo) {
             if (strlen($strNewPass) < 15 && strlen($strNewPass) > 5 && strlen($strNewPassTwo) < 15 && strlen($strNewPassTwo) > 5) {
                 $strMD5 = md5($strNewPass);

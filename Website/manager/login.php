@@ -15,9 +15,12 @@ if (isset($_POST['submit'])) {
     if (empty($strName) || empty($strPass) || empty($intPin)) {
         $strError = 'Please fill in all the information';
     } else {      
-        $strName = mysqli_real_escape_string($mysql, stripslashes($strName));
-        $strPass = mysqli_real_escape_string($mysql, stripslashes($strPass));
-        $intPin = mysqli_real_escape_string($mysql, stripslashes($intPin));
+        $strName = mysqli_real_escape_string($mysql, $strName);
+        $strPass = mysqli_real_escape_string($mysql, $strPass);
+        $intPin = mysqli_real_escape_string($mysql, $intPin);
+        $strName = addslashes($strName);
+        $strPass = addslashes($strPass);
+        $intPin = addslashes($intPin);
         $strPass = md5($strPass);
         $resQuery = mysqli_query($mysql, "SELECT username FROM users WHERE username = '$strName' AND password = '$strPass'");
         $intRows = mysqli_num_rows($resQuery);
