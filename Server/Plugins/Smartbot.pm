@@ -6,6 +6,9 @@ use warnings;
 use Method::Signatures;
 use Switch;
 use Lyrics::Fetcher;
+use LWP::UserAgent;
+use URI::Escape;
+use XML::Simple;
 
 method new($resChild) {
        my $obj = bless {}, $self;
@@ -260,7 +263,19 @@ method handleSing($objClient, $strArg) {
             }
 }
 
-method handleWiki($objClient, $strArg) {}
+method handleWiki($objClient, $strArg) {
+            return if ($strArg eq '');
+            my $strURL = "http://en.wikipedia.org/w/api.php?action=opensearch&search=" . uri_escape($strArg) . "&format=xml&limit=1";
+            my $resUA = LWP::UserAgent->new;
+            my $strResp = $resUA->get($strURL);
+            if ($strResp->is_success) {
+                my $strData = $strResp->decoded_content; 
+                my $arrData = XMLin($strData);
+                $objClient->botSay($arrData->{Section}->{Item}->{Description}->{content});
+           } else {
+                $objClient->botSay('Cannot find any information for: ' . $strArg);
+           }
+}
 
 
 1;

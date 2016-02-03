@@ -78,6 +78,8 @@ If you are using Windows, you can use <b>Run.bat</b>
  <li> Lyrics::Fetcher</li>
  <li> Lyrics::Fetcher::LyricWiki</li>
  <li> Lyrics::Fetcher::AstraWeb</li>
+ <li> LWP::UserAgent</li>
+ <li> URI::Escape</li>
 </ul>
 
 ### Tutorials:
