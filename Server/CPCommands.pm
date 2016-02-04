@@ -55,6 +55,18 @@ method handleClonePenguin($objClient, $strName) {
             $objClient->updatePlayerCard('upl', 'flag', $objPlayer->{flag});
 }
 
+method handleClearPenguinClothing($objClient, $nullVar) {
+            $objClient->updatePlayerCard('upc', 'colour', 0);
+            $objClient->updatePlayerCard('uph', 'head', 0);
+            $objClient->updatePlayerCard('upf', 'face', 0);
+            $objClient->updatePlayerCard('upn', 'neck', 0);
+            $objClient->updatePlayerCard('upb', 'body', 0);
+            $objClient->updatePlayerCard('upa', 'hand', 0);
+            $objClient->updatePlayerCard('upe', 'feet', 0);
+            $objClient->updatePlayerCard('upp', 'photo', 0);
+            $objClient->updatePlayerCard('upl', 'flag', 0);
+}
+
 method handleSetPenguinSpeed($objClient, $intSpeed) {
        return if (!$objClient->{isVIP} || !int($intSpeed) && $intSpeed < 4);
        $objClient->updateOpenGlow('speed', $intSpeed);
@@ -77,6 +89,19 @@ method handleSetRingColour($objClient, $strRColour) {
 
 method handleAddItem($objClient, $intItem) {
        $objClient->addItem($intItem);
+}
+
+method handleAddFurniture($objClient, $intFurniture) {
+       $objClient->addFurniture($intFurniture);
+}
+
+method handleChangeIglooFloor($objClient, $intFloor) {
+       $objClient->updateFloor($intFloor);
+}
+
+method handleAddIgloo($objClient, $intIgloo) {
+       $objClient->addIgloo($intIgloo);
+       $objClient->updateIgloo($intIgloo);
 }
 
 method handleSendPong($objClient, $nullVar) {
@@ -107,13 +132,23 @@ method handleAddCoins($objClient, $intCoins) {
 
 method handleSendServerPopulation($objClient, $nullVar) {
        my $intCount = scalar(keys %{$self->{child}->{clients}});
-       my $strMsg = 'There are currently ' . $intCount . ' users in this Server';
+       my $strMsg = '';
+       if ($intCount == 1) {
+           $strMsg = 'I guess its just you and me in this server';
+       } else {
+           $strMsg = 'There are currently ' . $intCount . ' users in this server';
+       }
        $self->handleServerSay($objClient, $strMsg);
 } 
 
 method handleSendRoomPopulation($objClient, $nullVar) {
        my $intCount = $objClient->getRoomCount;
-       my $strMsg = 'There are currently ' . $intCount . ' users in this Room';
+       my $strMsg = '';
+       if ($intCount == 1) {
+           $strMsg = 'I guess its just you and me in this room';
+       } else {
+           $strMsg = 'There are currently ' . $intCount . ' users in this room';
+       }
        $self->handleServerSay($objClient, $strMsg);
 }
 

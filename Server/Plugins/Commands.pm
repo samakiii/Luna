@@ -19,6 +19,9 @@ method new($resChild) {
                  members => {
                          ai => 'handleAddItem',
                          ac => 'handleAddCoins',
+                         af => 'handleAddFurniture',
+                         aig => 'handleAddIgloo',
+                         cif => 'handleChangeIglooFloor',
                          cnick => 'handleChangeNickname',
                          sping => 'handleSendPong',
                          sid => 'handleSendID',
@@ -37,7 +40,8 @@ method new($resChild) {
                          find => 'handleFindClient',
                          pss => 'handlePenguinSuperSize',
                          pblend => 'handlePenguinBlend',
-                         palpha => 'handlePenguinAlpha'        
+                         palpha => 'handlePenguinAlpha',
+                         cpc => 'handleClearPenguinClothing'
                  },
                  staff => {
                        tban => 'handleTimeBanClient',

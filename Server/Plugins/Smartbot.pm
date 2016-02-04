@@ -38,6 +38,7 @@ method new($resChild) {
                    move => 'handleMove',
                    mascot => 'handleMascot',
                    sit => 'handleSitDown',
+                   mwalk => 'handleMoonWalk',
                    tsb => 'handleThrowSnowball'
        };
        return $obj;
@@ -239,6 +240,10 @@ method handleDance($objClient, $nullVar) {
             $objClient->sendRoom('%xt%upp%-1%0%0%');
             $objClient->botSay('Watch me break the floor bitches');
             $objClient->sendRoom('%xt%sf%-1%0%26%');
+}
+
+method handleMoonWalk($objClient, $nullVar) {
+            $objClient->sendRoom('%xt%sf%-1%0%16%');
 }
 
 method handleSitDown($objClient, $nullVar) {
