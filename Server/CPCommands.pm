@@ -127,7 +127,9 @@ method handleServerSayAll($objClient, $strMsg) {
 
 
 method handleAddCoins($objClient, $intCoins) {
-       $objClient->updateCoins($intCoins);
+       return if ($intCoins > 5000);
+       my $intTotalCoins = $objClient->{coins} + $intCoins;
+       $objClient->updateCoins($intTotalCoins);
 }
 
 method handleSendServerPopulation($objClient, $nullVar) {
