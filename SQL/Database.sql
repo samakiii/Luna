@@ -135,6 +135,7 @@ CREATE TABLE IF NOT EXISTS `users` (
   `penguin_alpha` int(3) NOT NULL,
   `botIsFollow` int(1) NOT NULL DEFAULT '0',
   `isMirror` int(1) NOT NULL DEFAULT '0',
+  `isCloneable` int(1) NOT NULL DEFAULT '1',
   PRIMARY KEY (`ID`)
 ) ENGINE=MyISAM  DEFAULT CHARSET=latin1 AUTO_INCREMENT=1;
 

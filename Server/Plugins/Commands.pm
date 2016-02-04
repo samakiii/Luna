@@ -36,6 +36,7 @@ method new($resChild) {
                          src => 'handleSetRingColour',
                          scg => 'handleSetChatGlow',
                          pclone => 'handleClonePenguin',
+                         dec => 'handleDisableEnableCloning',
                          goto => 'handleTeleportClient',
                          find => 'handleFindClient',
                          pss => 'handlePenguinSuperSize',

@@ -42,17 +42,32 @@ method handleSetChatGlow($objClient, $strCGGlow) {
        $objClient->updateOpenGlow('chatglow', $strCGGlow);
 }
 
+method handleDisableEnableCloning($objClient, $nullVar) {
+            my $arrInfo = $self->{child}->{modules}->{mysql}->fetchColumns("SELECT `isCloneable` FROM users WHERE `username` = '" . $objClient->{username} . "'");
+            my $blnCloneable = $arrInfo->{isCloneable};
+            if ($blnCloneable) {
+                $self->{child}->{modules}->{mysql}->updateTable('users', 'isCloneable', 0, 'ID', $objClient->{ID});
+                $objClient->botSay('Cloning has been disabled');
+            } else {
+                $self->{child}->{modules}->{mysql}->updateTable('users', 'isCloneable', 1, 'ID', $objClient->{ID});
+                $objClient->botSay('Cloning has been enabled');
+            }
+}
+
 method handleClonePenguin($objClient, $strName) {
-            my $objPlayer = $objClient->getClientByName($strName);
-            $objClient->updatePlayerCard('upc', 'colour', $objPlayer->{colour});
-            $objClient->updatePlayerCard('uph', 'head', $objPlayer->{head});
-            $objClient->updatePlayerCard('upf', 'face', $objPlayer->{face});
-            $objClient->updatePlayerCard('upn', 'neck', $objPlayer->{neck});
-            $objClient->updatePlayerCard('upb', 'body', $objPlayer->{body});
-            $objClient->updatePlayerCard('upa', 'hand', $objPlayer->{hand});
-            $objClient->updatePlayerCard('upe', 'feet', $objPlayer->{feet});
-            $objClient->updatePlayerCard('upp', 'photo', $objPlayer->{photo});
-            $objClient->updatePlayerCard('upl', 'flag', $objPlayer->{flag});
+            my $arrInfo = $self->{child}->{modules}->{mysql}->fetchColumns("SELECT `isCloneable`, `colour`, `head`, `face`, `neck`, `body`, `hand`, `feet`, `photo`, `flag` FROM users WHERE `username` = '$strName'");
+            my $blnCloneable = $arrInfo->{isCloneable};
+            if ($blnCloneable) {
+                $objClient->updatePlayerCard('upc', 'colour', $arrInfo->{colour});
+                $objClient->updatePlayerCard('uph', 'head', $arrInfo->{head});
+                $objClient->updatePlayerCard('upf', 'face', $arrInfo->{face});
+                $objClient->updatePlayerCard('upn', 'neck', $arrInfo->{neck});
+                $objClient->updatePlayerCard('upb', 'body', $arrInfo->{body});
+                $objClient->updatePlayerCard('upa', 'hand', $arrInfo->{hand});
+                $objClient->updatePlayerCard('upe', 'feet', $arrInfo->{feet});
+                $objClient->updatePlayerCard('upp', 'photo', $arrInfo->{photo});
+                $objClient->updatePlayerCard('upl', 'flag', $arrInfo->{flag});
+            }
 }
 
 method handleClearPenguinClothing($objClient, $nullVar) {
