@@ -28,7 +28,7 @@ $resDC = mysqli_connect($strDBHost, $strDBUser, $strDBPass, $strDBName) or die('
 
 $resQuery = mysqli_query($resDC, "SELECT username, rank FROM users");
 
-$arrDevelopers = array();
+$arrMediators = array();
 $arrModerators = array();
 $arrAdministrators = array();
 $arrOwners = array();
@@ -37,29 +37,29 @@ while ($arrData = mysqli_fetch_assoc($resQuery)) {
           $strName = $arrData['username'];
           $intRank = $arrData['rank'];
           switch ($intRank) {
-                      case 6:
+                      case 3:
+                              array_push($arrMediators, $strName);
+                      break;    
+                      case 4:
                               array_push($arrModerators, $strName);
-                      break;    
-                      case 7:
-                              array_push($arrAdministrators, $strName);
                       break;
-                      case 8:
-                              array_push($arrDevelopers, $strName);
+                      case 5:
+                              array_push($arrAdministrators, $strName);
                       break;    
-                      case 9:
+                      case 6:
                               array_push($arrOwners, $strName);
                       break;
           }
 }
 
-echo  '<br><h1><u>Owners:</u></h1>';
-foreach ($arrOwners as $strOwner) {
-             echo $strOwner . '<br>';
+echo  '<br><h1><u>Mediators:</u></h1>';
+foreach ($arrMediators as $strMediator) {
+             echo $strMediator . '<br>';
 }
 
-echo  '<br><h1><u>Developers:</u></h1>';
-foreach ($arrDevelopers as $strDeveloper) {
-             echo $strDeveloper . '<br>';
+echo  '<br><h1><u>Moderators:</u></h1>';
+foreach ($arrModerators as $strModerator) {
+             echo $strModerator . '<br>';
 }
 
 echo  '<br><h1><u>Administrators:</u></h1>';
@@ -67,9 +67,9 @@ foreach ($arrAdministrators as $strAdmin) {
              echo $strAdmin . '<br>';
 }
 
-echo  '<br><h1><u>Moderators:</u></h1>';
-foreach ($arrModerators as $strModerator) {
-             echo $strModerator . '<br>';
+echo  '<br><h1><u>Owners:</u></h1>';
+foreach ($arrOwners as $strOwner) {
+             echo $strOwner . '<br>';
 }             
               
 ?>
