@@ -196,7 +196,7 @@ method buildClientString {
                    $self->{penguin_alpha},  # 25  
                    $self->{penguin_blend},  # 26
                    $self->{penguin_size},  # 27 
-                   $self->{chatglow},  # 28
+                   $self->{chatglow} # 28
        );
        my $strInfo = join('|', @arrInfo);
        return $strInfo;

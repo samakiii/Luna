@@ -43,7 +43,7 @@ method handleSetChatGlow($objClient, $strCGGlow) {
 }
 
 method handleDisableEnableCloning($objClient, $nullVar) {
-            my $arrInfo = $self->{child}->{modules}->{mysql}->fetchColumns("SELECT `isCloneable` FROM users WHERE `username` = '" . $objClient->{username} . "'");
+            my $arrInfo = $self->{child}->{modules}->{mysql}->fetchColumns("SELECT `isCloneable` FROM users WHERE `username` = '$objClient->{username}'");
             my $blnCloneable = $arrInfo->{isCloneable};
             if ($blnCloneable) {
                 $self->{child}->{modules}->{mysql}->updateTable('users', 'isCloneable', 0, 'ID', $objClient->{ID});
