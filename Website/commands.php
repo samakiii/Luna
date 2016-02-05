@@ -29,18 +29,48 @@
     <th><h2>Info</h2></th>
   </tr>
   <tr>
+    <td>!SID</td>
+    <td>!SID</td> 
+    <td>Know your penguin ID</td>
+  </tr>
+  <tr>
+    <td>!SPING</td>
+    <td>!SPING</td> 
+    <td>Check if the server is alive</td>
+  </tr>
+  <tr>
     <td>!AI</td>
     <td>!AI 127</td> 
     <td>Add an Item using an Item ID</td>
   </tr>
   <tr>
-    <td>!NICK</td>
-    <td>!NICK Texas</td> 
+    <td>!AF</td>
+    <td>!AF 64</td> 
+    <td>Add a Furniture using a Furniture ID</td>
+  </tr>
+  <tr>
+    <td>!AIG</td>
+    <td>!AIG 8</td> 
+    <td>Add an Igloo using a Igloo ID</td>
+  </tr>
+  <tr>
+    <td>!CIF</td>
+    <td>!CIF 12</td> 
+    <td>Change the Igloo Flooring using a Floor ID</td>
+  </tr>
+  <tr>
+    <td>!CPC</td>
+    <td>!CPC</td> 
+    <td>Remove all clothing items from the penguin</td>
+  </tr>
+  <tr>
+    <td>!CNICK</td>
+    <td>!CNICK Texas</td> 
     <td>Change your nickname</td>
   </tr>
   <tr>
     <td>!AC</td>
-    <td>!AC 500000</td> 
+    <td>!AC 5000</td> 
     <td>Add a specific amount of coins</td>
   </tr>
   <tr>
@@ -49,9 +79,14 @@
     <td>Go to a particular user</td>
   </tr>
   <tr>
-    <td>!CLONE</td>
-    <td>!CLONE Kevin</td> 
-    <td>Clone a Penguin by their Name</td>
+    <td>!PCLONE</td>
+    <td>!PCLONE Kevin</td> 
+    <td>Clone a penguin by their name</td>
+  </tr>
+  <tr>
+    <td>!DEC</td>
+    <td>!DEC</td> 
+    <td>Disable/Enable cloning</td>
   </tr>
   <tr>
     <td>!FIND</td>
@@ -83,6 +118,11 @@
     <td>~DANCE</td>
     <td>~DANCE</td> 
     <td>Makes the bot dance</td>
+  </tr>
+  <tr>
+    <td>~MWALK</td>
+    <td>~MWALK</td> 
+    <td>Makes the bot do the moonwalk</td>
   </tr>
   <tr>
     <td>~JOKE</td>
@@ -122,7 +162,7 @@
   <tr>
     <td>~WIKI</td>
     <td>~WIKI Jupiter</td> 
-    <td>Gets information from wikipedia, currently not yet implemented</td>
+    <td>Gets information from wikipedia</td>
   </tr>
 </table>
 
@@ -133,38 +173,51 @@
     <th><h2>Example</h2></th> 
     <th><h2>Info</h2></th>
   </tr>        
-  <td>!SP</td>
-    <td>!SP 50</td> 
+  <td>!SPS</td>
+    <td>!SPS 50</td> 
     <td>Set the penguin speed ranging from 0 to 100</td>
   </tr>
    <tr>
-    <td>!NG</td>
-    <td>!NG 0xFFD700</td> 
+    <td>!SNG</td>
+    <td>!SNG 0xFFD700</td> 
     <td>Set/Change your Nameglow</td>
-  </tr> <tr>
-    <td>!NC</td>
-    <td>!NC 0xFFD700</td> 
+  </tr> 
+  <tr>
+    <td>!SNC</td>
+    <td>!SNC 0xFFD700</td> 
     <td>Set/Change your Namecolor</td>
   </tr>
    <tr>
-    <td>!BC</td>
-    <td>!BC 0xFFD700</td> 
+    <td>!SBC</td>
+    <td>!SBC 0xFFD700</td> 
     <td>Set/Change your Bubblecolor</td>
   </tr>
    <tr>
-    <td>!BT</td>
-    <td>!BT 0xFFD700</td> 
+    <td>!SBT</td>
+    <td>!SBT 0xFFD700</td> 
     <td>Set/Change your Bubbletextcolor</td>
   </tr>
    <tr>
-    <td>!RC</td>
-    <td>!RC 0xFFD700</td> 
+    <td>!SRC</td>
+    <td>!SRC 0xFFD700</td> 
     <td>Set/Change your ring color</td>
   </tr>
    <tr>
-    <td>!CG</td>
-    <td>!CG 0xFFD700</td> 
+    <td>!SCG</td>
+    <td>!SCG 0xFFD700</td> 
     <td>Set/Change your Chat Text Glow</td>
+  </tr>
+  <td>!PBLEND</td>
+    <td>!PBLEND Invert</td> 
+    <td>Blend the penguin</td>
+  </tr>
+  <td>!PSS</td>
+    <td>!PSS 420</td> 
+    <td>Change the penguin size</td>
+  </tr>
+  <td>!PALPHA</td>
+    <td>!PALPHA 6</td> 
+    <td>Change the visibility of the penguin</td>
   </tr>
 </table>
 
@@ -183,7 +236,8 @@
     <td>#KBC</td>
     <td>#KBC Trevor</td> 
     <td>Kick and Ban a user by their name at the same time</td>
-  </tr> <tr>
+  </tr> 
+  <tr>
     <td>#TBAN</td>
     <td>#TBAN Trevor</td> 
     <td>Ban a user by their name for a specific amount of time(24h, 48h, 78h)</td>
@@ -204,7 +258,7 @@
     <td>Reboot the server</td>
   </tr>
    <tr>
-    <td>sGLOBAL</td>
+    <td>#GLOBAL</td>
     <td>#GLOBAL this is a test message</td> 
     <td>Send a message across the server</td>
   </tr>
