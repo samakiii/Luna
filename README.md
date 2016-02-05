@@ -27,7 +27,7 @@ Club Penguin Server Emulator - AS2 Protocol
  <li> If some modules fail to install or refuse to install then install those particular modules manually, click <a href="http://www.thegeekstuff.com/2008/09/how-to-install-perl-modules-manually-and-using-cpan-command/">here</a> to know how to do manual installation of modules</li>
  </ul>
  <li> Import the <a href="https://github.com/Levi-M/Luna/blob/master/SQL/Database.sql">Database.sql</a> using <b>Phpmyadmin/Adminer</b></li>
- <li> Setup the <a href="https://github.com/Levi-M/Luna/blob/master/Website/">Website</a> and create an account</li> using the register or use the <a href="https://github.com/Levi-M/Luna/blob/master/README.md#default-server-account">default account</a>
+ <li> Edit <a href="https://github.com/Levi-M/Luna/blob/master/Website/config.php">Config.php</a> and create an account</li> using the register or use the <a href="https://github.com/Levi-M/Luna/blob/master/README.md#default-server-account">default account</a>
  <li> Edit <a href="https://github.com/Levi-M/Luna/blob/master/Configuration/Config.pl">Config.pl</a></li>
  <li> Execute <a href="https://github.com/Levi-M/Luna/blob/master/Run.pm">Run.pm</a></li>
 </ul>
