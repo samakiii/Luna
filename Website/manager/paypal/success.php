@@ -18,23 +18,6 @@ if (isset($item_transaction)) {
     $item_no = addslashes($item_no);
     $item_transaction = addslashes($item_transaction);
     
-/*
-    Follow these steps to configure your account for PDT:
-    
-       1. Log in to your PayPal account.
-       2. Click the Profile subtab.
-       3. Click Website Payment Preferences in the Seller Preferences column.
-       4. Under Auto Return for Website Payments, click the On radio button.
-       5. For the Return URL, enter the URL on your site that will receive the transaction ID posted by PayPal after a customer payment.
-       6. Under Payment Data Transfer, click the On radio button.
-       7. Click Save.
-       8. Click Website Payment Preferences in the Seller Preferences column.
-       9. Scroll down to the Payment Data Transfer section of the page to view your PDT identity token.
-       10. Copy and paste that in $identity_token
-*/
-    
-    $identity token = '';
-    
     $request = curl_init();
     curl_setopt_array($request, 
                                array(

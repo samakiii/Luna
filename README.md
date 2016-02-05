@@ -106,6 +106,21 @@ The source now comes with a default account, this account is created when you im
 
 *<b>Note:</b>* Click the <b>return to the merchant site</b> button after you have paid in order for the payment to go through successfully.
 
+Follow these steps to configure your paypal account for PDT:
+    
+<ul>
+<li>Log in to your PayPal account</li>
+<li>Click the Profile subtab</li>
+<li>Click Website Payment Preferences in the Seller Preferences column</li>
+<li>Under Auto Return for Website Payments, click the On radio button</li>
+<li>For the Return URL, enter the URL on your site that will receive the transaction ID posted by PayPal after a customer payment</li>
+<li>Under Payment Data Transfer, click the On radio button</li>
+<li>Click Save</li>
+<li>Click Website Payment Preferences in the Seller Preferences column</li>
+<li>Scroll down to the Payment Data Transfer section of the page to view your PDT identity token</li>
+<li>Copy and paste the token in <b>Website/config.php</b> where it says ```$identity_token```</li>
+</ul>
+
 ### Contact Page Setup:
 
 Make sure to setup a mail server, you can do so by following these instructions below.
@@ -152,7 +167,7 @@ Replace it with:
 sendmail_path = /usr/sbin/ssmtp -t
 ```
 
-Next go back to the source and open <b>/Website/contact.php</b>
+Next go back to the source and open <b>/Website/config.php</b>
 
 Find this line: 
 

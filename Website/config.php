@@ -17,4 +17,7 @@ $strSiteKey = '6Lee7RMTAAAAANDR7uPCUyEE323E9aY9n3a6yuLS';
 // for the contact form
 $strContactEmail = "your@yourdomain.com";
 
+// for paypal
+$identity token = 'addyourpaypalidentitytokenhere';
+
 ?>
