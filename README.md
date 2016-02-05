@@ -118,7 +118,7 @@ Follow these steps to configure your paypal account for PDT:
 <li>Click Save</li>
 <li>Click Website Payment Preferences in the Seller Preferences column</li>
 <li>Scroll down to the Payment Data Transfer section of the page to view your PDT identity token</li>
-<li>Copy and paste the token in <b>Website/config.php</b> where it says ```$identity_token```</li>
+<li>Copy and paste the token in <b>Website/config.php</b> where it says <code>$identity_token</code></li>
 </ul>
 
 ### Contact Page Setup:
