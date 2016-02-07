@@ -18,9 +18,6 @@ method handleKick($strData, $objClient) {
        if ($objClient->{isStaff}) {
            $objPlayer->sendError(5);
            $self->{child}->{modules}->{base}->removeClient($objPlayer->{sock});
-       } else {
-           $objClient->sendError(800);
-           $self->{child}->{modules}->{base}->removeClient($objClient->{sock});
        }
 }
 
@@ -36,9 +33,6 @@ method handleMute($strData, $objClient) {
                $objClient->updateMute($objPlayer, 0);
                $objClient->botSay($objPlayer->{username} . ' Has Been Unmuted By: ' . $objClient->{username});
            }
-       } else {
-           $objClient->sendError(800);
-           $self->{child}->{modules}->{base}->removeClient($objClient->{sock});
        }
 }
 
@@ -53,9 +47,6 @@ method handleBan($strData, $objClient) {
                $objClient->botSay($objClient->{username} . ' Has Permanently Banned ' . $objPlayer->{username});
                $self->{child}->{modules}->{base}->removeClient($objPlayer->{sock});
            }
-       } else {
-           $objClient->sendError(800);
-           $self->{child}->{modules}->{base}->removeClient($objClient->{sock});
        }
 }
 
