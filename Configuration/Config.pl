@@ -54,5 +54,5 @@ our $dbConfig = {
     dbHost => '127.0.0.1',
     dbName => 'Luna',
     dbUser => 'root',
-    dbPass => '1337hax'
+    dbPass => '1337h4x0r'
 };
