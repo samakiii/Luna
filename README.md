@@ -169,7 +169,7 @@ Follow these steps to configure your paypal account for PDT:
     
 <ul>
   <li> Log in to your PayPal account</li>
-  <li> Click the <a>Profile</b> subtab</li>
+  <li> Click the <b>Profile</b> subtab</li>
   <li> Click <b>Website Payment Preferences</b> in the <b>Seller Preferences</b> column</li>
   <li> Under <b>Auto Return</b> for <b>Website Payments</b>, click the <b>On</b> radio button</li>
   <li> For the <b>Return URL</b>, enter the URL on your site that will receive the transaction ID posted by PayPal after a customer payment</li>
