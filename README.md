@@ -11,42 +11,28 @@ Club Penguin Server Emulator - AS2 Protocol
 ### Requirements:
 <ul>
  <li> PHP 5.5+</li>
- <li> Perl 5.12 till 5.18</li>
+ <li> Perl v5.12 till v5.18</li>
  <li> reCaptcha Keys</li>
- <li> Apache/Nginx</li>
+ <li> Apache2/Nginx</li>
  <li> Phpmyadmin/Adminer</li>
- <li> MYSQL</li>
+ <li> MySQL</li>
  <li> Internet Connection</li>
 </ul>
 
 ### Instructions:
 <ul>
- <li> Setup an AS2 Media Server</li>
- <li> Install all the Perl modules from the <a href="https://github.com/Levi-M/Luna/blob/master/README.md#modules">modules list</a></li>
+ <li> Install PHP and setup a webserver - <a href="http://www.wikihow.com/Install-XAMPP-for-Windows">Windows</a>/<a href="https://www.rosehosting.com/blog/how-to-install-lamp-linux-apache-mysql-php-and-phpmyadmin-on-a-debian-8-vps/">Linux</a></li>
+ <li> Install all the Perl modules from the <a href="https://github.com/Levi-M/Luna#modules">modules list</a></li>
  <ul>
- <li> If some modules fail to install or refuse to install then install those particular modules manually, click <a href="http://www.thegeekstuff.com/2008/09/how-to-install-perl-modules-manually-and-using-cpan-command/">here</a> to know how to do manual installation of modules</li>
+ <li> If some modules fail to install or refuse to install then install those particular modules manually, click <a href="http://www.thegeekstuff.com/2008/09/how-to-install-perl-modules-manually-and-using-cpan-command/">here</a> to know how to do manual installation of modules or use <code>force install</code> to install them</li>
+ <li> If you are still not able to install the modules by yourself, you can create an issue but do not create an issue if you did not try the above</li>
  </ul>
- <li> Import the <a href="https://github.com/Levi-M/Luna/blob/master/SQL/Database.sql">Database.sql</a> using <b>Phpmyadmin/Adminer</b></li>
+ <li> Setup an AS2 Media Server</li>
+ <li> Import the <a href="https://github.com/Levi-M/Luna/blob/master/SQL/Database.sql">SQL</a> using <b>Phpmyadmin/Adminer</b></li>
  <li> Edit <a href="https://github.com/Levi-M/Luna/blob/master/Website/config.php">Config.php</a> and create an account</li> using the register or use the <a href="https://github.com/Levi-M/Luna/blob/master/README.md#default-server-account">default account</a>
  <li> Edit <a href="https://github.com/Levi-M/Luna/blob/master/Configuration/Config.pl">Config.pl</a></li>
  <li> Execute <a href="https://github.com/Levi-M/Luna/blob/master/Run.pm">Run.pm</a></li>
 </ul>
-
-### Usage:
-
-Open <b>Terminal/Cmd</b> and type the following:
-
-```
-cd /tmp/Luna
-```
-
-and then type:
-
-```
-perl Run.pm
-```
-
-If you are using Windows, you can use <b>Run.bat</b>
 
 *<b>Important Note:</b>* First install <b>CPAN</b> and after that type: ```reload cpan``` and then continue installing the other modules.
 
@@ -54,9 +40,6 @@ If you are using Windows, you can use <b>Run.bat</b>
 <ul>
  <li> CPAN</li>
  <li> Method::Signatures</li>
- <li> HTML::Entities</li>
- <li> IO::Socket</li>
- <li> IO::Select</li>
  <li> Digest::MD5</li>
  <li> XML::Simple</li>
  <li> LWP::Simple</li>
@@ -69,53 +52,135 @@ If you are using Windows, you can use <b>Run.bat</b>
  <li> Module::Find</li>
  <li> Array::Utils</li>
  <li> List::Util</li>
- <li> HTTP::Date</li>
  <li> Math::Round</li>
- <li> POSIX</li>
  <li> Switch</li>
- <li> File::Basename</li>
  <li> File::Fetch</li>
  <li> Lyrics::Fetcher</li>
  <li> Lyrics::Fetcher::LyricWiki</li>
  <li> Lyrics::Fetcher::AstraWeb</li>
- <li> LWP::UserAgent</li>
- <li> URI::Escape</li>
 </ul>
+
 
 ### Tutorials:
+
+### VPS Setup:
+
+To setup Luna on a VPS is very easy, since most of the VPS's come with <b>Ubuntu 14</b>, I will be using <b>Ubuntu</b> here:
+
+First you got to setup <a href="http://howtoubuntu.org/how-to-install-lamp-on-ubuntu">LAMP</a>
+
+Please also execute these commands after installing LAMP:
+
+```
+sudo apt-get install php5-mysql
+sudo apt-get install libmysqlclient-dev
+sudo service apache2 restart
+```
+
+Then after you have done that, check the version of Perl your server comes bundled with, so open up your terminal and execute this command:
+
+```
+perl -v
+```
+
+These days your servers comes bundled with <b>Perl 5.20+</b> which is not compatible with Luna yet. So what do you got to do? Simple! Use <b>perlbrew</b>!
+
+So open up your terminal again and run these commands:
+
+```
+sudo cpan App::perlbrew
+perlbrew init
+```
+
+There we go, <b>perlbrew</b> is installed! Now lets install <b>Perl 5.14</b> and use that as the default version of Perl by running these commands:
+
+```
+perlbrew install perl-5.14.4
+perlbrew switch perl-5.14.4
+```
+
+and you're done. Now before we proceed any further, lets make sure you have an updated server. So run these commands:
+
+```
+sudo apt-get update
+sudo apt-get upgrade
+sudo apt-get dist-upgrade
+sudo apt-get install build-essentials
+```
+
+Now lets start installing the required modules for Luna, please note that some modules in the list are already pre-installed so watch what you do.
+
+First lets initiate <b>CPAN</b>, run this command:
+
+```
+cpan
+```
+
+If you get any prompts, type <b>y</b>(yes) and hit the <b>enter</b> key on your keyboard.
+
+Now lets first update <a>CPAN</b> by executing these commands:
+
+```
+install CPAN
+reload CPAN
+```
+
+Now using the <a href="https://github.com/Levi-M/Luna#modules">modules list</a> go ahead and install each of those modules except <b>CPAN</b> since we already updated it. Usually after installing a module, it will display a status to let you know if it is installed or not so please be aware of it.
+
+After you have done that, download <a href="https://github.com/Levi-M/Luna/archive/master.zip">Luna</a> and unzip it and store it somewhere in your server.
+
+Now lets import the SQL onto Phpmyadmin:
+
 <ul>
- <li><a href="https://www.google.com/recaptcha/intro/index.html">reCaptcha(Required)</a></li>
- <li><a href="https://www.apachefriends.org/">Install XAMPP - Windows Users</a></li>
- <li><a href="https://www.digitalocean.com/community/tutorials/how-to-install-linux-apache-mysql-php-lamp-stack-on-ubuntu">Install LAMP - Linux Users</a></li>
- <li><a href="http://learn.perl.org/installing/">How to install Perl</a></li>
- <li><a href="http://perlmaven.com/how-to-install-a-perl-module-from-cpan">How to install Perl modules</a></li>
- <li><a href="http://nginx.org/en/docs/install.html">How to install Nginx(Optional)</a></li>
- <li><a href="http://www.adminer.org/">How to install Adminer(Optional)</a></li>
+  <li>Go to http://yourserverip/phpmyadmin and login using your MySQL username and password</li>
+  <li>Go to the <b>Import</b> tab</li>
+  <li>Click <b>Browse</b>, locate Luna's SQL file, click <b>Open</b>, and then click <b>Go</b></li>
 </ul>
 
-*<b>Note:</b>* Windows users please do not install Perl when installing XAMPP. Also it is recommended that you install Active State Perl instead of Strawberry Perl.
+Make sure you follow these tutorials too:
+
+<ul>
+  <li><a href="https://github.com/Levi-M/Luna#paypal">Paypal</a></li>
+  <li><a href="https://github.com/Levi-M/Luna#contact-page-setup">Contact Page Setup</a></li>
+</ul>
+
+and setup a <a href="https://www.google.com/recaptcha">reCaptcha</a> account and get your keys.
+
+Now go back to Luna's directory and open <b>/Configuration/Config.pl</b> and <b>/Website/config.php</b>
+
+Edit your information in those files and save it.
+
+One more thing, move the content from the <b>Website</b> folder from Luna to <b>/var/www/html/</b> and make sure to edit <b>play.php</b> too.
+
+Last but not the least, pull up your terminal and using the ```cd``` command, navigate to Luna's directory and execute this command:
+
+```
+perl Run.pm
+```
+
+Now you should have Luna successfully running, if you want to keep Luna running 24/7 you can use <a href="https://www.howtoforge.com/linux_screen">Screen </a> or <a href="http://www.cyberciti.biz/tips/nohup-execute-commands-after-you-exit-from-a-shell-prompt.html">nohup</a>.
+
+ 
 
 ### Paypal:
-
 *<b>Note:</b>* Click the <b>return to the merchant site</b> button after you have paid in order for the payment to go through successfully.
 
 Follow these steps to configure your paypal account for PDT:
     
 <ul>
-<li> Log in to your PayPal account</li>
-<li> Click the Profile subtab</li>
-<li> Click Website Payment Preferences in the Seller Preferences column</li>
-<li> Under Auto Return for Website Payments, click the On radio button</li>
-<li> For the Return URL, enter the URL on your site that will receive the transaction ID posted by PayPal after a customer payment</li>
-<li> Under Payment Data Transfer, click the On radio button</li>
-<li> Click Save</li>
-<li> Click Website Payment Preferences in the Seller Preferences column</li>
-<li> Scroll down to the Payment Data Transfer section of the page to view your PDT identity token</li>
-<li> Copy and paste the token in <b>Website/config.php</b> where it says <code>$identity_token</code></li>
+  <li> Log in to your PayPal account</li>
+  <li> Click the <a>Profile</b> subtab</li>
+  <li> Click <b>Website Payment Preferences</b> in the <b>Seller Preferences</b> column</li>
+  <li> Under <b>Auto Return</b> for <b>Website Payments</b>, click the <b>On</b> radio button</li>
+  <li> For the <b>Return URL</b>, enter the URL on your site that will receive the transaction ID posted by PayPal after a customer payment</li>
+  <li> Under <b>Payment Data Transfer</b>, click the <b>On</b> radio button</li>
+  <li> Click <b>Save</b></li>
+  <li> Click <b>Website Payment Preferences</b> in the <b>Seller Preferences</b> column</li>
+  <li> Scroll down to the <b>Payment Data Transfer</b> section of the page to view your PDT identity token</li>
+  <li> Copy and paste the token in <b>Website/config.php</b> where it says <code>$identity_token</code></li>
 </ul>
 
 ### Contact Page Setup:
-
 Make sure to setup a mail server, you can do so by following these instructions below.
 
 Open your terminal and run this command:
@@ -181,8 +246,7 @@ Last but not the least, login to your gmail account and once you're done, click 
 Once you're at that page, turn ON the <b>lesssecureapps</b> settings and go back to the contact page and voila!
 
 ### Default Server Account:
-
-The source now comes with a default account, this account is created when you import the SQL into your database. 
+The source comes with a default account, this account is created when you import the SQL into your database. 
 
 <b>Username:</b> Isis<br>
 <b>Password:</b> imfuckinggay<br>
