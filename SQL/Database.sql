@@ -28,7 +28,7 @@ CREATE TABLE IF NOT EXISTS `products` (
   `price` mediumblob NOT NULL,
   `currency` varchar(10) NOT NULL,
   PRIMARY KEY (`pid`) 
-) ENGINE=InnoDB DEFAULT CHARSET=latin1 AUTO_INCREMENT=1;
+) ENGINE=MyISAM  DEFAULT CHARSET=latin1 AUTO_INCREMENT=1;
 
 INSERT INTO `products` (`product`, `price`, `currency`) VALUES ('isVIP', '3.00', 'USD');
 
