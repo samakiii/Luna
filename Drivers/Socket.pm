@@ -61,7 +61,7 @@ method updateServPop {
            my $strName = $self->{child}->{servConfig}->{servName};
            my $intPort = $self->{child}->{servConfig}->{servPort};
            my $intPop = scalar(keys %{$self->{child}->{clients}});
-           $self->{child}->{modules}->{mysql}->updateTable('servers', 'servPort', $intPort, 'curPop', $intPop);
+           $self->{child}->{modules}->{mysql}->updateTable('servers', 'curPop', $intPop, 'servPort', $intPort);
            $self->{child}->{modules}->{logger}->output('Server: ' . $strName . '|Population: ' . $intPop, Logger::LEVELS->{inf});
        }
 }
