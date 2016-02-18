@@ -132,7 +132,7 @@ After you have done that, download <a href="https://github.com/Levi-M/Luna/archi
 Now lets import the SQL onto Phpmyadmin:
 
 <ul>
-  <li>Go to http://yourserverip/phpmyadmin and login using your MySQL username and password</li>
+  <li>Go to <link href="http://yourserverip/phpmyadmin"> and login using your MySQL username and password</li>
   <li>Go to the <b>Import</b> tab</li>
   <li>Click <b>Browse</b>, locate Luna's SQL file, click <b>Open</b>, and then click <b>Go</b></li>
 </ul>
