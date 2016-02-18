@@ -659,11 +659,15 @@ method changePuffleStats($intPuffle, $strType, $intCount, $blnInc = 1) {
        my $arrInfo = $self->{parent}->{modules}->{mysql}->fetchColumns("SELECT $strType FROM puffles WHERE `puffleID` = '$intPuffle' AND `ownerID` = '$self->{ID}'");
        my $intStat = $arrInfo->{$strType};
        $blnInc ? ($intStat += $intCount) : ($intStat -= $intCount);
-       $intStat > 100 ? ($intStat -= ($intStat - 100)) : $intStat;
+       if ($intStat > 100) {
+		   $intStat -= ($intStat - 100);
+	   } else {
+		   $intStat = $intStat;
+	   }
        $self->{parent}->{modules}->{mysql}->execQuery("UPDATE puffles SET `$strType` = '$intStat' WHERE `puffleID` = '$intPuffle' AND `ownerID` = '$self->{ID}'");
 }
 
-method changeRandPuffStat($intPuffle) { # I dont even know if this is the proper way lol
+method changeRandPuffStat($intPuffle) {
        my $arrInfo = $self->{parent}->{modules}->{mysql}->fetchColumns("SELECT * FROM puffles WHERE `puffleID` = '$intPuffle' AND `ownerID` = '$self->{ID}'");
        my $intRandHealth = $self->{parent}->{modules}->{crypt}->generateInt(1, 10);
        my $intRandEnergy = $self->{parent}->{modules}->{crypt}->generateInt(1, 10);
