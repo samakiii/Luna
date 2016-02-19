@@ -105,7 +105,7 @@ and you're done. Now before we proceed any further, lets make sure you have an u
 sudo apt-get update
 sudo apt-get upgrade
 sudo apt-get dist-upgrade
-sudo apt-get install build-essentials
+sudo apt-get install build-essential
 ```
 
 Now lets start installing the required modules for Luna, please note that some modules in the list are already pre-installed so watch what you do.
