@@ -72,6 +72,8 @@ First you got to setup <a href="http://howtoubuntu.org/how-to-install-lamp-on-ub
 Please also execute these commands after installing LAMP:
 
 ```
+echo "ServerName localhost" | sudo tee /etc/apache2/conf-available/fqdn.conf
+sudo a2enconf fqdn
 sudo apt-get install php5-mysql
 sudo apt-get install libmysqlclient-dev
 sudo service apache2 restart
