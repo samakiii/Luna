@@ -376,12 +376,12 @@ method handleXTData($strData, $objClient) {
        if (!$objClient->{isAuth} && $objClient->{username} eq '') {
            return $self->{modules}->{base}->removeClient($objClient->{sock});
        } else {
+		   $self->handleCustomPlugins('xt', $strData, $objClient);
            foreach (values %{$self->{systems}}) {
                     if ($_->can($strHandler)) {
                         $_->$strHandler($strData, $objClient);
                     }
            }
-           $self->handleCustomPlugins('xt', $strData, $objClient);
        }
 }
 
