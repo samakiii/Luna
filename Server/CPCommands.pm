@@ -19,6 +19,8 @@ method handlePenguinSuperSize($objClient, $intSize) {
 
 method handlePenguinBlend($objClient, $strBlend) {
        return if (!$objClient->{isVIP});
+       my %blendModes = ('normal', 'invert', 'layer', 'multiply', 'screen', 'lighten', 'darken', 'difference', 'add', 'substract', 'alpha', 'erase', 'overlay', 'hardlight');
+       return if (!exists($blendModes{$strBlend}));
        $objClient->updateOpenGlow('penguin_blend', $strBlend);
 }
 
@@ -294,7 +296,7 @@ method handleTimeBanClient($objClient, $strName) {
                } 
                case (3) {                        
                      $self->handleBanClient($objClient, $strName);
-               }
+              }
        }
 }
 
