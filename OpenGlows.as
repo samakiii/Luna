@@ -57,15 +57,15 @@ function SetGlows(){
             var Glow = new flash.filters.DropShadowFilter(0, 0, Players[PlayerIndex].Nameglow, 20, 5, 5, 15, 3);
             PlayerName.name_txt.filters = [Glow];
         }
-        if (Players[PlayerIndex].Alpha != "") {
-	           ENGINE.room_mc.load_mc["p" + PlayerIndex]._alpha = int(Players[PlayerIndex].Alpha);
+        if (Players[PlayerIndex].PAlpha != "") {
+	           ENGINE.room_mc.load_mc["p" + PlayerIndex]._alpha = int(Players[PlayerIndex].PAlpha);
         }
         if ((Players[PlayerIndex].Blend != "") && (Players[PlayerIndex].Blend != 0)) {
 	           ENGINE.room_mc.load_mc["p" + PlayerIndex].blendMode = Players[PlayerIndex].Blend;
         }
         if ((Players[PlayerIndex].Size != "") && (Players[PlayerIndex].Size != 1)) {
-	           ENGINE.room_mc.load_mc["p" + PlayerIndex]._yscale = int(Players[PlayerIndex].Size);
-	           ENGINE.room_mc.load_mc["p" + PlayerIndex]._xscale = int(Players[PlayerIndex].Size);
+	           ENGINE.room_mc.load_mc["p" + PlayerIndex]._XSCALE = int(Players[PlayerIndex].Size);
+	           ENGINE.room_mc.load_mc["p" + PlayerIndex]._YSCALE = int(Players[PlayerIndex].Size);
         }
         if (Players[PlayerIndex].ChatGlow){
             var Glow = new flash.filters.DropShadowFilter(0, 0, Players[PlayerIndex].ChatGlow, 20, 5, 5, 15, 3);
@@ -104,19 +104,29 @@ function SetGlows(){
                 PlayerName.title_mc.text = "Member";
                 PlayerName.title_mc.setTextFormat(title_txt);
                 break;
-				case '145 854':
+                case '292':
                 var title_txt = new TextFormat();
                 title_txt.size = 8;
-                title_txt.color = 0xFF0000;
-                title_txt.bold = true;
+                title_txt.color = 0x000000;
                 title_txt.align = 'center';
                 title_txt.font = 'Burbank Small Medium';
                 PlayerName.createTextField( 'title_mc', 4, -50, 25, 100, 13 );
                 PlayerName.title_mc.selectable = false;
-                PlayerName.title_mc.text = "Frosty Bot";
+                PlayerName.title_mc.text = "VIP";
                 PlayerName.title_mc.setTextFormat(title_txt);
                 break;
-            case '876':
+                case '438':
+                var title_txt = new TextFormat();
+                title_txt.size = 8;
+                title_txt.color = 0x000000;
+                title_txt.align = 'center';
+                title_txt.font = 'Burbank Small Medium';
+                PlayerName.createTextField( 'title_mc', 4, -50, 25, 100, 13 );
+                PlayerName.title_mc.selectable = false;
+                PlayerName.title_mc.text = "Mediator";
+                PlayerName.title_mc.setTextFormat(title_txt);
+                break;
+				case '584':
                 var title_txt = new TextFormat();
                 title_txt.size = 8;
                 title_txt.color = 0xFF0000;
@@ -125,7 +135,30 @@ function SetGlows(){
                 title_txt.font = 'Burbank Small Medium';
                 PlayerName.createTextField( 'title_mc', 4, -50, 25, 100, 13 );
                 PlayerName.title_mc.selectable = false;
-                PlayerName.title_mc.text = "Founder";
+                PlayerName.title_mc.text = "Moderator";
+                PlayerName.title_mc.setTextFormat(title_txt);
+                break;
+                case '730':
+                var title_txt = new TextFormat();
+                title_txt.size = 8;
+                title_txt.color = 0x000000;
+                title_txt.align = 'center';
+                title_txt.font = 'Burbank Small Medium';
+                PlayerName.createTextField( 'title_mc', 4, -50, 25, 100, 13 );
+                PlayerName.title_mc.selectable = false;
+                PlayerName.title_mc.text = "Administrator";
+                PlayerName.title_mc.setTextFormat(title_txt);
+                break;
+                case '876':
+                var title_txt = new TextFormat();
+                title_txt.size = 8;
+                title_txt.color = 0xFF0000;
+                title_txt.bold = true;
+                title_txt.align = 'center';
+                title_txt.font = 'Burbank Small Medium';
+                PlayerName.createTextField( 'title_mc', 4, -50, 25, 100, 13 );
+                PlayerName.title_mc.selectable = false;
+                PlayerName.title_mc.text = "Owner";
                 PlayerName.title_mc.setTextFormat(title_txt);
                 break;
            }
@@ -143,7 +176,7 @@ function UpdatePlayer(PlayerArray){
         Speed: PlayerArray[22],
         Rank: PlayerArray[23],
         Mood: PlayerArray[24],
-        Alpha: PlayerArray[25], 
+        PAlpha: PlayerArray[25], 
         Blend: PlayerArray[26],
         Size:  PlayerArray[27],
         ChatGlow: PlayerArray[28]
@@ -256,6 +289,6 @@ function OpenGlows(){
             _loc4_.setRGB(color);
         }
     }
-    AIRTOWER.addListener("se", _global.showEmoteBalloon); // for emotes
+    AIRTOWER.addListener("se", _global.showEmoteBalloon);
 }
 OpenGlows();
