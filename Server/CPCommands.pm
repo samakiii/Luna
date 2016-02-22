@@ -177,7 +177,7 @@ method handleJoinRoom($objClient, $intRoom) {
        }
 }
 
-method handleRebootServer($objClient, $nullVar) {
+method handleShutdownServer($objClient, $nullVar) {
        return if (!$objClient->{isAdmin});
        foreach (values %{$self->{child}->{clients}}) {
                 $_->sendError(990);
