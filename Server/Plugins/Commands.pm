@@ -50,7 +50,7 @@ method new($resChild) {
                        ban => 'handleBanClient',
                        kick => 'handleKickClient',
                        unban => 'handleUnbanClient',
-                       reboot => 'handleRebootServer',
+                       shutdown => 'handleShutdownServer',
                        global => 'handleServerSayAll',
                        summon => 'handleSummonClient',
                        mirror => 'handleMirrorClient'                       
