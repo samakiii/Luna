@@ -42,18 +42,17 @@ body :-ms-input-placeholder {
 }
 .overlay {
     position: fixed;
-    height: 100%;
+    height: 105%;
     width: 100%;
     background: linear-gradient(#50a3a2 0%, #53e3a6 100%);
-    z-index: 10;
+    z-index: 5;
 }
 .container {
-  margin: 0 auto;
-  padding: 80px 0;
-  height: 95%;
+  padding: 50px 0;
+  height: 80%;
   width: 100%;
   text-align: center;
-  overflow: scroll;
+  overflow: auto;
 }
 .container h1 {
   font-size: 40px;
@@ -257,17 +256,17 @@ output[for='range'] {
 }
 table {
  color:#333;
- width:640px;
+ width:800px;
  border-collapse: collapse; 
  border-spacing:0;
 }
 td, th {
  border:1px solid #ccc;
- height:30px;
+ height:25px;
  transition: all 0.3s;
 }
 th {
- background:#DFDFDF;  /* Darken header a bit */
+ background:#DFDFDF;Â  /* Darken header a bit */
  font-weight: bold;
 }
 td {
@@ -276,10 +275,10 @@ td {
 }
 tr:nth-child(even) td {
   background:#F1F1F1; 
-}   
+}Â Â  
 tr:nth-child(odd) td { 
   background:#FEFEFE;
-}  
+}Â  
 tr td:hover { 
   background:#666; color: #FFF; 
 }
@@ -288,7 +287,7 @@ tr td:hover {
     text-align: center;
     color: black;
     bottom: 0;
-    height: 30px;
+    height: 25px;
     background: #f0f0f0;
     width: 100%;
 }
