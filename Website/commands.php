@@ -197,9 +197,9 @@
     <td>Unban a user by their name</td>
   </tr>
    <tr>
-    <td>#REBOOT</td>
-    <td>#REBOOT</td> 
-    <td>Reboot the server</td>
+    <td>#SHUTDOWN</td>
+    <td>#SHUTDOWN</td> 
+    <td>Shutdown the server</td>
   </tr>
    <tr>
     <td>#GLOBAL</td>
