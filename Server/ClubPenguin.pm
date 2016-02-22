@@ -7,6 +7,7 @@ use Method::Signatures;
 use Digest::MD5 qw(md5_hex);
 use Math::Round qw(round);
 use File::Basename;
+use LWP::UserAgent;
 
 method new($resConfig, $resDBConfig) {
        my $obj = bless {}, $self;
@@ -155,7 +156,12 @@ method initializeSource {
        $self->loadModules;
        $self->initiateMysql;
        if ($self->{servConfig}->{servType} ne 'login') {
-           $self->{modules}->{crumbs}->updateCrumbs;
+		   if ($self->isInternetConnected) {
+			   $self->{modules}->{crumbs}->updateCrumbs;
+           } else {
+	           $self->{modules}->{logger}->output('Failed To Update Crumbs Due To No Internet Access', Logger::LEVELS->{err}); 
+			   $self->{modules}->{logger}->output('Default Crumbs Are Going To Be Used Instead', Logger::LEVELS->{ntc}); 
+		   }
            $self->{modules}->{crumbs}->loadCrumbs;
            $self->loadSystems;
            if ($self->{servConfig}->{servType} eq 'game') {
@@ -164,6 +170,13 @@ method initializeSource {
        }
        $self->loadPlugins;
        $self->initiateServer;
+}
+
+method isInternetConnected {
+	   my $resPing = LWP::UserAgent->new;
+	   my $resRequest = HTTP::Request->new(GET => 'http://clubpenguin.com');
+	   my $blnResp = $resPing->request($resRequest);
+       return $blnResp->is_success ? 1 : 0;
 }
 
 method createHeader {
