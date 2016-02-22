@@ -55,9 +55,6 @@ Club Penguin Server Emulator - AS2 Protocol
  <li> Math::Round</li>
  <li> Switch</li>
  <li> File::Fetch</li>
- <li> Lyrics::Fetcher</li>
- <li> Lyrics::Fetcher::LyricWiki</li>
- <li> Lyrics::Fetcher::AstraWeb</li>
 </ul>
 
 
