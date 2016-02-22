@@ -29,9 +29,6 @@ our $gameConfig = {
             botFeet => 0,
             botFlag => 0,
             botPhoto => 0,
-            botXPos => 0,
-            botYPos => 0,
-            botFrame => 12,
             botMember => 1, 
             botRank => 999,
             botNameGlow => '',
@@ -39,7 +36,7 @@ our $gameConfig = {
             botBubbleColour => '',
             botBubbleText => '',
             botRingColour => '',
-            botSpeed => 0,
+            botSpeed => 5,
             botMood => 'The feelings are mutual'
     }
 };
