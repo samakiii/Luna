@@ -2,7 +2,7 @@
 
 $strDBHost = '127.0.0.1';
 $strDBUser = 'root';
-$strDBPass = 'passwordgoeshere';
+$strDBPass = '1337h4x0r';
 $strDBName = 'Luna';
 
 // for server statistics
@@ -15,9 +15,9 @@ $strSecretKey = '6Lee7RMTAAAAAD_B4-4nEt2Amni4XC3EfGmKEI_K';
 $strSiteKey = '6Lee7RMTAAAAANDR7uPCUyEE323E9aY9n3a6yuLS';
 
 // for the contact form
-$strContactEmail = "your@yourdomain.com";
+$strContactEmail = "leneilmario@gmail.com";
 
 // for paypal
-$identity token = 'addyourpaypalidentitytokenhere';
+$identity_token = 'addyourpaypalidentitytokenhere';
 
 ?>
