@@ -215,10 +215,7 @@ method buildBotString {
                    $self->{parent}->{servConfig}->{botProp}->{botHand},
                    $self->{parent}->{servConfig}->{botProp}->{botFeet},
                    $self->{parent}->{servConfig}->{botProp}->{botFlag},
-                   $self->{parent}->{servConfig}->{botProp}->{botPhoto},
-                   $self->{parent}->{servConfig}->{botProp}->{botXPos},
-                   $self->{parent}->{servConfig}->{botProp}->{botYPos},
-                   $self->{parent}->{servConfig}->{botProp}->{botFrame},
+                   $self->{parent}->{servConfig}->{botProp}->{botPhoto}, 0, 0, 0,
                    $self->{parent}->{servConfig}->{botProp}->{botMember},
                    $self->{parent}->{servConfig}->{botProp}->{botRank},
                    $self->{parent}->{servConfig}->{botProp}->{botNameGlow},
@@ -330,10 +327,11 @@ method sendMascotMsg($intMsg) {
 
 method sendMessage($strMsg) {
        if (!$self->{isMuted} && $strMsg ne '') {
+		   $strMsg = decode_entities($strMsg);
            if (!$self->{isMirror}) {
-                $self->sendRoom('%xt%sm%-1%' .  $self->{ID} . '%' . decode_entities($strMsg) . '%');
+                $self->sendRoom('%xt%sm%-1%' .  $self->{ID} . '%' . $strMsg . '%');
            } else {
-                $self->sendRoom('%xt%sm%-1%' .  $self->{ID} . '%' . decode_entities(reverse($strMsg)) . '%');
+                $self->sendRoom('%xt%sm%-1%' .  $self->{ID} . '%' . reverse($strMsg) . '%');
            }
        }
 }
