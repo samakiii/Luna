@@ -455,7 +455,7 @@ method buildRoomString {
                     $userList .= $_->buildClientString . '%';
                 }
        }
-       if ($self->{parent}->{servConfig}->{botProp}->{onServ}) {
+       if ($self->{parent}->{servConfig}->{botProp}->{onServ} && $self->{room} < 1000) {
            $userList .= $self->buildBotString . '%';
        }
        return $userList;
