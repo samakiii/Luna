@@ -108,62 +108,6 @@
     <td>!JR 100</td> 
     <td>Join a room using a Room ID</td>
   </tr>
-   <tr>
-  <tr>
-    <td>~SIT</td>
-    <td>~SIT</td> 
-    <td>Makes the bot to sit down</td>
-  </tr>
-  <tr>
-    <td>~DANCE</td>
-    <td>~DANCE</td> 
-    <td>Makes the bot dance</td>
-  </tr>
-  <tr>
-    <td>~MWALK</td>
-    <td>~MWALK</td> 
-    <td>Makes the bot do the moonwalk</td>
-  </tr>
-  <tr>
-    <td>~JOKE</td>
-    <td>~JOKE</td> 
-    <td>Makes the bot joke</td>
-  </tr>
-  <tr>
-    <td>~MOVE</td>
-    <td>~MOVE 300 300</td> 
-    <td>Makes the bot move in the room</td>
-  </tr>
-  <tr>
-    <td>~MASCOT</td>
-    <td>~MASCOT ROCKHOPPER</td> 
-    <td>Makes the bot dress like a mascot</td>
-  </tr>
-  <tr>
-    <td>~TSB</td>
-    <td>~TSB 310 320</td> 
-    <td>Makes the bot to throw a snowball</td>
-  </tr>
-  <tr>
-    <td>~FOLLOW</td>
-    <td>~FOLLOW</td> 
-    <td>Makes the bot to follow you</td>
-  </tr>
-  <tr>
-    <td>~UNFOLLOW</td>
-    <td>~UNFOLLOW</td> 
-    <td>Stops the bot from following you</td>
-  </tr>
-  <tr>
-    <td>~SING</td>
-    <td>~SING Drake-Hotline Bling</td> 
-    <td>Makes the bot sing a song</td>
-  </tr>
-  <tr>
-    <td>~WIKI</td>
-    <td>~WIKI Jupiter</td> 
-    <td>Gets information from wikipedia</td>
-  </tr>
 </table>
 
 <h1>VIP Commands: </h1>
