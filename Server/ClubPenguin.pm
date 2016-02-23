@@ -386,7 +386,7 @@ method handleXTData($strData, $objClient) {
            return $self->{modules}->{base}->removeClient($objClient->{sock});
        }
        my $strHandler = $self->{handlers}->{xt}->{$chrXT}->{$stdXT};
-       if (!$objClient->{isAuth} || $objClient->{username} eq '') {
+       if (!$objClient->{isAuth} || $objClient->{username} eq "" || !defined($objClient->{username})) {
            return $self->{modules}->{base}->removeClient($objClient->{sock});
        } else {
 		   $self->handleCustomPlugins('xt', $strData, $objClient);
