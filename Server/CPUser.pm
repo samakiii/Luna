@@ -72,9 +72,6 @@ method new($resParent, $resSock) {
        $obj->{bubblecolour} = '';
        $obj->{ringcolour} = '';      
        $obj->{chatglow} = '';      
-       $obj->{penguin_size} = 0;
-       $obj->{penguin_blend} = '';
-       $obj->{penguin_alpha} = 0;
        $obj->{isMirror} = 0;
        return $obj;
 }
@@ -193,10 +190,7 @@ method buildClientString {
                    $self->{speed}, # 22
                    $self->{rank} * 146, # 23
                    $self->{mood},  # 24   
-                   $self->{penguin_alpha},  # 25  
-                   $self->{penguin_blend},  # 26
-                   $self->{penguin_size},  # 27 
-                   $self->{chatglow} # 28
+                   $self->{chatglow} # 25
        );
        my $strInfo = join('|', @arrInfo);
        return $strInfo;
