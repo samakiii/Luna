@@ -236,6 +236,11 @@
     <td>#MIRROR Trevor</td> 
     <td>Activate mirror on a user by their name</td>
   </tr>
+  <tr>
+    <td>#UNMIRROR</td>
+    <td>#UNMIRROR Trevor</td> 
+    <td>Deactivate mirror on a user by their name</td>
+  </tr>
 </table>
 </center>			  
 
