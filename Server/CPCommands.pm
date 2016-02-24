@@ -14,10 +14,11 @@ method new($resChild) {
 
 method handlePenguinSuperSize($objClient, $strArgs) {
        return if (!$objClient->{isVIP});
-       my @arrParts = split(" ", $strArgs);
-       my $intX = ($arrParts[0] ? $arrParts[0] : 0);
-       my $intY = ($arrParts[1] ? $arrParts[1] : 0);
-       $objClient->sendRoom('%xt%ssp%' . $objClient->{ID} . '%' . $intX . '%' . $intY . '%');
+       my @arrParts = split(" ", $strArgs);  
+       my $intX = $arrParts[0];
+       my $intY = $arrParts[1];
+       return if ($intX > 800 || $intY > 800);
+       $objClient->sendRoom('%xt%ssp%' . $objClient->{ID} . '%' . ($intX ? $intX : 100)  . '%' . ($intY ? $intY : 100) . '%');
 }
 
 method handlePenguinBlend($objClient, $strBlend) {
