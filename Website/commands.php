@@ -44,6 +44,11 @@
     <td>Add an Item using an Item ID</td>
   </tr>
   <tr>
+    <td>!AAI</td>
+    <td>!AAI</td> 
+    <td>Add all items</td>
+  </tr>
+  <tr>
     <td>!AF</td>
     <td>!AF 64</td> 
     <td>Add a Furniture using a Furniture ID</td>
@@ -57,6 +62,21 @@
     <td>!CIF</td>
     <td>!CIF 12</td> 
     <td>Change the Igloo Flooring using a Floor ID</td>
+  </tr>
+  <tr>
+    <td>!SAVEOUTFIT</td>
+    <td>!SAVEOUTFIT Outfit-name</td> 
+    <td>Save current penguin outfit</td>
+  </tr>
+  <tr>
+    <td>!GPOUTFIT</td>
+    <td>!GPOUTFIT</td> 
+    <td>Get previous penguin outfit</td>
+  </tr>
+  <tr>
+    <td>!GSOUTFIT</td>
+    <td>!GSOUTFIT Outfit-name</td> 
+    <td>Get saved penguin outfit by outfit name</td>
   </tr>
   <tr>
     <td>!CPC</td>
