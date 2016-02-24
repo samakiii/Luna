@@ -17,7 +17,7 @@ method handlePenguinSuperSize($objClient, $strArgs) {
        my @arrParts = split(" ", $strArgs);  
        my $intX = $arrParts[0];
        my $intY = $arrParts[1];
-       return if ($intX > 800 || $intY > 800);
+       return if (!int($intX) || !int($intY) || $intX > 800 || $intY > 800);
        $objClient->sendRoom('%xt%ssp%' . $objClient->{ID} . '%' . ($intX ? $intX : 100)  . '%' . ($intY ? $intY : 100) . '%');
 }
 
