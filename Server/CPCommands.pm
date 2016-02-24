@@ -231,15 +231,14 @@ method handleMirrorClient($objClient, $strName) {
             return if ($objClient->{rank} < 4 && uc($objClient->{username}) eq uc($strName));
             my $objPlayer = $objClient->getClientByName($strName);       
             return if ($objPlayer->{rank} > 4);     
-            my $arrInfo = $self->{child}->{modules}->{mysql}->fetchColumns("SELECT `isMirror` FROM users WHERE `username` = '$objPlayer->{username}'");
-            my $blnMirror = $arrInfo->{isMirror};
-            if ($blnMirror) {
-                $objPlayer->{isMirror} = 0;
-                $self->{child}->{modules}->{mysql}->updateTable('users', 'isMirror', 0, 'ID', $objClient->{ID});
-            } else {
-                $objPlayer->{isMirror} = 1;
-                $self->{child}->{modules}->{mysql}->updateTable('users', 'isMirror', 1, 'ID', $objClient->{ID});
-            }
+            $self->{child}->{modules}->{mysql}->updateTable('users', 'isMirror', 1, 'ID', $objPlayer->{ID});
+}
+
+method handleUnmirrorClient($objClient, $strName) {
+            return if ($objClient->{rank} < 4 && uc($objClient->{username}) eq uc($strName));
+            my $objPlayer = $objClient->getClientByName($strName);       
+            return if ($objPlayer->{rank} > 4);     
+            $self->{child}->{modules}->{mysql}->updateTable('users', 'isMirror', 0, 'ID', $objPlayer->{ID});
 }
 
 method handleBanClient($objClient, $strName) {
