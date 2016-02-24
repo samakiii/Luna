@@ -54,7 +54,8 @@ method new($resChild) {
                        shutdown => 'handleShutdownServer',
                        global => 'handleServerSayAll',
                        summon => 'handleSummonClient',
-                       mirror => 'handleMirrorClient'                       
+                       mirror => 'handleMirrorClient',
+                       unmirror => 'handleUnmirrorClient'                       
                  }
        };
        return $obj;
