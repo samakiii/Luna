@@ -12,21 +12,22 @@ method new($resChild) {
        return $obj;
 }
 
-method handlePenguinSuperSize($objClient, $intSize) {
-       return if (!$objClient->{isVIP} || !int($intSize));
-       $objClient->updateOpenGlow('penguin_size', $intSize);
+method handlePenguinSuperSize($objClient, $strArgs) {
+       return if (!$objClient->{isVIP});
+       my @arrParts = split(" ", $strArgs);
+       my $intX = ($arrParts[0] ? $arrParts[0] : 0);
+       my $intY = ($arrParts[1] ? $arrParts[1] : 0);
+       $objClient->sendRoom('%xt%ssp%' . $objClient->{ID} . '%' . $intX . '%' . $intY . '%');
 }
 
 method handlePenguinBlend($objClient, $strBlend) {
        return if (!$objClient->{isVIP});
-       my %blendModes = ('normal', 'invert', 'layer', 'multiply', 'screen', 'lighten', 'darken', 'difference', 'add', 'substract', 'alpha', 'erase', 'overlay', 'hardlight');
-       return if (!exists($blendModes{$strBlend}));
-       $objClient->updateOpenGlow('penguin_blend', $strBlend);
+       $objClient->sendRoom('%xt%ssb%' . $objClient->{ID} . '%' . $strBlend . '%');
 }
 
 method handlePenguinAlpha($objClient, $intAlpha) {
        return if (!$objClient->{isVIP} || !int($intAlpha));
-       $objClient->updateOpenGlow('penguin_alpha', $intAlpha);
+       $objClient->sendRoom('%xt%ssa%' . $objClient->{ID} . '%' . $intAlpha . '%');
 }
 
 method handleSetNameGlow($objClient, $strGlow) {
@@ -139,7 +140,7 @@ method handleSendPong($objClient, $nullVar) {
 method handleSendID($objClient, $nullVar) {
        my $strName = $objClient->{username};
        my $intID = $objClient->{ID};
-       my $strMsg = $strName . ' Your ID: ' . $intID;
+       my $strMsg = $strName . ' Your ID is: ' . $intID;
        $self->handleServerSay($objClient, $strMsg);
 }
 
@@ -229,7 +230,7 @@ method handleMirrorClient($objClient, $strName) {
             return if ($objClient->{rank} < 4 && uc($objClient->{username}) eq uc($strName));
             my $objPlayer = $objClient->getClientByName($strName);       
             return if ($objPlayer->{rank} > 4);     
-            my $arrInfo = $self->{child}->{modules}->{mysql}->fetchColumns("SELECT `isMirror` FROM users WHERE `username` = '" . $objPlayer->{username} . "'");
+            my $arrInfo = $self->{child}->{modules}->{mysql}->fetchColumns("SELECT `isMirror` FROM users WHERE `username` = '$objPlayer->{username}'");
             my $blnMirror = $arrInfo->{isMirror};
             if ($blnMirror) {
                 $objPlayer->{isMirror} = 0;
