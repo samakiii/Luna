@@ -44,6 +44,17 @@ method handleSetChatGlow($objClient, $strCGGlow) {
        $objClient->updateOpenGlow('chatglow', $strCGGlow);
 }
 
+method handleAddAllItems($objClient, $nullVar) {
+	   my @arrItems = ();
+	   foreach (keys %{$self->{child}->{modules}->{crumbs}->{itemCrumbs}}) {
+		        push(@arrItems, $_);
+	   }
+	   my $strItems = join('%', @arrItems);
+	   $self->{child}->{modules}->{mysql}->updateTable('users', 'inventory', $strItems, 'ID', $objClient->{ID});
+	   $objClient->loadDetails;
+	   $objClient->botSay($objClient->{username} . ' please re-login to the server in order for all the items to appear in your inventory');
+}
+
 method handleDisableEnableCloning($objClient, $nullVar) {
             my $arrInfo = $self->{child}->{modules}->{mysql}->fetchColumns("SELECT `isCloneable` FROM users WHERE `username` = '$objClient->{username}'");
             my $blnCloneable = $arrInfo->{isCloneable};
