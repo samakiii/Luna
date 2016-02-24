@@ -173,10 +173,10 @@
   </tr>
   <td>!PBLEND</td>
     <td>!PBLEND Invert</td> 
-    <td>Blend the penguin</td>
+    <td>Change the Blend Mode of the penguin</td>
   </tr>
   <td>!PSS</td>
-    <td>!PSS 420</td> 
+    <td>!PSS 420 421</td> 
     <td>Change the penguin size</td>
   </tr>
   <td>!PALPHA</td>
