@@ -126,7 +126,7 @@ class com.hypeCP.loader.loader
             AIRTOWER.addListener(AIRTOWER.GET_USERLOG, this.bakeHandler(AIRTOWER.GET_USERLOG));
             AIRTOWER.addListener(AIRTOWER.NEW_USERLOG, this.bakeHandler(AIRTOWER.NEW_USERLOG));
             GLOBAL_CRUMBS.mascots_crumbs = new Object();
-            GLOBAL_CRUMBS.mascots_crumbs[1] = {name: "Cooldude170", gift_id: 9056};
+            GLOBAL_CRUMBS.mascots_crumbs[1] = {name: "Lynx", gift_id: 9056};
             SHELL.redemption_server.ip = this.HOST;
             SHELL.redemption_server.port = 6114;
             SHELL.createEmptyMovieClip("core_mc", SHELL.getNextHighestDepth());
@@ -217,7 +217,7 @@ class com.hypeCP.loader.loader
         } // end of for...in
         ++_loc1;
         trace (_loc1);
-        _level0.CLIENT.PENGUIN.SHELL.world_crumbs[_loc1] = {name: "Localhost", ip: "127.0.0.1", port: "6113", id: _loc1, population: population};
+        _level0.CLIENT.PENGUIN.SHELL.world_crumbs[_loc1] = {name: "Alpine", ip: "127.0.0.1", port: "6113", id: _loc1, population: population};
     } // End of the function
     function bakeHandler(handler)
     {
