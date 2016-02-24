@@ -29,7 +29,7 @@ Club Penguin Server Emulator - AS2 Protocol
  </ul>
  <li> Setup an AS2 Media Server</li>
  <li> Import the <a href="https://github.com/Levi-M/Luna/blob/master/SQL/Database.sql">SQL</a> using <b>Phpmyadmin/Adminer</b></li>
- <li> Edit <a href="https://github.com/Levi-M/Luna/blob/master/Website/config.php">Config.php</a> and create an account</li> using the register or use the <a href="https://github.com/Levi-M/Luna/blob/master/README.md#default-server-account">default account</a>
+ <li> Edit <a href="https://github.com/Levi-M/Luna/blob/master/Website/config.php">Config.php</a> and create an account using the register or use the <a href="https://github.com/Levi-M/Luna/blob/master/README.md#default-server-account">default account</a></li>
  <li> Edit <a href="https://github.com/Levi-M/Luna/blob/master/Configuration/Config.pl">Config.pl</a></li>
  <li> Execute <a href="https://github.com/Levi-M/Luna/blob/master/Run.pm">Run.pm</a></li>
 </ul>
