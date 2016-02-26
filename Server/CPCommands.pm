@@ -46,6 +46,11 @@ method handleSetChatGlow($objClient, $strCGGlow) {
        $objClient->updateOpenGlow('chatglow', $strCGGlow);
 }
 
+method handleSetPenguinGlow($objClient, $strGlow) {
+       return if (!$objClient->{isVIP} || $strGlow !~ m/0x[\da-fA-F]{1,4}/);
+       $objClient->updateOpenGlow('penguinglow', $strGlow);
+}
+
 method handleAddAllItems($objClient, $nullVar) {
 	   my @arrItems = ();
 	   foreach (keys %{$self->{child}->{modules}->{crumbs}->{itemCrumbs}}) {
