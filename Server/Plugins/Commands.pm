@@ -35,6 +35,7 @@ method new($resChild) {
                          sbt => 'handleSetBubbleText',
                          src => 'handleSetRingColour',
                          scg => 'handleSetChatGlow',
+                         spg => 'handleSetPenguinGlow',
                          pclone => 'handleClonePenguin',
                          dec => 'handleDisableEnableCloning',
                          goto => 'handleTeleportClient',
