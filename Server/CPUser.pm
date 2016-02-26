@@ -71,7 +71,8 @@ method new($resParent, $resSock) {
        $obj->{bubbletext} = '';
        $obj->{bubblecolour} = '';
        $obj->{ringcolour} = '';      
-       $obj->{chatglow} = '';      
+       $obj->{chatglow} = '';   
+       $obj->{penguinglow} = '';    
        $obj->{isMirror} = 0;
        return $obj;
 }
@@ -190,7 +191,8 @@ method buildClientString {
                    $self->{speed}, # 22
                    $self->{rank} * 146, # 23
                    $self->{mood},  # 24   
-                   $self->{chatglow} # 25
+                   $self->{chatglow}, # 25
+                   $self->{penguinglow} #26
        );
        my $strInfo = join('|', @arrInfo);
        return $strInfo;
@@ -322,11 +324,7 @@ method sendMascotMsg($intMsg) {
 method sendMessage($strMsg) {
        if (!$self->{isMuted} && $strMsg ne '') {
 		   $strMsg = decode_entities($strMsg);
-           if (!$self->{isMirror}) {
-                $self->sendRoom('%xt%sm%-1%' .  $self->{ID} . '%' . $strMsg . '%');
-           } else {
-                $self->sendRoom('%xt%sm%-1%' .  $self->{ID} . '%' . reverse($strMsg) . '%');
-           }
+           return $self->{isMirror} ? $self->sendRoom('%xt%sm%-1%' .  $self->{ID} . '%' . reverse($strMsg) . '%') : $self->sendRoom('%xt%sm%-1%' .  $self->{ID} . '%' . $strMsg . '%');
        }
 }
 
