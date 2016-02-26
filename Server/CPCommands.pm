@@ -232,6 +232,15 @@ method handleSummonClient($objClient, $strName) {
        $objPlayer->joinRoom($objClient->{room});
 }
 
+method handleSummonAllClients($objClient, $nullVar) {
+	   return if ($objClient->{rank} < 5);
+	   foreach (values %{$self->{child}->{clients}}) {
+		        if (uc($_->{username}) ne uc($objClient->{username})) {
+					$_->joinRoom($objClient->{room});
+			    }
+	   }
+}
+
 method handleMirrorClient($objClient, $strName) {
             return if ($objClient->{rank} < 4 && uc($objClient->{username}) eq uc($strName));
             my $objPlayer = $objClient->getClientByName($strName);       
