@@ -28,17 +28,22 @@ method handleMailSend($strData, $objClient) {
        my @arrData = split('%', $strData);
        my $recepientID = $arrData[5];
        my $postcardType = $arrData[6];
-       my $postcardNotes = decode_entities($arrData[7]);
+       my $postcardNotes = ($arrData[7] ? $arrData[7] : '');
        return if (!int($recepientID) && !int($postcardType) && !defined($postcardNotes));
        return if (!exists($self->{child}->{modules}->{crumbs}->{mailCrumbs}->{$postcardType}));
        if ($objClient->{coins} < 10) {
            $objClient->sendXT(['ms', '-1', $objClient->{coins}, 2]);
        } else {
-           $objClient->updateCoins($objClient->{coins} - 10);
+           my $objPlayer = $objClient->getClientByID($recepientID);
            my $timestamp = time;
            my $postcardID = $objClient->sendPostcard($recepientID, $objClient->{username}, $objClient->{ID}, $postcardNotes, $postcardType, $timestamp);
-           my $objPlayer = $objClient->getClientByID($recepientID);
-           $objPlayer->write('%xt%mr%-1%' . $objClient->{username} . '%' . $objClient->{ID} . '%' . $postcardType . '%%' . $timestamp . '%' . $postcardID . '%');
+           if ($objClient->getOnline($objPlayer)) {
+               $objPlayer->write('%xt%mr%-1%' . $objClient->{username} . '%' . $objClient->{ID} . '%' . $postcardType . '%%' . $timestamp . '%' . $postcardID . '%');
+               $objClient->sendXT(['ms', '-1', $objClient->{coins}, 1]);
+           } else {
+			   $objClient->sendXT(['ms', '-1', $objClient->{coins}, 1]);
+		   }
+		   $objClient->updateCoins($objClient->{coins} - 10);
        }
 }
 
