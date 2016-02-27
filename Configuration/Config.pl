@@ -38,6 +38,9 @@ our $gameConfig = {
             botRingColour => '',
             botChatGlow => '',
             botPenguinGlow => '',
+            botBubbleGlow => '',
+            botMoodGlow => '',
+            botMoodColor => '',
             botSpeed => 5,
             botMood => 'The feelings are mutual'
     }
