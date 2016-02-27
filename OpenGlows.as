@@ -15,17 +15,18 @@ INTERFACE.updatePlayerWidget = function() {
    INTERFACE.updatePlayerWidgetO();
    var mP = INTERFACE.getActivePlayerId() == SHELL.getMyPlayerId();
    var player_ob = INTERFACE.getPlayerObject(INTERFACE.getActivePlayerId());
+   var glow = new flash.filters.DropShadowFilter(0, 0, Players[player_ob.player_id].MoodGlow, 20, 5, 5, 15, 3);
    var tF = new TextFormat();
    tF.font = "Burbank Small Medium";
    tF.size = 12;
    tF.align = "center";
-   tF.color = 0xFFFFFF;
+   tF.color = Players[player_ob.player_id].MoodColor;
 
    INTERFACE.PLAYER_WIDGET.art_mc.createTextField("pMood_txt",2, 10, 230, 203, 16);
    INTERFACE.PLAYER_WIDGET.art_mc.pMood_txt.text = Players[player_ob.player_id].Mood;
    INTERFACE.PLAYER_WIDGET.art_mc.pMood_txt.selectable = mP;
    INTERFACE.PLAYER_WIDGET.art_mc.pMood_txt.setTextFormat(tF);
-   INTERFACE.PLAYER_WIDGET.art_mc.pMood_txt.textColor = 16756224;
+   INTERFACE.PLAYER_WIDGET.art_mc.pMood_txt.filters = [glow];
    if(mP) {
       INTERFACE.PLAYER_WIDGET.art_mc.pMood_txt.type = "input";
       INTERFACE.PLAYER_WIDGET.art_mc.pMood_txt.onKillFocus = function() {
@@ -68,6 +69,12 @@ function SetGlows(){
             _loc1.setRGB(Players[PlayerIndex].BubbleColor);
             var _loc2 = new Color(i.pointer_mc);
             _loc2.setRGB(Players[PlayerIndex].BubbleColor);
+        }
+        if(Players[PlayerIndex].BubbleGlow) {
+            var pballon = INTERFACE.BALLOONS["p" + PlayerIndex];
+            var Glow = new flash.filters.DropShadowFilter(0, 0, Players[PlayerIndex].BubbleGlow, 20, 5, 5, 15, 3);
+            pballon.balloon_mc.filters = [Glow];
+            pballon.pointer_mc.filters = [Glow];
         }
         if(Players[PlayerIndex].BubbleTextColor) {
             var mc = INTERFACE.BALLOONS["p" + PlayerIndex];
@@ -163,7 +170,10 @@ function UpdatePlayer(PlayerArray){
         Rank: PlayerArray[23],
         Mood: PlayerArray[24],
         ChatGlow: PlayerArray[25],
-        PenguinGlow: PlayerArray[26]
+        PenguinGlow: PlayerArray[26],
+        BubbleGlow: PlayerArray[27],
+        MoodGlow: PlayerArray[28],
+        MoodColor: PlayerArray[29]
     };
 }
 
@@ -271,12 +281,20 @@ function OpenGlows() {
         obj.shift();
         id = obj[0];
         color = Players[id].BubbleColor;
+        glow = Players[id].BubbleGlow;
         if(color) {
             var _loc3_ = new Color(INTERFACE.balloons_mc["p" + id].balloon_mc);
             var _loc4_ = new Color(INTERFACE.balloons_mc["p" + id].pointer_mc);
             _loc3_.setRGB(color);
             _loc4_.setRGB(color);
         }
+        if (glow) {
+			var pglow = new flash.filters.DropShadowFilter(0, 0, glow, 20, 5, 5, 15, 3);
+			var _loc5 = INTERFACE.balloons_mc["p" + id].balloon_mc;
+            var _loc6 = INTERFACE.balloons_mc["p" + id].pointer_mc;
+            _loc5.filters = [pglow];
+            _loc6.filters = [pglow];
+		}
     }
     AIRTOWER.addListener("se", _global.showEmoteBalloon);
 }
