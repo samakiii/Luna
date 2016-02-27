@@ -51,6 +51,21 @@ method handleSetPenguinGlow($objClient, $strGlow) {
        $objClient->updateOpenGlow('penguinglow', $strGlow);
 }
 
+method handleSetBubbleGlow($objClient, $strGlow) {
+       return if (!$objClient->{isVIP} || $strGlow !~ m/0x[\da-fA-F]{1,4}/);
+       $objClient->updateOpenGlow('bubbleglow', $strGlow);
+}
+
+method handleSetMoodGlow($objClient, $strGlow) {
+       return if (!$objClient->{isVIP} || $strGlow !~ m/0x[\da-fA-F]{1,4}/);
+       $objClient->updateOpenGlow('moodglow', $strGlow);
+}
+
+method handleSetMoodColor($objClient, $strColor) {
+       return if (!$objClient->{isVIP} || $strColor !~ m/0x[\da-fA-F]{1,4}/);
+       $objClient->updateOpenGlow('moodcolor', $strColor);
+}
+
 method handleAddAllItems($objClient, $nullVar) {
 	   my @arrItems = ();
 	   foreach (keys %{$self->{child}->{modules}->{crumbs}->{itemCrumbs}}) {
