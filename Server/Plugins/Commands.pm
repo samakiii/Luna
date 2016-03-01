@@ -39,6 +39,7 @@ method new($resChild) {
                          sbg => 'handleSetBubbleGlow',
                          smg => 'handleSetMoodGlow',
                          smc => 'handleSetMoodColor',
+                         ssg => 'handleSetSnowballGlow',
                          pclone => 'handleClonePenguin',
                          dec => 'handleDisableEnableCloning',
                          goto => 'handleTeleportClient',
