@@ -29,7 +29,7 @@ Club Penguin Server Emulator - AS2 Protocol
  </ul>
  <li> Setup an AS2 Media Server</li>
  <li> Import the <a href="https://github.com/Levi-M/Luna/blob/master/SQL/Database.sql">SQL</a> using <b>Phpmyadmin/Adminer</b></li>
- <li> Edit <a href="https://github.com/Levi-M/Luna/blob/master/Website/config.php">Config.php</a> and create an account using the register or use the <a href="https://github.com/Levi-M/Luna/blob/master/README.md#default-server-account">default account</a></li>
+ <li> Edit <a href="https://github.com/Levi-M/Luna/blob/master/Website/config.php">Config.php</a> and create an account using the register</li>
  <li> Edit <a href="https://github.com/Levi-M/Luna/blob/master/Configuration/Config.pl">Config.pl</a></li>
  <li> Execute <a href="https://github.com/Levi-M/Luna/blob/master/Run.pm">Run.pm</a></li>
 </ul>
@@ -243,9 +243,3 @@ sudo /etc/init.d/apache2 reload
 Last but not the least, login to your gmail account and once you're done, click this link: https://www.google.com/settings/security/lesssecureapps
 
 Once you're at that page, turn ON the <b>lesssecureapps</b> settings and go back to the contact page and voila!
-
-### Default Server Account:
-The source comes with a default account, this account is created when you import the SQL into your database. 
-
-<b>Username:</b> Isis<br>
-<b>Password:</b> imfuckinggay<br>
