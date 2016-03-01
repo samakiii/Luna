@@ -78,6 +78,7 @@ method new($resParent, $resSock) {
        $obj->{moodglow} = '';  
        $obj->{moodcolor} = '';       
        $obj->{isMirror} = 0;
+       $obj->{wow} = 0;
        return $obj;
 }
 
@@ -200,7 +201,8 @@ method buildClientString {
                    $self->{bubbleglow}, #27
                    ($self->{moodglow} ? $self->{moodglow} : '0x000000'), #28
                    ($self->{moodcolor} ? $self->{moodcolor} : '0xFFFFFF'), #29
-                   $self->{snowballglow} # 30
+                   $self->{snowballglow}, # 30
+                   $self->{wow} # 31
        );
        my $strInfo = join('|', @arrInfo);
        return $strInfo;
