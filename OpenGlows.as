@@ -85,23 +85,23 @@ function SetGlows(){
             var _loc3 = new Color(ENGINE.room_mc.load_mc["p" + PlayerIndex].art_mc.ring);
             _loc3.setRGB(Players[PlayerIndex].RingColor);
         }
-	var PlayerName = INTERFACE.nicknames_mc["p" + PlayerIndex];	
-	var Ranks:Array = new Array();
-	Ranks[146] = "Member";
-	Ranks[292] = "VIP";
-	Ranks[438] = "Mediator";
-	Ranks[584] = "Moderator";
-	Ranks[730] = "Administrator";
-	Ranks[876] = "Owner";
-	var title_txt = new TextFormat();
-	title_txt.size = 8;
-	title_txt.color = 0x000000;
-	title_txt.align = 'center';
-	title_txt.font = 'Burbank Small Medium';
-	PlayerName.createTextField('title_mc', 4, -50, 25, 100, 13);
-	PlayerName.title_mc.selectable = false;
-	PlayerName.title_mc.text =  Ranks[Players[PlayerIndex].Rank];
-	PlayerName.title_mc.setTextFormat(title_txt);
+		var PlayerName = INTERFACE.nicknames_mc["p" + PlayerIndex];	
+		var Ranks:Array = new Array();
+		Ranks[146] = "Member";
+		Ranks[292] = "VIP";
+		Ranks[438] = "Mediator";
+		Ranks[584] = "Moderator";
+		Ranks[730] = "Administrator";
+		Ranks[876] = "Owner";
+		var title_txt = new TextFormat();
+		title_txt.size = 8;
+		title_txt.color = 0x000000;
+		title_txt.align = 'center';
+		title_txt.font = 'Burbank Small Medium';
+		PlayerName.createTextField('title_mc', 4, -50, 25, 100, 13);
+		PlayerName.title_mc.selectable = false;
+		PlayerName.title_mc.text =  Ranks[Players[PlayerIndex].Rank];
+		PlayerName.title_mc.setTextFormat(title_txt);
 	}
 }
 
@@ -120,7 +120,8 @@ function UpdatePlayer(PlayerArray){
         BubbleGlow: PlayerArray[27],
         MoodGlow: PlayerArray[28],
         MoodColor: PlayerArray[29],
-        SnowballGlow: PlayerArray[30]
+        SnowballGlow: PlayerArray[30],
+        Walls: PlayerArray[31]
     };
 }
 
@@ -276,6 +277,39 @@ ENGINE.throwBall = function (player_id, target_x, target_y, start_height, max_he
 	 }
 	}
 };
+
+ENGINE.findPlayerPath = function(player_id, x, y) { 
+	var _local12 = ENGINE.getPlayerMovieClip(player_id); 
+	var _local7 = ENGINE.getRoomBlockMovieClip(); 
+	var _local13 = ENGINE.getValidXPosition(x); 
+	var _local14 = ENGINE.getValidYPosition(y); 
+	var _local11 = Math.round(_local12._x); 
+	var _local10 = Math.round(_local12._y); 
+	var _local15 = ENGINE.findDistance(_local11, _local10, _local13, _local14); 
+	var _local6 = Math.round(_local15); 
+	var _local9 = (_local13 - _local11) / _local6; 
+	var _local8 = (_local14 - _local10) / _local6; 
+	var _local4 = _local11; var _local3 = _local10; 
+	var _local5 = new Object();
+	_local5.x = _local11;
+	_local5.y = _local10;
+	var _local16 = _local7.hitTest(_local11, _local10, true);
+	while (_local6 > 0) { 
+		_local4 = _local4 + _local9;
+		_local3 = _local3 + _local8;
+		var _local2 = Math.round(_local4);
+		var _local1 = Math.round(_local3);
+		if(Players[player_id].Walls != 1){
+			if (_local7.hitTest(_local2, _local1, true)) {
+				break; 
+			} 
+		}
+		_local5.x = _local2;
+		_local5.y = _local1; 
+		_local6--; 
+	} 
+	return(_local5); 
+}
 
 function OpenGlows() {  
     _global.handleJoinRoom = function(obj) {
