@@ -130,7 +130,7 @@ if (isset($_POST['submit'])) {
        <input type="password" name="passtwo" maxlength="15" placeholder="Enter Your Password Again">
        <input type="password" name="spin" maxlength="6" placeholder="Enter Your Secret Pin">
        <select name="color" id="color">
-                <option value="">Color</option>
+                <option value="null">Color</option>
                 <option value="1">Blue</option>
                 <option value="2">Green</option>
                 <option value="3">Pink</option>
