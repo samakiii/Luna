@@ -85,77 +85,23 @@ function SetGlows(){
             var _loc3 = new Color(ENGINE.room_mc.load_mc["p" + PlayerIndex].art_mc.ring);
             _loc3.setRGB(Players[PlayerIndex].RingColor);
         }
-		var PlayerName = INTERFACE.nicknames_mc["p" + PlayerIndex];
-		switch(Players[PlayerIndex].Rank){
-			case '146':
-				var title_txt = new TextFormat();
-				title_txt.size = 8;
-				title_txt.color = 0x000000;
-				title_txt.align = 'center';
-				title_txt.font = 'Burbank Small Medium';
-				PlayerName.createTextField( 'title_mc', 4, -50, 25, 100, 13 );
-				PlayerName.title_mc.selectable = false;
-				PlayerName.title_mc.text = "Member";
-				PlayerName.title_mc.setTextFormat(title_txt);
-			break;
-			case '292':
-				var title_txt = new TextFormat();
-				title_txt.size = 8;
-				title_txt.color = 0x000000;
-				title_txt.align = 'center';
-				title_txt.font = 'Burbank Small Medium';
-				PlayerName.createTextField( 'title_mc', 4, -50, 25, 100, 13 );
-				PlayerName.title_mc.selectable = false;
-				PlayerName.title_mc.text = "VIP";
-				PlayerName.title_mc.setTextFormat(title_txt);
-			break;
-			case '438':
-				var title_txt = new TextFormat();
-				title_txt.size = 8;
-				title_txt.color = 0x000000;
-				title_txt.align = 'center';
-				title_txt.font = 'Burbank Small Medium';
-				PlayerName.createTextField( 'title_mc', 4, -50, 25, 100, 13 );
-				PlayerName.title_mc.selectable = false;
-				PlayerName.title_mc.text = "Mediator";
-				PlayerName.title_mc.setTextFormat(title_txt);
-			break;
-			case '584':
-				var title_txt = new TextFormat();
-				title_txt.size = 8;
-				title_txt.color = 0xFF0000;
-				title_txt.bold = true;
-				title_txt.align = 'center';
-				title_txt.font = 'Burbank Small Medium';
-				PlayerName.createTextField( 'title_mc', 4, -50, 25, 100, 13 );
-				PlayerName.title_mc.selectable = false;
-				PlayerName.title_mc.text = "Moderator";
-				PlayerName.title_mc.setTextFormat(title_txt);
-			break;
-			case '730':
-				var title_txt = new TextFormat();
-				title_txt.size = 8;
-				title_txt.color = 0x000000;
-				title_txt.align = 'center';
-				title_txt.font = 'Burbank Small Medium';
-				PlayerName.createTextField( 'title_mc', 4, -50, 25, 100, 13 );
-				PlayerName.title_mc.selectable = false;
-				PlayerName.title_mc.text = "Administrator";
-				PlayerName.title_mc.setTextFormat(title_txt);
-			break;
-			case '876':
-				var title_txt = new TextFormat();
-				title_txt.size = 8;
-				title_txt.color = 0xFF0000;
-				title_txt.bold = true;
-				title_txt.align = 'center';
-				title_txt.font = 'Burbank Small Medium';
-				PlayerName.createTextField( 'title_mc', 4, -50, 25, 100, 13 );
-				PlayerName.title_mc.selectable = false;
-				PlayerName.title_mc.text = "Owner";
-				PlayerName.title_mc.setTextFormat(title_txt);
-			break;
-		}
+	var PlayerName = INTERFACE.nicknames_mc["p" + PlayerIndex];	
+	var Ranks:Array = new Array();
+	Ranks[146] = "Member";
+	Ranks[292] = "VIP";
+	Ranks[438] = "Mediator";
+	Ranks[584] = "Moderator";
+	Ranks[730] = "Administrator";
+	Ranks[876] = "Owner";
+	var title_txt = new TextFormat();
+	title_txt.size = 8;
+	title_txt.color = 0x000000;
+	title_txt.align = 'center';
+	title_txt.font = 'Burbank Small Medium';
+	PlayerName.createTextField('title_mc', 4, -50, 25, 100, 13);
+	PlayerName.title_mc.selectable = false;
+	PlayerName.title_mc.text =  Ranks[Players[PlayerIndex].Rank];
+	PlayerName.title_mc.setTextFormat(title_txt);
 	}
 }
 
@@ -173,7 +119,8 @@ function UpdatePlayer(PlayerArray){
         PenguinGlow: PlayerArray[26],
         BubbleGlow: PlayerArray[27],
         MoodGlow: PlayerArray[28],
-        MoodColor: PlayerArray[29]
+        MoodColor: PlayerArray[29],
+        SnowballGlow: PlayerArray[30]
     };
 }
 
@@ -251,6 +198,85 @@ ENGINE.movePlayer = function(player_id, target_x, target_y, is_trigger, frame){
     }
 };
 
+ENGINE.throwBall = function (player_id, target_x, target_y, start_height, max_height, wait) {
+	var _local2 = ENGINE.getPlayerMovieClip(player_id);
+	var room_mc = ENGINE.getRoomMovieClip();
+	if (_local2.is_reading) {
+		ENGINE.removePlayerBook(player_id);
+	}
+	if (_local2.is_ready && (!_local2.is_moving)) {
+		if (throw_item_counter == undefined) {
+			throw_item_counter = 0;
+		}
+		if (throw_item_counter > 10) {
+			throw_item_counter = 0;
+		}
+		var start_x = _local2._x;
+		var start_y = _local2._y;
+		var c = (throw_item_counter++);
+		var _local3 = "i" + c;
+		if (room_mc[_local3] != undefined) {
+			room_mc[_local3].removeMovieClip();
+		}
+		 room_mc.attachMovie("ball", _local3, 1000200 + c);
+		 var mc = room_mc[_local3];
+		 mc.player_id = player_id;
+		 mc.id = c;
+		 mc._x = start_x;
+		 mc._y = start_y;
+		 ENGINE.updateItemDepth(mc, c);
+		 var _local6 = ENGINE.findDistance(start_x, start_y, target_x, target_y);
+		 var _local5 = ENGINE.findAngle(start_x, start_y, target_x, target_y);
+		 var _local4 = Math.round(ENGINE.findDirection(_local5) / 2);
+		 ENGINE.updatePlayerFrame(player_id, 26 + _local4);
+		 var duration = (_local6 / 15);
+		 var change_x = (target_x - start_x);
+		 var change_y = (target_y - start_y);
+		 var peak = (duration / 2);
+		 var change_height1 = (max_height - start_height);
+		 var change_height2 = (-max_height);
+		 mc.art._y = start_height;
+		 mc._visible = false;
+		 var t = 0;
+		 var w = 0;
+		 mc.onEnterFrame = function () {
+		 if (w > wait) {
+			 mc._visible = true;
+			 if(Players[player_id].SnowballGlow) {
+				var sglow = new flash.filters.DropShadowFilter(0, 0, Players[player_id].SnowballGlow, 20, 5, 5, 15, 3)
+				mc.filters = [sglow];
+			 }
+			 t++;
+			 if (t < duration) {
+				 mc._x = ENGINE.mathLinearTween(t, start_x, change_x, duration);
+				 mc._y = ENGINE.mathLinearTween(t, start_y, change_y, duration);
+				 ENGINE.updateItemDepth(mc, c);
+				 if (t < peak) {
+					 mc.art._y = ENGINE.mathEaseOutQuad(t, start_height, change_height1, peak);
+				 } else {
+					 mc.art._y = ENGINE.mathEaseInQuad(t - peak, max_height, change_height2, peak);
+				 }
+			 } else {
+				 mc._x = target_x;
+				 mc._y = target_y;
+				 mc.art._y = 0;
+				 mc.gotoAndStop(2);
+				 room_mc.handleThrow(mc);
+				 _level0.CLIENT.PENGUIN.SHELL.updateListeners(_level0.CLIENT.PENGUIN.SHELL.BALL_LAND, {id:mc.id, player_id:mc.player_id, x:mc._x, y:mc._y});
+				 if (room_mc.snowballBlock != undefined) {
+					 if (room_mc.snowballBlock.hittest(mc._x, mc._y, true)) {
+						 mc._visible = false;
+					 }
+				 }
+				 this.onEnterFrame = null;
+			 }
+		 } else {
+			 w++;
+		 }
+	 }
+	}
+};
+
 function OpenGlows() {  
     _global.handleJoinRoom = function(obj) {
         for(var Index in obj){
@@ -289,11 +315,11 @@ function OpenGlows() {
             _loc4_.setRGB(color);
         }
         if (glow) {
-			var pglow = new flash.filters.DropShadowFilter(0, 0, glow, 20, 5, 5, 15, 3);
+			var bglow = new flash.filters.DropShadowFilter(0, 0, glow, 20, 5, 5, 15, 3);
 			var _loc5 = INTERFACE.balloons_mc["p" + id].balloon_mc;
             var _loc6 = INTERFACE.balloons_mc["p" + id].pointer_mc;
-            _loc5.filters = [pglow];
-            _loc6.filters = [pglow];
+            _loc5.filters = [bglow];
+            _loc6.filters = [bglow];
 		}
     }
     AIRTOWER.addListener("se", _global.showEmoteBalloon);
