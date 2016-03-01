@@ -9,9 +9,6 @@ use Method::Signatures;
 method new($resChild) {
        my $obj = bless {}, $self;
        $obj->{child} = $resChild;
-       $obj->{transforms} = {
-		      racecar => 'http://frosty.us/play/v2/content/global/avatar/1.swf'
-	   };
        return $obj;
 }
 
