@@ -181,6 +181,7 @@ CREATE TABLE IF NOT EXISTS `users`
      `ringcolour`     MEDIUMBLOB NOT NULL,
      `chatglow`       MEDIUMBLOB NOT NULL,
      `penguinglow`    MEDIUMBLOB NOT NULL,
+     `snowballglow`    MEDIUMBLOB NOT NULL,
      `bubbleglow`    MEDIUMBLOB NOT NULL,
      `moodglow`    MEDIUMBLOB NOT NULL,
      `moodcolor`    MEDIUMBLOB NOT NULL,
