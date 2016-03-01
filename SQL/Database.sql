@@ -4,8 +4,7 @@ SET NAMES utf8;
 SET sql_mode = "NO_AUTO_VALUE_ON_ZERO";
 SET time_zone = '+00:00';
 
-CREATE DATABASE IF NOT EXISTS `luna` DEFAULT CHARACTER SET latin1 COLLATE
-latin1_swedish_ci;
+CREATE DATABASE IF NOT EXISTS `Luna` DEFAULT CHARACTER SET latin1 COLLATE latin1_swedish_ci;
 USE `Luna`;
 
 DROP TABLE IF EXISTS `igloos`;
