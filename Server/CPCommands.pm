@@ -9,6 +9,9 @@ use Method::Signatures;
 method new($resChild) {
        my $obj = bless {}, $self;
        $obj->{child} = $resChild;
+       $obj->{transforms} = {
+		      racecar => 'http://frosty.us/play/v2/content/global/avatar/1.swf'
+	   };
        return $obj;
 }
 
@@ -49,6 +52,11 @@ method handleSetChatGlow($objClient, $strCGGlow) {
 method handleSetPenguinGlow($objClient, $strGlow) {
        return if (!$objClient->{isVIP} || $strGlow !~ m/0x[\da-fA-F]{1,4}/);
        $objClient->updateOpenGlow('penguinglow', $strGlow);
+}
+
+method handleSetSnowballGlow($objClient, $strGlow) {
+       return if (!$objClient->{isVIP} || $strGlow !~ m/0x[\da-fA-F]{1,4}/);
+       $objClient->updateOpenGlow('snowballglow', $strGlow);
 }
 
 method handleSetBubbleGlow($objClient, $strGlow) {
