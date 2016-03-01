@@ -94,6 +94,18 @@ method handleDisableEnableCloning($objClient, $nullVar) {
             }
 }
 
+method handleWalkOnWalls($objClient, $nullVar) {
+            if ($objClient->{wow}) {
+                $self->{child}->{modules}->{mysql}->updateTable('users', 'wow', 0, 'ID', $objClient->{ID});
+                $objClient->{wow} = 0;
+                $objClient->botSay('Walk on walls has been disabled');
+            } else {
+                $self->{child}->{modules}->{mysql}->updateTable('users', 'wow', 1, 'ID', $objClient->{ID});
+                $objClient->{wow} = 1;
+                $objClient->botSay('Walk on walls has been enabled');
+            }
+}
+
 method handleClonePenguin($objClient, $strName) {
             my $arrInfo = $self->{child}->{modules}->{mysql}->fetchColumns("SELECT `isCloneable`, `colour`, `head`, `face`, `neck`, `body`, `hand`, `feet`, `photo`, `flag` FROM users WHERE `username` = '$strName'");
             my $blnCloneable = $arrInfo->{isCloneable};
