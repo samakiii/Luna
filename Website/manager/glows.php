@@ -8,80 +8,43 @@ if ($_SESSION['isVIP'] == false) {
 }
 
 $strError = '';
+$strFormTwoError = '';
 $strMessage = '';
+$strFormTwoMessage = '';
 
 $mysql = mysqli_connect($strDBHost, $strDBUser, $strDBPass, $strDBName);
 
+$strUsername = $_SESSION['login_user']; 
+
 if (isset($_POST['update'])) {
-    $strNG = $_POST['nameglow'];
-    $strNC = $_POST['namecolor'];
-    $strBT = $_POST['bubbletext'];
-    $strBC = $_POST['bubblecolor'];
-    $strRC = $_POST['ringcolor'];
-    $strCG = $_POST['chatglow'];
-    $intSpeed = $_POST['speed'];
-
-    if (isset($strNG) && isset($strNC) && isset($strBT) && isset($strBC) && isset($strRC)) {
-        $strNG = mysqli_real_escape_string($mysql, $strNG);
-        $strNC = mysqli_real_escape_string($mysql, $strNC);
-        $strBT = mysqli_real_escape_string($mysql, $strBT);
-        $strBC = mysqli_real_escape_string($mysql, $strBC);
-        $strRC = mysqli_real_escape_string($mysql, $strRC);
-        $strCG = mysqli_real_escape_string($mysql, $strCG);
-        $intSpeed = mysqli_real_escape_string($mysql, $intSpeed);
-        
-        $strNG = addslashes($strNG);
-        $strNC = addslashes($strNC);
-        $strBT = addslashes($strBT);
-        $strBC = addslashes($strBC);
-        $strRC = addslashes($strRC);
-        $strCG = addslashes($strCG);
-        $intSpeed = addslashes($intSpeed);
-
-        $strUsername = $_SESSION['login_user'];
-        
-        if (is_numeric($intSpeed) && $intSpeed <= 100) {
-            if (ctype_alnum($strNG) && strlen($strNG) <= 6) {
-                if (ctype_alnum($strNC) && strlen($strNC) <= 6) {
-                    if (ctype_alnum($strBT) && strlen($strBT) <= 6) {
-                        if (ctype_alnum($strBC) && strlen($strBC) <= 6) {
-                            if (ctype_alnum($strRC) && strlen($strRC) <= 6) {
-                                if (ctype_alnum($strCG) && strlen($strCG) <= 6) {
-                                    $strNGHex = '0x' . $strNG;
-                                    $strNCHex = '0x' . $strNC;
-                                    $strBTHex = '0x' . $strBT;
-                                    $strBCHex = '0x' . $strBC;
-                                    $strRCHex = '0x' . $strRC;
-                                    $strCGHex = '0x' . $strCG;
-                                    mysqli_query($mysql, "UPDATE users SET nameglow = '$strNGHex' WHERE username = '$strUsername'");
-                                    mysqli_query($mysql, "UPDATE users SET namecolour = '$strNCHex' WHERE username = '$strUsername'");
-                                    mysqli_query($mysql, "UPDATE users SET bubbletext = '$strBTHex' WHERE username = '$strUsername'");
-                                    mysqli_query($mysql, "UPDATE users SET bubblecolour = '$strBCHex' WHERE username = '$strUsername'");
-                                    mysqli_query($mysql, "UPDATE users SET ringcolour = '$strRCHex' WHERE username = '$strUsername'");
-                                    mysqli_query($mysql, "UPDATE users SET chatglow = '$strCGHex' WHERE username = '$strUsername'");
-                                    mysqli_query($mysql, "UPDATE users SET speed = '$intSpeed' WHERE username = '$strUsername'");
-                                    $strMessage = 'Successfully updated glow settings';
-                                } else {
-                                    $strError = 'Invalid Chat Glow Pattern';
-                                }
-                            } else {
-                                $strError = 'Invalid Ring Color Pattern';
-                            }
-                        } else {
-                            $strError = 'Invalid Bubble Color Pattern';
-                        }
-                    } else {
-                        $strError = 'Invalid Bubble Text Pattern';
-                    }
-                } else {
-                    $strError = 'Invalid Name Color Pattern';
-                }
-            } else {
-                $strError = 'Invalid Name Glow Pattern';
-            }
+    $strType = $_POST['gtype'];
+    $strColor = $_POST['color'];
+    if (isset($strType) && isset($strColor)) {
+        $strType = mysqli_real_escape_string($mysql, $strType);
+        $strColor = mysqli_real_escape_string($mysql, $strColor);
+        $strType = addslashes($strType);
+        $strColor = addslashes($strColor);     
+        if (strlen($strColor) <= 6) {
+			$strColor = '0x' . $strColor;
+            mysqli_query($mysql, "UPDATE users SET $strType = '$strColor' WHERE username = '$strUsername'");
+            $strMessage = "Successfully updated " . ucfirst($strType);
         } else {
-            $strError = 'Invalid Penguin Speed';
-        }
+			$strError = "Invalid Glow Pattern";
+		}
+    }
+}
+
+if (isset($_POST['update_speed'])) {
+    $intSpeed = $_POST['speed'];
+    if (isset($intSpeed)) {
+        $intSpeed = mysqli_real_escape_string($mysql, $intSpeed);
+        $intSpeed = addslashes($intSpeed);     
+        if (is_numeric($intSpeed) && $intSpeed <= 100) {
+            mysqli_query($mysql, "UPDATE users SET speed = '$intSpeed' WHERE username = '$strUsername'");
+            $strFormTwoMessage = "Successfully updated Speed to $intSpeed";
+        } else {
+			$strFormTwoError = "Invalid Speed";
+		}
     }
 }
 
@@ -120,26 +83,35 @@ if ($_SESSION['isStaff'] == true) {
 <div class="container">
 <center>
 <form class="form" name="form" method="post" action="<?php echo $_SERVER['PHP_SELF']; ?>">
-       <label for="nameglow">Name Glow:</label>
-       <input class="jscolor" type="text" name="nameglow" maxlength="6">
-       <label for="namecolor">Name Color:</label>
-       <input class="jscolor" type="text" name="namecolor" maxlength="6">
-       <label for="bubbletext">Bubble Text Glow:</label>
-       <input class="jscolor" type="text" name="bubbletext" maxlength="6">
-       <label for="bubblecolor">Bubble Color:</label>
-       <input class="jscolor" type="text" name="bubblecolor" maxlength="6">
-       <label for="ringcolor">Ring Color:</label>
-       <input class="jscolor" type="text" name="ringcolor" maxlength="6">
-       <label for="chatglow">Chat Glow:</label>
-       <input class="jscolor" type="text" name="chatglow" maxlength="6">
+       <select name="gtype" id="gtype">
+		  <option value="null">Select Type</option>
+		  <option value='nameglow'>Name Glow</option>
+		  <option value='namecolour'>Name Color</option>
+		  <option value='bubbletext'>Bubble Text Color</option>
+		  <option value='bubblecolour'>Bubble Color</option>
+		  <option value='bubbleglow'>Bubble Glow</option>
+		  <option value='ringcolour'>Ring Color</option>
+		  <option value='chatglow'>Chat Glow</option>
+		  <option value='penguinglow'>Penguin Glow</option>
+		  <option value='moodglow'>Mood Glow</option>
+		  <option value='moodcolor'>Penguin Glow</option>
+		  <option value='snowballglow'>Snowball Glow</option>
+       </select>
+       <br><br>
+       <input class="jscolor" type="text" name="color" maxlength="6">
+       <input type="submit" id="login-button" name="update" value="Update">
+       <span><?php echo $strError; ?></span>
+       <span><?php echo $strMessage; ?></span>
+</form>
+<form class="form" name="form2" method="post" action="<?php echo $_SERVER['PHP_SELF']; ?>">
        <label for="speed">Speed:</label>
        <div class="slider">
        <output id="rangevalue">10</output>
        <input type = "range" min="0" max="100" name="speed" onchange="rangevalue.value=value"/>
        </div>
-       <input type="submit" id="login-button" name="update" value="Update">
-       <span><?php echo $strError; ?></span>
-       <span><?php echo $strMessage; ?></span>
+       <input type="submit" id="login-button" name="update_speed" value="Update">
+       <span><?php echo $strFormTwoError; ?></span>
+       <span><?php echo $strFormTwoMessage; ?></span>
 </form>
 </center>
 
