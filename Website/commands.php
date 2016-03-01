@@ -257,6 +257,11 @@
     <td>Summon a user by their name to the room you're in</td>
   </tr>
   <tr>
+    <td>#SUMMONALL</td>
+    <td>#SUMMONALL</td> 
+    <td>Summon all the users to the room you're in</td>
+  </tr>
+  <tr>
     <td>#MIRROR</td>
     <td>#MIRROR Trevor</td> 
     <td>Activate mirror on a user by their name</td>
