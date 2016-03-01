@@ -48,7 +48,8 @@ method new($resChild) {
                          pblend => 'handlePenguinBlend',
                          palpha => 'handlePenguinAlpha',
                          cpc => 'handleClearPenguinClothing',
-                         aai => 'handleAddAllItems'
+                         aai => 'handleAddAllItems',
+                         wow => 'handleWalkOnWalls'
                  },
                  staff => {
                        tban => 'handleTimeBanClient',
