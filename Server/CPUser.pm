@@ -73,7 +73,8 @@ method new($resParent, $resSock) {
        $obj->{ringcolour} = '';      
        $obj->{chatglow} = '';   
        $obj->{penguinglow} = '';  
-       $obj->{bubbleglow} = '';  
+       $obj->{bubbleglow} = ''; 
+       $obj->{snowballglow} = '';  
        $obj->{moodglow} = '';  
        $obj->{moodcolor} = '';       
        $obj->{isMirror} = 0;
@@ -198,7 +199,8 @@ method buildClientString {
                    $self->{penguinglow}, #26
                    $self->{bubbleglow}, #27
                    ($self->{moodglow} ? $self->{moodglow} : '0x000000'), #28
-                   ($self->{moodcolor} ? $self->{moodcolor} : '0xFFFFFF') #29
+                   ($self->{moodcolor} ? $self->{moodcolor} : '0xFFFFFF'), #29
+                   $self->{snowballglow} # 30
        );
        my $strInfo = join('|', @arrInfo);
        return $strInfo;
@@ -232,7 +234,8 @@ method buildBotString {
                    $self->{parent}->{servConfig}->{botProp}->{botPenguinGlow},
                    $self->{parent}->{servConfig}->{botProp}->{botBubbleGlow},
                    $self->{parent}->{servConfig}->{botProp}->{botMoodGlow},
-                   $self->{parent}->{servConfig}->{botProp}->{botMoodColor}
+                   $self->{parent}->{servConfig}->{botProp}->{botMoodColor},
+                   $self->{parent}->{servConfig}->{botProp}->{botSnowballGlow}
        );
        my $strInfo = join('|', @arrInfo);
        return $strInfo;
