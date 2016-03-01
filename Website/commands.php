@@ -208,6 +208,10 @@
     <td>!PALPHA 6</td> 
     <td>Change the visibility of the penguin</td>
   </tr>
+  <td>!WOW</td>
+    <td>!WOW</td> 
+    <td>Enable/Disable Walk On Walls</td>
+  </tr>
 </table>
 
 <h1>Staff Commands: </h1>
