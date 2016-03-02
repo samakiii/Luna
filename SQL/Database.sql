@@ -146,6 +146,7 @@ CREATE TABLE `users` (
   `isCloneable` int(1) NOT NULL DEFAULT '1',
   `outfits` longtext NOT NULL,
   `wow` int(1) NOT NULL DEFAULT '0',
+  `transformation` mediumtext NOT NULL,
   PRIMARY KEY (`ID`)
 ) ENGINE=MyISAM DEFAULT CHARSET=latin1;
 
