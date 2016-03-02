@@ -210,41 +210,6 @@ method buildClientString {
        return $strInfo;
 }
 
-method buildBotString {
-       my @arrInfo = (
-                   $self->{parent}->{servConfig}->{botProp}->{botID},
-                   $self->{parent}->{servConfig}->{botProp}->{botName},
-                   $self->{parent}->{servConfig}->{botProp}->{bitMask},
-                   $self->{parent}->{servConfig}->{botProp}->{botColour},
-                   $self->{parent}->{servConfig}->{botProp}->{botHead},
-                   $self->{parent}->{servConfig}->{botProp}->{botFace},
-                   $self->{parent}->{servConfig}->{botProp}->{botNeck},
-                   $self->{parent}->{servConfig}->{botProp}->{botBody},
-                   $self->{parent}->{servConfig}->{botProp}->{botHand},
-                   $self->{parent}->{servConfig}->{botProp}->{botFeet},
-                   $self->{parent}->{servConfig}->{botProp}->{botFlag},
-                   $self->{parent}->{servConfig}->{botProp}->{botPhoto}, 0, 0, 0,
-                   $self->{parent}->{servConfig}->{botProp}->{botMember},
-                   $self->{parent}->{servConfig}->{botProp}->{botRank},
-                   $self->{parent}->{servConfig}->{botProp}->{botNameGlow},
-                   $self->{parent}->{servConfig}->{botProp}->{botNameColour},
-                   $self->{parent}->{servConfig}->{botProp}->{botBubbleColour},
-                   $self->{parent}->{servConfig}->{botProp}->{botBubbleText},
-                   $self->{parent}->{servConfig}->{botProp}->{botRingColour},
-                   $self->{parent}->{servConfig}->{botProp}->{botSpeed},
-                   $self->{parent}->{servConfig}->{botProp}->{botRank},
-                   $self->{parent}->{servConfig}->{botProp}->{botMood},
-                   $self->{parent}->{servConfig}->{botProp}->{botChatGlow},
-                   $self->{parent}->{servConfig}->{botProp}->{botPenguinGlow},
-                   $self->{parent}->{servConfig}->{botProp}->{botBubbleGlow},
-                   $self->{parent}->{servConfig}->{botProp}->{botMoodGlow},
-                   $self->{parent}->{servConfig}->{botProp}->{botMoodColor},
-                   $self->{parent}->{servConfig}->{botProp}->{botSnowballGlow}
-       );
-       my $strInfo = join('|', @arrInfo);
-       return $strInfo;
-}
-
 method getClientByID($intPID) {
        return if (!int($intPID));
        foreach (values %{$self->{parent}->{clients}}) {
@@ -478,9 +443,6 @@ method buildRoomString {
                 if ($_->{room} == $self->{room} && $_->{ID} ne $self->{ID}) {
                     $userList .= $_->buildClientString . '%';
                 }
-       }
-       if ($self->{parent}->{servConfig}->{botProp}->{onServ} && $self->{room} < 1000) {
-           $userList .= $self->buildBotString . '%';
        }
        return $userList;
 }
