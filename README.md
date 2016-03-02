@@ -62,6 +62,8 @@ Club Penguin Server Emulator - AS2 Protocol
 
 ### VPS Setup:
 
+*<b>Note:</b>* This tutorial works for people who use Linux as your OS - localhosted.
+
 To setup Luna on a VPS is very easy, since most of the VPS's come with <b>Ubuntu 14</b>, I will be using <b>Ubuntu</b> here:
 
 First you got to setup <a href="http://howtoubuntu.org/how-to-install-lamp-on-ubuntu">LAMP</a>
