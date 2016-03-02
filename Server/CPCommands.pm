@@ -71,6 +71,12 @@ method handleSetMoodColor($objClient, $strColor) {
        $objClient->updateOpenGlow('moodcolor', $strColor);
 }
 
+method handlePenguinTransformation($objClient, $strName) {
+       $strName = lc($strName);
+       $self->handleClearPenguinClothing($objClient, '');
+       $objClient->updateOpenGlow('transformation', $strName);
+}
+
 method handleAddAllItems($objClient, $nullVar) {
 	   my @arrItems = ();
 	   foreach (keys %{$self->{child}->{modules}->{crumbs}->{itemCrumbs}}) {
