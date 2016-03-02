@@ -166,7 +166,7 @@ ENGINE.movePlayer = function(player_id, target_x, target_y, is_trigger, frame){
         var _local2 = ENGINE.findAngle(start_x, start_y, target_x, target_y);
         var d = ENGINE.findDirection(_local2);
         var duration = (_local3 / 4);
-        if(Players[player_id].Speed != 'off') {
+        if(Players[player_id].Speed) {
             var duration = (_local3 / Players[player_id].Speed);
         }
         var change_x = (target_x - start_x);
