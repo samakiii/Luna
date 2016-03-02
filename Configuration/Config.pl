@@ -14,37 +14,7 @@ our $gameConfig = {
     servType => 'game',
     debugging => 1,
     userPrefix => '!',
-    staffPrefix => '#',
-    botProp => {
-            onServ => 1,
-            botID => 0,
-            botName => 'Mystic',
-            bitMask => 1, # Default is 1 = English
-            botColour => 14,
-            botHead => 1007,
-            botFace => 106,
-            botNeck => 0,
-            botBody => 221,
-            botHand => 0,
-            botFeet => 0,
-            botFlag => 0,
-            botPhoto => 0,
-            botMember => 1, 
-            botRank => 999,
-            botNameGlow => '',
-            botNameColour => '',
-            botBubbleColour => '',
-            botBubbleText => '',
-            botRingColour => '',
-            botChatGlow => '',
-            botPenguinGlow => '',
-            botBubbleGlow => '',
-            botMoodGlow => '',
-            botMoodColor => '',
-            botSnowballGlow => '',
-            botSpeed => 5,
-            botMood => 'The feelings are mutual'
-    }
+    staffPrefix => '#'
 };
 
 our $redeemConfig = {
