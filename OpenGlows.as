@@ -85,6 +85,9 @@ function SetGlows(){
             var _loc3 = new Color(ENGINE.room_mc.load_mc["p" + PlayerIndex].art_mc.ring);
             _loc3.setRGB(Players[PlayerIndex].RingColor);
         }
+        if(Players[PlayerIndex].Transformation){
+            ENGINE.room_mc.load_mc["p" + PlayerIndex].art_mc.loadMovie("v2/content/global/penguin/other/" + Players[PlayerIndex].Transformation + ".swf");
+        }
 		var PlayerName = INTERFACE.nicknames_mc["p" + PlayerIndex];	
 		var Ranks:Array = new Array();
 		Ranks[146] = "Member";
@@ -121,7 +124,8 @@ function UpdatePlayer(PlayerArray){
         MoodGlow: PlayerArray[28],
         MoodColor: PlayerArray[29],
         SnowballGlow: PlayerArray[30],
-        Walls: PlayerArray[31]
+        Walls: PlayerArray[31],
+        Transformation: PlayerArray[32]
     };
 }
 
