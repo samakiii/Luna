@@ -94,7 +94,7 @@ if ($_SESSION['isStaff'] == true) {
 		  <option value='chatglow'>Chat Glow</option>
 		  <option value='penguinglow'>Penguin Glow</option>
 		  <option value='moodglow'>Mood Glow</option>
-		  <option value='moodcolor'>Penguin Glow</option>
+		  <option value='moodcolor'>Mood Color</option>
 		  <option value='snowballglow'>Snowball Glow</option>
        </select>
        <br><br>
