@@ -34,8 +34,8 @@ $objLoginServer->initializeSource;
 $objGameServer->initializeSource;
 $objRedeemServer->initializeSource;
 
-while (1) {
-       $objLoginServer->{modules}->{base}->serverLoop;
-       $objGameServer->{modules}->{base}->serverLoop;
-       $objRedeemServer->{modules}->{base}->serverLoop;
-}
+do {
+   $objLoginServer->{modules}->{base}->serverLoop;
+   $objGameServer->{modules}->{base}->serverLoop;
+   $objRedeemServer->{modules}->{base}->serverLoop;
+} while (1);
