@@ -3,7 +3,7 @@ use warnings;
 
 require 'Configuration/Config.pl';
 
-use vars qw($loginConfig $gameConfig $redeemConfig $dbConfig);
+use vars qw($loginConfig $gameConfig $dbConfig);
 
 use Module::Find;
 
@@ -28,14 +28,11 @@ use Server::CPUser;
 
 my $objLoginServer = ClubPenguin->new($loginConfig, $dbConfig);
 my $objGameServer = ClubPenguin->new($gameConfig, $dbConfig);
-my $objRedeemServer = ClubPenguin->new($redeemConfig, $dbConfig);
 
 $objLoginServer->initializeSource;
 $objGameServer->initializeSource;
-$objRedeemServer->initializeSource;
 
 do {
    $objLoginServer->{modules}->{base}->serverLoop;
    $objGameServer->{modules}->{base}->serverLoop;
-   $objRedeemServer->{modules}->{base}->serverLoop;
 } while (1);
