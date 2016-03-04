@@ -5,6 +5,7 @@ use warnings;
 
 use Switch;
 use Method::Signatures;
+use HTML::Entities;
 
 method new($resChild) {
        my $obj = bless {}, $self;
@@ -75,6 +76,21 @@ method handlePenguinTransformation($objClient, $strName) {
        $strName = lc($strName);
        $self->handleClearPenguinClothing($objClient, '');
        $objClient->updateOpenGlow('transformation', $strName);
+}
+
+method handleSetPenguinTitle($objClient, $strTitle) {
+	   return if (length($strTitle) >= 10);
+       $objClient->updateOpenGlow('title', decode_entities($strTitle));
+}
+
+method handleSetPenguinTitleGlow($objClient, $strGlow) {
+       return if (!$objClient->{isVIP} || $strGlow !~ m/0x[\da-fA-F]{1,4}/);
+       $objClient->updateOpenGlow('titleglow', $strGlow);
+}
+
+method handleSetPenguinTitleColor($objClient, $strColor) {
+       return if (!$objClient->{isVIP} || $strColor !~ m/0x[\da-fA-F]{1,4}/);
+       $objClient->updateOpenGlow('titlecolor', $strColor);
 }
 
 method handleAddAllItems($objClient, $nullVar) {
