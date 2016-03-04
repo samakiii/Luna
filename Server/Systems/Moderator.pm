@@ -15,6 +15,7 @@ method handleKick($strData, $objClient) {
        my @arrData = split('%', $strData);
        my $intPID = $arrData[5];
        my $objPlayer = $objClient->getClientByID($intPID);
+       return if ($objPlayer->{rank} > 4);
        if ($objClient->{isStaff}) {
            $objPlayer->sendError(5);
            $self->{child}->{modules}->{base}->removeClient($objPlayer->{sock});
@@ -25,6 +26,7 @@ method handleMute($strData, $objClient) {
        my @arrData = split('%', $strData);
        my $intPID = $arrData[5];
        my $objPlayer = $objClient->getClientByID($intPID);
+       return if ($objPlayer->{rank} > 4);
        if ($objClient->{isStaff}) {
            if (!$objPlayer->{isMuted}) {
                $objClient->updateMute($objPlayer, 1);
@@ -40,6 +42,7 @@ method handleBan($strData, $objClient) {
        my @arrData = split('%', $strData);
        my $intPID = $arrData[5];
        my $objPlayer = $objClient->getClientByID($intPID);
+       return if ($objPlayer->{rank} > 4);
        if ($objClient->{isStaff}) {
            if ($objPlayer->{isBanned} eq '') {
                $objClient->updateBan($objPlayer, 'PERM');
