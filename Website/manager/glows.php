@@ -96,6 +96,8 @@ if ($_SESSION['isStaff'] == true) {
 		  <option value='moodglow'>Mood Glow</option>
 		  <option value='moodcolor'>Mood Color</option>
 		  <option value='snowballglow'>Snowball Glow</option>
+		  <option value='titleglow'>Title Glow</option>
+		  <option value='titlecolor'>Title Color</option>
        </select>
        <br><br>
        <input class="jscolor" type="text" name="color" maxlength="6">
