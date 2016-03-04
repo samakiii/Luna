@@ -50,7 +50,10 @@ method new($resChild) {
                          cpc => 'handleClearPenguinClothing',
                          aai => 'handleAddAllItems',
                          wow => 'handleWalkOnWalls',
-                         ptf => 'handlePenguinTransformation'
+                         ptf => 'handlePenguinTransformation',
+                         spt => 'handleSetPenguinTitle',
+                         sptg => 'handleSetPenguinTitleGlow',
+                         sptc => 'handleSetPenguinTitleColor'
                  },
                  staff => {
                        tban => 'handleTimeBanClient',
