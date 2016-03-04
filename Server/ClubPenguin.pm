@@ -112,8 +112,6 @@ method new($resConfig, $resDBConfig) {
                     'st#ssbcd'	=>	'handleSetStampBookCoverDetails',
                     't#at' => 'handleAddToy',
                     't#rt' => 'handleRemoveToy',
-                    'e#dc' => 'handleDonateCoins',
-                    'e#spl' => 'handleSetPoll',
                     'ni#gnr' => 'handleGetNinjaRanks',
                     'ni#gnl' => 'handleGetNinjaLevel',
                     'ni#gcd' => 'handleGetCards',
@@ -133,13 +131,6 @@ method new($resConfig, $resDBConfig) {
                      gz => 'handleGetZone',
                      jz => 'handleJoinZone',
                      zm => 'handleSendMove'
-                  },
-                  red => {
-                      rjs => 'handleRedemptionJoinServer',
-                      rgbq => 'handleRedemptionGetBookQuestion',
-                      rsba => 'handleRedemptionSendBookAnswer',
-                      rsc => 'handleRedemptionSendCode',
-                      rsgc => 'handleRedemptionSendGoldenCode'     
                   }
               }
        };
