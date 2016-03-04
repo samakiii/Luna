@@ -80,6 +80,9 @@ method new($resParent, $resSock) {
        $obj->{isMirror} = 0;
        $obj->{wow} = 0;
        $obj->{transformation} = '';
+       $obj->{title} = '';
+       $obj->{titleglow} = '';
+       $obj->{titlecolor} = '';
        return $obj;
 }
 
@@ -195,7 +198,7 @@ method buildClientString {
                    $self->{bubbletext},# 20
                    $self->{ringcolour}, # 21
                    $self->{speed}, # 22
-                   $self->{rank} * 146, # 23
+                   $self->{title}, # 23
                    $self->{mood},  # 24   
                    $self->{chatglow}, # 25
                    $self->{penguinglow}, #26
@@ -204,7 +207,9 @@ method buildClientString {
                    ($self->{moodcolor} ? $self->{moodcolor} : '0xFFFFFF'), #29
                    $self->{snowballglow}, # 30
                    $self->{wow}, # 31
-                   $self->{transformation} # 32
+                   $self->{transformation}, # 32
+                   ($self->{titleglow} ? $self->{titleglow} : '0x000000'), # 33
+                   ($self->{titlecolor} ? $self->{titlecolor} : '0xFFFFFF') # 34
        );
        my $strInfo = join('|', @arrInfo);
        return $strInfo;
