@@ -85,26 +85,23 @@ function SetGlows(){
             var _loc3 = new Color(ENGINE.room_mc.load_mc["p" + PlayerIndex].art_mc.ring);
             _loc3.setRGB(Players[PlayerIndex].RingColor);
         }
-        if(Players[PlayerIndex].Transformation){
-            ENGINE.room_mc.load_mc["p" + PlayerIndex].art_mc.loadMovie("v2/content/global/penguin/other/" + Players[PlayerIndex].Transformation + ".swf");
+        if(Players[PlayerIndex].Transformation) {
+            ENGINE.room_mc.load_mc["p" + PlayerIndex].art_mc.loadMovie("http://localhost/play/v2/content/global/penguin/other/" + Players[PlayerIndex].Transformation + ".swf");
         }
-		var PlayerName = INTERFACE.nicknames_mc["p" + PlayerIndex];	
-		var Ranks:Array = new Array();
-		Ranks[146] = "Member";
-		Ranks[292] = "VIP";
-		Ranks[438] = "Mediator";
-		Ranks[584] = "Moderator";
-		Ranks[730] = "Administrator";
-		Ranks[876] = "Owner";
-		var title_txt = new TextFormat();
-		title_txt.size = 8;
-		title_txt.color = 0x000000;
-		title_txt.align = 'center';
-		title_txt.font = 'Burbank Small Medium';
-		PlayerName.createTextField('title_mc', 4, -50, 25, 100, 13);
-		PlayerName.title_mc.selectable = false;
-		PlayerName.title_mc.text =  Ranks[Players[PlayerIndex].Rank];
-		PlayerName.title_mc.setTextFormat(title_txt);
+        if(Players[PlayerIndex].Title) {
+			var PlayerName = INTERFACE.nicknames_mc["p" + PlayerIndex];	
+			var tglow = new flash.filters.DropShadowFilter(0, 0, Players[PlayerIndex].TitleGlow, 20, 5, 5, 15, 3);
+			var title_txt = new TextFormat();
+			title_txt.size = 8;
+			title_txt.color = Players[PlayerIndex].TitleColor;
+			title_txt.align = 'center';
+			title_txt.font = 'Burbank Small Medium';
+			PlayerName.createTextField('title_mc', 4, -50, 25, 100, 13);
+			PlayerName.title_mc.selectable = false;
+			PlayerName.title_mc.text =  Players[PlayerIndex].Title;
+			PlayerName.title_mc.filters = [tglow];
+			PlayerName.title_mc.setTextFormat(title_txt);
+		}
 	}
 }
 
@@ -116,7 +113,7 @@ function UpdatePlayer(PlayerArray){
         BubbleTextColor: PlayerArray[20],
         RingColor: PlayerArray[21],
         Speed: PlayerArray[22],
-        Rank: PlayerArray[23],
+        Title: PlayerArray[23],
         Mood: PlayerArray[24],
         ChatGlow: PlayerArray[25],
         PenguinGlow: PlayerArray[26],
@@ -125,7 +122,9 @@ function UpdatePlayer(PlayerArray){
         MoodColor: PlayerArray[29],
         SnowballGlow: PlayerArray[30],
         Walls: PlayerArray[31],
-        Transformation: PlayerArray[32]
+        Transformation: PlayerArray[32],
+        TitleGlow: PlayerArray[33],
+        TitleColor: PlayerArray[34]
     };
 }
 
