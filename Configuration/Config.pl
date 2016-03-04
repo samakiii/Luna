@@ -17,12 +17,6 @@ our $gameConfig = {
     staffPrefix => '#'
 };
 
-our $redeemConfig = {
-    servPort => 6114,
-    servType => 'redem',
-    debugging => 1
-};
-
 our $dbConfig = {
     dbHost => '127.0.0.1',
     dbName => 'Luna',
