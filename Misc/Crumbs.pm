@@ -17,8 +17,7 @@ method new($resChild) {
                furns => 'furniture_items.json',
                rooms => 'rooms.json',
                stamps => 'stamps.json',
-               pcards => 'postcards.json',
-               redeem => 'redeem.json'
+               pcards => 'postcards.json'
        };  
        $obj->{methods} = {
                paper_items => 'loadItems',
@@ -28,7 +27,6 @@ method new($resChild) {
                rooms => 'loadRooms',
                stamps => 'loadStamps',
                postcards => 'loadPostcards',
-               redeem => 'loadRedemptions'
        };
        $obj->{directory} = 'file://' . cwd . '/Misc/JSON/';
        return $obj;
@@ -38,7 +36,7 @@ method updateCrumbs {
        my $strDir = 'Misc/JSON/';
        my @arrUrls;
        while (my ($strKey, $strFile) = each(%{$self->{jsons}})) {
-              if ($strKey ne 'pcards' && $strKey ne 'redeem') {
+              if ($strKey ne 'pcards') {
                   my $strLink = 'http://media1.clubpenguin.com/play/en/web_service/game_configs/';
                   my $strUrl = $strLink . $strFile;
                   push(@arrUrls, $strUrl);
@@ -142,13 +140,6 @@ method loadPostcards($arrPostcards) {
               %{$self->{mailCrumbs}->{$intCardID}}  = (cost => $intCardCost);
        }
        $self->{child}->{modules}->{logger}->output('Successfully Loaded ' . scalar(keys %{$self->{mailCrumbs}}) . ' Postcards', Logger::LEVELS->{inf});
-}
-
-method loadRedemptions($arrRedemptions) {
-       foreach (sort keys %{$arrRedemptions}) {
-                %{$self->{redeemCrumbs}->{$arrRedemptions->{$_}->{redeemName}}} = (type => $arrRedemptions->{$_}->{redeemType}, items => $arrRedemptions->{$_}->{redeemItems}, cost => $arrRedemptions->{$_}->{redeemCoins});
-       }
-       $self->{child}->{modules}->{logger}->output('Successfully Loaded ' . scalar(keys %{$self->{redeemCrumbs}}) . ' Redemptions', Logger::LEVELS->{inf}); 
 }
 
 1;
