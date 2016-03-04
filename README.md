@@ -50,7 +50,6 @@ Club Penguin Server Emulator - AS2 Protocol
  <li> DBI</li>
  <li> DBD::mysql</li>
  <li> Module::Find</li>
- <li> Array::Utils</li>
  <li> List::Util</li>
  <li> Math::Round</li>
  <li> Switch</li>
