@@ -1,3 +1,3 @@
 @echo off
-perl Run.pm
+start /LOW perl Run.pm
 pause > nul
