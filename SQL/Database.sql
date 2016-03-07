@@ -110,7 +110,7 @@ CREATE TABLE `users` (
   `feet` int(10) NOT NULL DEFAULT '0',
   `photo` int(10) NOT NULL DEFAULT '0',
   `flag` int(10) NOT NULL DEFAULT '0',
-  `colour` int(10) NOT NULL DEFAULT '1',
+  `colour` mediumtext NOT NULL,
   `coins` int(11) NOT NULL,
   `isMuted` int(1) NOT NULL DEFAULT '0',
   `isVIP` int(1) NOT NULL DEFAULT '0',
