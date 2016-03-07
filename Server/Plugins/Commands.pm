@@ -36,6 +36,7 @@ method new($resChild) {
                          src => 'handleSetRingColour',
                          scg => 'handleSetChatGlow',
                          spg => 'handleSetPenguinGlow',
+                         spc => 'handleSetPenguinColor',
                          sbg => 'handleSetBubbleGlow',
                          smg => 'handleSetMoodGlow',
                          smc => 'handleSetMoodColor',
