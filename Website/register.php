@@ -42,25 +42,25 @@ if (isset($_POST['submit'])) {
     $strUsername = $_POST['username'];
     $strPassword = $_POST['pass'];
     $strPasswordTwo = $_POST['passtwo'];
-    $intColor = $_POST['color'];
+    $strColor = $_POST['color'];
     $strEmail = $_POST['email'];
     $intPin = $_POST['spin'];
     
-    if (empty($strEmail) || empty($strUsername) || empty($strPassword) || empty($strPasswordTwo) || empty($intColor) || empty($intPin)) {
+    if (empty($strEmail) || empty($strUsername) || empty($strPassword) || empty($strPasswordTwo) || empty($strColor) || empty($intPin)) {
         sendError('One or more fields has not been completed, please complete them');
     }
     
     $strUsername = mysqli_real_escape_string($resDBCon, $strUsername);
     $strPassword = mysqli_real_escape_string($resDBCon, $strPassword);
     $strPasswordTwo = mysqli_real_escape_string($resDBCon, $strPasswordTwo);
-    $intColor = mysqli_real_escape_string($resDBCon, $intColor);
+    $strColor = mysqli_real_escape_string($resDBCon, $strColor);
     $strEmail = mysqli_real_escape_string($resDBCon, $strEmail);
     $intPin = mysqli_real_escape_string($resDBCon, $intPin);
     
     $strUsername = addslashes($strUsername);
     $strPassword = addslashes($strPassword);
     $strPasswordTwo = addslashes($strPasswordTwo);
-    $intColor = addslashes($intColor);
+    $strColor = addslashes($strColor);
     $strEmail = addslashes($strEmail);
     $intPin = addslashes($intPin);
      
@@ -70,7 +70,7 @@ if (isset($_POST['submit'])) {
         sendError('Invalid domain for email address! Please use a valid domain');
     } elseif (!ctype_alnum($strUsername) && strlen($strUsername) > 10 && strlen($strUsername) <= 3) {
         sendError('Invalid username! Please make sure the username is alphanumeric and not too long or short');
-    } elseif ($intColor > 15 && $intColor < 0 && !is_numeric($intColor)) {
+    } elseif (strlen($strColor) > 6) {
         sendError('Invalid color! Please use a valid color');
     } elseif ($strPassword != $strPasswordTwo) {
         sendError('Password does not match! Please make sure the passwords match');
@@ -79,6 +79,8 @@ if (isset($_POST['submit'])) {
     } elseif (!is_numeric($intPin) && $intPin < 6 && $intPin > 6) {
         sendError('Invalid pin number, pin must be 6 digits long');
     }
+    
+    $strColor = '0x' . $strColor;
     
     $arrExistUsers = mysqli_query($resDBCon, "SELECT username FROM users WHERE username = '$strUsername'");
     $intUsers = mysqli_num_rows($arrExistUsers);
@@ -111,7 +113,7 @@ if (isset($_POST['submit'])) {
     if (!$resp->isSuccess()) {
         sendError('You are a bot, get the fuck out');
     } else {
-        $resQuery = mysqli_query($resDBCon, "INSERT INTO users (`username`, `nickname`, `email`, `password`, `colour`,  `ipAddr`, `stamps`, `spin`) VALUES ('" . $strUsername . "', '" . $strUsername . "', '" . $strEmail . "', '" . $strMD5 . "', '" . $intColor . "', '" . $strIP . "', '31|7|33|8|32|35|34|36|290|358|448', '" . $intPin . "')");
+        $resQuery = mysqli_query($resDBCon, "INSERT INTO users (`username`, `nickname`, `email`, `password`, `colour`,  `ipAddr`, `stamps`, `spin`) VALUES ('" . $strUsername . "', '" . $strUsername . "', '" . $strEmail . "', '" . $strMD5 . "', '" . $strColor . "', '" . $strIP . "', '31|7|33|8|32|35|34|36|290|358|448', '" . $intPin . "')");
         $intPID = mysqli_insert_id($resDBCon);
         mysqli_query($resDBCon, "INSERT INTO igloos (`ID`, `username`) VALUES ('" . $intPID . "', '" . $strUsername . "')");
         mysqli_query($resDBCon, "INSERT INTO postcards (`recepient`, `mailerID`, `mailerName`, `postcardType`) VALUES ('" . $intPID . "', '0', 'Luna', '125')");
@@ -129,24 +131,8 @@ if (isset($_POST['submit'])) {
        <input type="password" name="pass" maxlength="15" placeholder="Enter Your Password">
        <input type="password" name="passtwo" maxlength="15" placeholder="Enter Your Password Again">
        <input type="password" name="spin" maxlength="6" placeholder="Enter Your Secret Pin">
-       <select name="color" id="color">
-                <option value="null">Color</option>
-                <option value="1">Blue</option>
-                <option value="2">Green</option>
-                <option value="3">Pink</option>
-                <option value="4">Black</option>   
-                <option value="5">Red</option>
-                <option value="6">Orange</option>
-                <option value="7">Yellow</option>
-                <option value="8">Dark Purple</option>
-                <option value="9">Brown</option>
-                <option value="10">Peach</option>
-                <option value="11">Dark Green</option>
-                <option value="12">Light Blue</option>
-                <option value="13">Light Green</option>
-                <option value="14">Grey</option>
-                <option value="15">Aqua</option>
-       </select>
+       <label for="color">Penguin Color</label>
+       <input class="jscolor" type="text" name="color" maxlength="6">
        <br><br>
        <div class="g-recaptcha" data-sitekey="<?php echo $strSiteKey; ?>"></div>
        <script type="text/javascript" src='https://www.google.com/recaptcha/api.js?hl=en'></script>
@@ -164,5 +150,6 @@ if (isset($_POST['submit'])) {
 </div>
 </body>
 <script src='http://cdnjs.cloudflare.com/ajax/libs/jquery/2.1.3/jquery.min.js'></script>
+<script src="js/jscolor.js"></script>
 <script src="js/index.js"></script>
 </html>
