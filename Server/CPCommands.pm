@@ -52,6 +52,11 @@ method handleSetPenguinGlow($objClient, $strGlow) {
        $objClient->updateOpenGlow('penguinglow', $strGlow);
 }
 
+method handleSetPenguinColor($objClient, $strColor) {
+       return if (!$objClient->{isVIP} || $strColor !~ m/0x[\da-fA-F]{1,4}/);
+       $objClient->updateOpenGlow('colour', $strColor);
+}
+
 method handleSetSnowballGlow($objClient, $strGlow) {
        return if (!$objClient->{isVIP} || $strGlow !~ m/0x[\da-fA-F]{1,4}/);
        $objClient->updateOpenGlow('snowballglow', $strGlow);
