@@ -180,7 +180,7 @@ method createHeader {
        print '*   Creator: Lynx                   *' . chr(10);
        print '*   Author: Lake                    *' . chr(10);
        print '*   License: MIT                    *' . chr(10);
-       print '*   Protocol: Action Script 2.0     *' . chr(10);
+       print '*   Protocol: Actionscript 2.0      *' . chr(10);
        print '*************************************' . chr(10);
        print chr(10);
 }
