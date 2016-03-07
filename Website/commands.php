@@ -182,6 +182,21 @@
     <td>Set/Change your Penguin Glow</td>
   </tr>
   <tr>
+    <td>!SPC</td>
+    <td>!SPC 0xFFD700</td> 
+    <td>Set/Change your Penguin Color</td>
+  </tr>
+  <tr>
+    <td>!SPTG</td>
+    <td>!SPTG 0xFFD700</td> 
+    <td>Set/Change your Penguin Title Glow</td>
+  </tr>
+  <tr>
+    <td>!SPTC</td>
+    <td>!SPTC 0xFFD700</td> 
+    <td>Set/Change your Penguin Title Color</td>
+  </tr>
+  <tr>
     <td>!SMG</td>
     <td>!SMG 0xFFD700</td> 
     <td>Set/Change your Mood Glow</td>
@@ -190,6 +205,16 @@
     <td>!SMC</td>
     <td>!SMC 0xFFD700</td> 
     <td>Set/Change your Mood Color</td>
+  </tr>
+  <tr>
+    <td>!SPT</td>
+    <td>!SPT Member</td> 
+    <td>Change your Penguin Title</td>
+  </tr>
+  <tr>
+    <td>!PTF</td>
+    <td>!PTF Herbert</td> 
+    <td>Transform into a different character</td>
   </tr>
   <tr>
     <td>!SSG</td>
@@ -264,16 +289,6 @@
     <td>#SUMMONALL</td>
     <td>#SUMMONALL</td> 
     <td>Summon all the users to the room you're in</td>
-  </tr>
-  <tr>
-    <td>#MIRROR</td>
-    <td>#MIRROR Trevor</td> 
-    <td>Activate mirror on a user by their name</td>
-  </tr>
-  <tr>
-    <td>#UNMIRROR</td>
-    <td>#UNMIRROR Trevor</td> 
-    <td>Deactivate mirror on a user by their name</td>
   </tr>
 </table>
 </center>			  
