@@ -142,7 +142,6 @@ CREATE TABLE `users` (
   `penguin_size` int(3) NOT NULL,
   `penguin_blend` mediumblob NOT NULL,
   `penguin_alpha` int(3) NOT NULL,
-  `isMirror` int(1) NOT NULL DEFAULT '0',
   `isCloneable` int(1) NOT NULL DEFAULT '1',
   `outfits` longtext NOT NULL,
   `wow` int(1) NOT NULL DEFAULT '0',
