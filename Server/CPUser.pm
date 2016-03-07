@@ -77,7 +77,6 @@ method new($resParent, $resSock) {
        $obj->{snowballglow} = '';  
        $obj->{moodglow} = '';  
        $obj->{moodcolor} = '';       
-       $obj->{isMirror} = 0;
        $obj->{wow} = 0;
        $obj->{transformation} = '';
        $obj->{title} = '';
@@ -312,7 +311,7 @@ method sendMascotMsg($intMsg) {
 method sendMessage($strMsg) {
        if (!$self->{isMuted} && $strMsg ne '') {
 		   $strMsg = decode_entities($strMsg);
-           return $self->{isMirror} ? $self->sendRoom('%xt%sm%-1%' .  $self->{ID} . '%' . reverse($strMsg) . '%') : $self->sendRoom('%xt%sm%-1%' .  $self->{ID} . '%' . $strMsg . '%');
+           $self->sendRoom('%xt%sm%-1%' .  $self->{ID} . '%' . $strMsg . '%');
        }
 }
 
