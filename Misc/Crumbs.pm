@@ -79,7 +79,9 @@ method loadItems($arrItems) {
                 if ($_->{is_epf}) {
                     %{$self->{epfCrumbs}->{$_->{paper_item_id}}} = (points => $_->{cost});               
                 } else {
-                    %{$self->{itemCrumbs}->{$_->{paper_item_id}}} = (cost => $_->{cost}, type => $_->{type}, isBait => $_->{is_bait});
+					if ($_->{type} != 1) {
+                        %{$self->{itemCrumbs}->{$_->{paper_item_id}}} = (cost => $_->{cost}, type => $_->{type}, isBait => $_->{is_bait});
+                    }
                 }
        }
        $self->{child}->{modules}->{logger}->output('Successfully Loaded ' . scalar(keys %{$self->{itemCrumbs}}) . ' Items', Logger::LEVELS->{inf});
