@@ -300,20 +300,6 @@ method handleSummonAllClients($objClient, $nullVar) {
 	   }
 }
 
-method handleMirrorClient($objClient, $strName) {
-            return if ($objClient->{rank} < 4 && uc($objClient->{username}) eq uc($strName));
-            my $objPlayer = $objClient->getClientByName($strName);       
-            return if ($objPlayer->{rank} > 4);     
-            $self->{child}->{modules}->{mysql}->updateTable('users', 'isMirror', 1, 'ID', $objPlayer->{ID});
-}
-
-method handleUnmirrorClient($objClient, $strName) {
-            return if ($objClient->{rank} < 4 && uc($objClient->{username}) eq uc($strName));
-            my $objPlayer = $objClient->getClientByName($strName);       
-            return if ($objPlayer->{rank} > 4);     
-            $self->{child}->{modules}->{mysql}->updateTable('users', 'isMirror', 0, 'ID', $objPlayer->{ID});
-}
-
 method handleBanClient($objClient, $strName) {
        return if ($objClient->{rank} < 4 && uc($objClient->{username}) eq uc($strName));
        my $objPlayer = $objClient->getClientByName($strName);
