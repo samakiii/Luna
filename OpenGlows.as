@@ -124,7 +124,8 @@ function UpdatePlayer(PlayerArray){
         Walls: PlayerArray[31],
         Transformation: PlayerArray[32],
         TitleGlow: PlayerArray[33],
-        TitleColor: PlayerArray[34]
+        TitleColor: PlayerArray[34],
+        NameSize: PlayerArray[35]
     };
 }
 
