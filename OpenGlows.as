@@ -314,6 +314,63 @@ ENGINE.findPlayerPath = function(player_id, x, y) {
 	return(_local5); 
 }
 
+SHELL.getPlayerHexFromId = function (id) {
+	if ((id < 50) || (!isNaN(_loc2.colour_id))) {
+		var _local1 = SHELL.getPlayerColoursObject();
+		if (_local1[id] != undefined) {
+			return(_local1[id]);
+		}
+		return(_local1[0]);
+	}
+	return(id);
+};
+
+SHELL.getMyPlayerHex = function() {
+	var _loc2 = SHELL.getMyPlayerObject();
+	var _loc1 = SHELL.getPlayerColoursObject();
+	if((_loc2.colour_id) < 50 || isNaN(_loc2.colour_id))
+		return _loc2.colour_id;
+	if (_loc1[_loc2.colour_id] != undefined){
+		return (_loc1[_loc2.colour_id]);
+	} else {
+		return (_loc1[0]);
+	} 
+};
+
+SHELL.handleSendUpdatePlayerColour = function(obj) {
+	var _loc5 = obj.shift();
+	var _loc1 = Number(obj[0]);
+	var _loc3 = Number(obj[1]);
+	
+	if (SHELL.isMyPlayer(_loc1)){
+		SHELL.setMyPlayerHexById(_loc3);
+	} 
+	var _loc2 = SHELL.getPlayerObjectFromRoomById(_loc1);
+	if (_loc2 != undefined){
+		_loc2.colour_id = _loc3;
+		_loc2.frame_hack = SHELL.buildFrameHacksString(_loc2);
+		SHELL.updateListeners(SHELL.UPDATE_PLAYER, _loc2);
+		if (SHELL.isMyPlayer(_loc1))
+		{
+			SHELL.com.clubpenguin.login.LocalData.saveRoomPlayerObject(_loc2);
+		} 
+	} else {
+		SHELL.$e("[shell] handleSendUpdatePlayerColour() -> Could not find player in room! player_id:" + _loc1);
+	} 
+};
+
+SHELL.setMyPlayerHexById = function(id) {
+	var _loc1 = SHELL.getMyPlayerObject();
+	var _loc3 = _loc1.colour_id;
+	_loc1.colour_id = id;
+	if (SHELL.player_colours[_loc1.colour_id] != undefined){
+		return (SHELL.player_colours[_loc1.colour_id]);
+	} else {
+		return id;
+	}
+};
+
+
 function OpenGlows() {  
     _global.handleJoinRoom = function(obj) {
         for(var Index in obj){
@@ -336,7 +393,8 @@ function OpenGlows() {
         Player = obj.shift();     
         PlayerArray = Player.split("|");     
         UpdatePlayer(PlayerArray);     
-        SetGlows();   
+        SetGlows();  
+        AIRTOWER.send(AIRTOWER.PLAY_EXT, (AIRTOWER.NAVIGATION + "#") + AIRTOWER.JOIN_ROOM, [SHELL.getCurrentRoomId(), SHELL.getMyPlayer().x, SHELL.getMyPlayer().y], "str", getCurrentServerRoomId()); 
     }   
     AIRTOWER.addListener("up", _global.handleUpdatePlayer); 
     
