@@ -85,6 +85,8 @@ if ($_SESSION['isStaff'] == true) {
 <form class="form" name="form" method="post" action="<?php echo $_SERVER['PHP_SELF']; ?>">
        <select name="gtype" id="gtype">
 		  <option value="null">Select Type</option>
+		  <option value='penguinglow'>Penguin Glow</option>
+		   <option value='penguincolor'>Penguin Color</option>
 		  <option value='nameglow'>Name Glow</option>
 		  <option value='namecolour'>Name Color</option>
 		  <option value='bubbletext'>Bubble Text Color</option>
@@ -92,7 +94,6 @@ if ($_SESSION['isStaff'] == true) {
 		  <option value='bubbleglow'>Bubble Glow</option>
 		  <option value='ringcolour'>Ring Color</option>
 		  <option value='chatglow'>Chat Glow</option>
-		  <option value='penguinglow'>Penguin Glow</option>
 		  <option value='moodglow'>Mood Glow</option>
 		  <option value='moodcolor'>Mood Color</option>
 		  <option value='snowballglow'>Snowball Glow</option>
