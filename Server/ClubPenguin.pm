@@ -291,12 +291,13 @@ method handleLogin($strXML, $objClient) {
 
 method checkBeforeLogin($strName, $strPass, $objClient) {
        my $intNames = $self->{modules}->{mysql}->countRows("SELECT `username` FROM users WHERE `username` = '$strName'");
-       my $arrInfo = $self->{modules}->{mysql}->fetchColumns("SELECT * FROM users WHERE `username` = '$strName'");
-       my $strHash = $self->generateHash($arrInfo, $objClient);      
        if ($intNames <= 0) {
            $objClient->sendError(100);
            return $self->{modules}->{base}->removeClient($objClient->{sock});
-       } elsif ($strPass ne $strHash) {
+       }
+       my $arrInfo = $self->{modules}->{mysql}->fetchColumns("SELECT * FROM users WHERE `username` = '$strName'");
+       my $strHash = $self->generateHash($arrInfo, $objClient);             
+       if ($strPass ne $strHash) {
            $objClient->sendError(101);	
            $objClient->updateInvalidLogins($arrInfo->{invalidLogins} + 1, $strName);
            return $self->{modules}->{base}->removeClient($objClient->{sock});
