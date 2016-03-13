@@ -128,15 +128,7 @@
     <td>!JR 100</td> 
     <td>Join a room using a Room ID</td>
   </tr>
-</table>
-
-<h1>VIP Commands: </h1>
-<table>
-<tr>
-    <th><h2>Command</h2></th>
-    <th><h2>Example</h2></th> 
-    <th><h2>Info</h2></th>
-  </tr>        
+  <tr>  
   <td>!SPS</td>
     <td>!SPS 50</td> 
     <td>Set the penguin Speed ranging from 0 to 100</td>
