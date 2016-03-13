@@ -18,10 +18,8 @@ include 'session.php';
 <li><a href="profile.php">Home</a></li>
 <li><a href="settings.php">Settings</a></li>
 <li><a class="active" href="search.php">Search</a></li>
-<?php if ($_SESSION['isVIP'] == true) { ?>
 <li><a href="glows.php">Glow Panel</a></li>
 <?php
-}
 if ($_SESSION['isStaff'] == true) { 
 ?>
 <li><a href="moderator.php">Mod Panel</a></li>
@@ -53,7 +51,7 @@ if (isset($_POST['submit'])) {
        if (!empty($arrResults)) {
            $arrRanks = array(
                 1 => 'Member',
-                2 => 'VIP',
+                2 => 'Member',
                 3 => 'Mediator',
                 4 => 'Moderator',
                 5 => 'Administrator',
