@@ -47,7 +47,7 @@ $arrResults = mysqli_fetch_assoc($resQuery);
 
 $arrRanks = array(
                 1 => 'Member',
-                2 => 'VIP',
+                2 => 'Member',
                 3 => 'Mediator',
                 4 => 'Moderator',
                 5 => 'Administrator',
