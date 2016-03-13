@@ -3,10 +3,6 @@
 include 'session.php';
 include '../config.php';
 
-if ($_SESSION['isVIP'] == false) { 
-    header('location: index.php');
-}
-
 $strError = '';
 $strFormTwoError = '';
 $strMessage = '';
@@ -65,13 +61,11 @@ if (isset($_POST['update_speed'])) {
 <li><a href="profile.php">Home</a></li>
 <li><a href="settings.php">Settings</a></li>
 <li><a href="search.php">Search</a></li>
-<?php if ($_SESSION['isVIP'] == true) { ?>
 <li><a class="active" href="glows.php">Glow Panel</a></li>
 <?php 
-}
 if ($_SESSION['isStaff'] == true) {
- ?>
- <li><a href="moderator.php">Mod Panel</a></li>
+?>
+<li><a href="moderator.php">Mod Panel</a></li>
 <?php if ($_SESSION['isAdmin'] == true) { ?>
 <li><a href="admin.php">Admin Panel</a></li>
 <?php } } ?>
