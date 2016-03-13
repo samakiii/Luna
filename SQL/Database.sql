@@ -113,7 +113,6 @@ CREATE TABLE `users` (
   `colour` mediumtext NOT NULL,
   `coins` int(11) NOT NULL,
   `isMuted` int(1) NOT NULL DEFAULT '0',
-  `isVIP` int(1) NOT NULL DEFAULT '0',
   `isStaff` int(1) NOT NULL DEFAULT '0',
   `isAdmin` int(1) NOT NULL DEFAULT '0',
   `rank` int(1) NOT NULL DEFAULT '1',
@@ -148,7 +147,7 @@ CREATE TABLE `users` (
   `transformation` mediumtext NOT NULL,
   `title` mediumtext NOT NULL,
   `titleglow` mediumtext NOT NULL,
-  `titlecolor` mediumtext NOT NULL,
+  `titlecolor` mediumtext NOT NULL
   PRIMARY KEY (`ID`)
 ) ENGINE=MyISAM DEFAULT CHARSET=latin1;
 
