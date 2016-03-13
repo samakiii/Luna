@@ -30,7 +30,6 @@ if (isset($_POST['submit'])) {
             if ($arrInfo['spin'] == $intPin) {
                 $_SESSION['login_user'] = $strName;
                 $_SESSION['ID'] = $arrInfo['ID'];
-                $_SESSION['isVIP'] = $arrInfo['isVIP'];
                 $_SESSION['isStaff'] = $arrInfo['isStaff'];
                 $_SESSION['isAdmin'] = $arrInfo['isAdmin'];
                 header('location: profile.php');
