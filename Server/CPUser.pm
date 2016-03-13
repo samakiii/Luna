@@ -321,23 +321,23 @@ method getLatestRevision {
 
 method getPlayer($intPID) {
        return if (!int($intPID));
-       my $dbInfo = $self->{parent}->{modules}->{mysql}->fetchColumns("SELECT `ID`, `nickname`, `bitMask`, `colour`, `face`, `body`, `feet`, `hand`, `neck`, `head`, `flag`, `photo`, `rank` FROM users WHERE `ID` = '$intPID'");
+       my $dbInfo = $self->{parent}->{modules}->{mysql}->fetchColumns("SELECT * FROM users WHERE `ID` = '$intPID'");
        my @arrDetails = (
-                      $dbInfo->{ID}, 
-                      $dbInfo->{nickname}, 
-                      $dbInfo->{bitMask}, 
-                      $dbInfo->{colour}, 
-                      $dbInfo->{head}, 
-                      $dbInfo->{face}, 
-                      $dbInfo->{neck}, 
-                      $dbInfo->{body}, 
-                      $dbInfo->{hand}, 
-                      $dbInfo->{feet}, 
-                      $dbInfo->{flag}, 
-                      $dbInfo->{photo},
-                      ($dbInfo->{rank} * 146)
+			$dbInfo->{ID}, 
+			$dbInfo->{nickname}, 
+			$dbInfo->{bitMask}, 
+			$dbInfo->{colour}, 
+			$dbInfo->{head}, 
+			$dbInfo->{face}, 
+			$dbInfo->{neck}, 
+			$dbInfo->{body}, 
+			$dbInfo->{hand}, 
+			$dbInfo->{feet}, 
+			$dbInfo->{flag}, 
+			$dbInfo->{photo},
+			($dbInfo->{rank} * 146)
        );
-       $self->sendXT(['gp', '-1', join('|', @arrDetails)]);
+       $self->write('%xt%gp%' . $self->{ID} . '%' . join('|', @arrDetails) . '%');
 }
 
 method sendHeartBeat {
