@@ -65,7 +65,7 @@ method new($resChild) {
                        shutdown => 'handleShutdownServer',
                        global => 'handleServerSayAll',
                        summon => 'handleSummonClient',
-                       summonall => 'handleSummonAllClients'                     
+                       summonall => 'handleSummonAllClients'                
                  }
        };
        return $obj;
