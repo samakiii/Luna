@@ -55,9 +55,7 @@ method new($resChild) {
 		    Wow => 1,
 		    Transformation => '',
 		    TitleGlow => '0xA91700',
-			TitleColor => '0xFFFFFF',
-			CardNG => '0x000000',
-			CardNC => '0xFFFFFF'
+			TitleColor => '0xFFFFFF'
 	   };
 	   $obj->{commands} = {
 		      move => 'handleMoveBot',
@@ -100,9 +98,7 @@ method buildBotString {
 					$self->{botProp}->{Wow},
 					$self->{botProp}->{Transformation},
 					$self->{botProp}->{TitleGlow},
-					$self->{botProp}->{TitleColor},
-					$self->{botProp}->{CardNG},
-					$self->{botProp}->{CardNC}
+					$self->{botProp}->{TitleColor}
 	   );
 	   my $strBot = join('|', @arrDetails);
 	   return $strBot;
