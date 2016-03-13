@@ -24,7 +24,6 @@ method new($resParent, $resSock) {
        $obj->{active} = 0;
        $obj->{isMuted} = 0;
        $obj->{isBanned} = 0;
-       $obj->{isVIP} = 0;
        $obj->{isStaff} = 0;
        $obj->{isAdmin} = 0;
        $obj->{isAuth} = 0;
@@ -93,7 +92,7 @@ method sendXT(\@arrArgs) {
 
 method write($strData) {
        if ($self->{sock}->connected) {
-           send($self->{sock}, $strData . chr(0), 0);
+           syswrite($self->{sock}, $strData . chr(0));
        }
        if ($self->{parent}->{servConfig}->{debugging}) {
            $self->{parent}->{modules}->{logger}->output('Packet Sent: ' . $strData, Logger::LEVELS->{dbg});        
@@ -444,7 +443,7 @@ method updateOPStat($blnStat) {
 method buildRoomString {
        my $userList = $self->buildClientString . '%';
        foreach (values %{$self->{parent}->{clients}}) {
-                if ($_->{room} == $self->{room} && $_->{ID} ne $self->{ID}) {
+                if ($_->{room} == $self->{room} && $_->{ID} != $self->{ID}) {
                     $userList .= $_->buildClientString . '%';
                 }
        }
