@@ -19,10 +19,8 @@ include "../config.php";
 <li><a href="profile.php">Home</a></li>
 <li><a href="settings.php">Settings</a></li>
 <li><a href="search.php">Search</a></li>
-<?php if ($_SESSION["isVIP"] == true) { ?>
 <li><a href="glows.php">Glow Panel</a></li>
 <?php
-}
 if ($_SESSION["isStaff"] == true) { 
 ?>
 <li><a href="moderator.php">Mod Panel</a></li>
@@ -55,7 +53,7 @@ while ($row = mysqli_fetch_assoc($result)) {
 	
 <p>Name: <?php echo $row["product"]; ?></p>
 <p>Price: <?php echo $row["price"] . "$"; ?></p>
- 
+Â 
 <form name="form" method="post" action="<?php echo $paypal_url; ?>">
 <input type="hidden" name="business" value="<?php echo $paypal_id; ?>">
 <input type="hidden" name="cmd" value="_xclick">
