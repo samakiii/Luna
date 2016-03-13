@@ -22,11 +22,9 @@
 <div class="container">
 <center>
 <!-- Edit the swf urls below -->
-<object classid="clsid:D27CDB6E-AE6D-11cf-96B8-444553540000" codebase="http://fpdownload.macromedia.com/pub/shockwave/cabs/flash/swflash.cab#version=8,0,0,0" width="100%" height="100%">
-<param name="movie" value="http://127.0.0.1/play/LaLaLa.swf" />
-<param name="quality" value="high" />
-<PARAM NAME="SCALE" VALUE="default">
-<embed src="http://127.0.0.1/play/LaLaLa.swf" quality="high" type="application/x-shockwave-flash" width="950" height="600" SCALE="default" pluginspage="http://www.macromedia.com/go/getflashplayer" />
+<object width="950" height="600">
+<param name="movie" value="http://127.0.0.1/play/Loader/load.swf?cp=1356">
+<embed src="http://127.0.0.1/play/Loader/load.swf?cp=1356" width="950" height="600"></embed>
 </object>
 </center>
 
