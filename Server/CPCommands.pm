@@ -14,7 +14,6 @@ method new($resChild) {
 }
 
 method handlePenguinSuperSize($objClient, $strArgs) {
-       return if (!$objClient->{isVIP});
        my @arrParts = split(" ", $strArgs);  
        my $intX = $arrParts[0];
        my $intY = $arrParts[1];
@@ -23,57 +22,65 @@ method handlePenguinSuperSize($objClient, $strArgs) {
 }
 
 method handlePenguinBlend($objClient, $strBlend) {
-       return if (!$objClient->{isVIP});
        $objClient->sendRoom('%xt%ssb%' . $objClient->{ID} . '%' . $strBlend . '%');
 }
 
 method handlePenguinAlpha($objClient, $intAlpha) {
-       return if (!$objClient->{isVIP} || !int($intAlpha));
+       return if (!int($intAlpha));
        $objClient->sendRoom('%xt%ssa%' . $objClient->{ID} . '%' . $intAlpha . '%');
 }
 
 method handleSetNameGlow($objClient, $strGlow) {
-       return if (!$objClient->{isVIP} || $strGlow !~ m/0x[\da-fA-F]{1,4}/);
+	   return if (!defined($strGlow));
+       return if ($strGlow !~ m/0x[\da-fA-F]{1,4}/);
        $objClient->updateOpenGlow('nameglow', $strGlow);
 }
 
-method handleSetNameColour($objClient, $strNColour) {
-       return if (!$objClient->{isVIP} || $strNColour !~ m/0x[\da-fA-F]{1,4}/);
-       $objClient->updateOpenGlow('namecolour', $strNColour);
+method handleSetNameColour($objClient, $strColor) {
+	   return if (!defined($strColor));
+       return if ($strColor !~ m/0x[\da-fA-F]{1,4}/);
+       $objClient->updateOpenGlow('namecolour', $strColor);
 }
 
-method handleSetChatGlow($objClient, $strCGGlow) {
-       return if (!$objClient->{isVIP} || $strCGGlow !~ m/0x[\da-fA-F]{1,4}/);
-       $objClient->updateOpenGlow('chatglow', $strCGGlow);
+method handleSetChatGlow($objClient, $strGlow) {
+	   return if (!defined($strGlow));
+       return if ($strGlow !~ m/0x[\da-fA-F]{1,4}/);
+       $objClient->updateOpenGlow('chatglow', $strGlow);
 }
 
 method handleSetPenguinGlow($objClient, $strGlow) {
-       return if (!$objClient->{isVIP} || $strGlow !~ m/0x[\da-fA-F]{1,4}/);
+	   return if (!defined($strGlow));
+       return if ($strGlow !~ m/0x[\da-fA-F]{1,4}/);
        $objClient->updateOpenGlow('penguinglow', $strGlow);
 }
 
 method handleSetPenguinColor($objClient, $strColor) {
-       return if (!$objClient->{isVIP} || $strColor !~ m/0x[\da-fA-F]{1,4}/);
+	   return if (!defined($strColor));
+       return if ($strColor !~ m/0x[\da-fA-F]{1,4}/);
        $objClient->updateOpenGlow('colour', $strColor);
 }
 
 method handleSetSnowballGlow($objClient, $strGlow) {
-       return if (!$objClient->{isVIP} || $strGlow !~ m/0x[\da-fA-F]{1,4}/);
+	   return if (!defined($strGlow));
+       return if ($strGlow !~ m/0x[\da-fA-F]{1,4}/);
        $objClient->updateOpenGlow('snowballglow', $strGlow);
 }
 
 method handleSetBubbleGlow($objClient, $strGlow) {
-       return if (!$objClient->{isVIP} || $strGlow !~ m/0x[\da-fA-F]{1,4}/);
+	   return if (!defined($strGlow));
+       return if ($strGlow !~ m/0x[\da-fA-F]{1,4}/);
        $objClient->updateOpenGlow('bubbleglow', $strGlow);
 }
 
 method handleSetMoodGlow($objClient, $strGlow) {
-       return if (!$objClient->{isVIP} || $strGlow !~ m/0x[\da-fA-F]{1,4}/);
+	   return if (!defined($strGlow));
+       return if ($strGlow !~ m/0x[\da-fA-F]{1,4}/);
        $objClient->updateOpenGlow('moodglow', $strGlow);
 }
 
 method handleSetMoodColor($objClient, $strColor) {
-       return if (!$objClient->{isVIP} || $strColor !~ m/0x[\da-fA-F]{1,4}/);
+	   return if (!defined($strColor));
+       return if ($strColor !~ m/0x[\da-fA-F]{1,4}/);
        $objClient->updateOpenGlow('moodcolor', $strColor);
 }
 
@@ -89,12 +96,14 @@ method handleSetPenguinTitle($objClient, $strTitle) {
 }
 
 method handleSetPenguinTitleGlow($objClient, $strGlow) {
-       return if (!$objClient->{isVIP} || $strGlow !~ m/0x[\da-fA-F]{1,4}/);
+	   return if (!defined($strGlow));
+       return if ($strGlow !~ m/0x[\da-fA-F]{1,4}/);
        $objClient->updateOpenGlow('titleglow', $strGlow);
 }
 
 method handleSetPenguinTitleColor($objClient, $strColor) {
-       return if (!$objClient->{isVIP} || $strColor !~ m/0x[\da-fA-F]{1,4}/);
+	   return if (!defined($strColor));
+       return if ($strColor !~ m/0x[\da-fA-F]{1,4}/);
        $objClient->updateOpenGlow('titlecolor', $strColor);
 }
 
@@ -162,22 +171,25 @@ method handleClearPenguinClothing($objClient, $nullVar) {
 }
 
 method handleSetPenguinSpeed($objClient, $intSpeed) {
-       return if (!$objClient->{isVIP} || !int($intSpeed) && $intSpeed < 4);
+       return if (!int($intSpeed) && $intSpeed < 4);
        $objClient->updateOpenGlow('speed', $intSpeed);
 }
 
 method handleSetBubbleColour($objClient, $strBColour) {
-       return if (!$objClient->{isVIP} || $strBColour !~ m/0x[\da-fA-F]{1,4}/);
+	   return if (!defined($strBColour));
+       return if ($strBColour !~ m/0x[\da-fA-F]{1,4}/);
        $objClient->updateOpenGlow('bubblecolour', $strBColour);
 } 
 
 method handleSetBubbleText($objClient, $strText) {
-       return if (!$objClient->{isVIP} || $strText !~ m/0x[\da-fA-F]{1,4}/);
+	   return if (!defined($strText));
+       return if ($strText !~ m/0x[\da-fA-F]{1,4}/);
        $objClient->updateOpenGlow('bubbletext', $strText);
 }
 
 method handleSetRingColour($objClient, $strRColour) {
-       return if (!$objClient->{isVIP} || $strRColour !~ m/0x[\da-fA-F]{1,4}/);
+	   return if (!defined($strRColour));
+       return if ($strRColour !~ m/0x[\da-fA-F]{1,4}/);
        $objClient->updateOpenGlow('ringcolour', $strRColour);
 }
 
@@ -251,6 +263,7 @@ method handleSendRoomPopulation($objClient, $nullVar) {
 method handleJoinRoom($objClient, $intRoom) {
        if ($intRoom > 0 && $intRoom < 1000) {
            $objClient->joinRoom($intRoom);
+           $self->{child}->{plugins}->{Bot}->handleReloadBot($objClient, '');
        }
 }
 
@@ -283,12 +296,14 @@ method handleTeleportClient($objClient, $strName) {
        return if (uc($objClient->{username}) eq uc($strName));
        my $objPlayer = $objClient->getClientByName($strName);
        $objClient->joinRoom($objPlayer->{room});
+       $self->{child}->{plugins}->{Bot}->handleReloadBot($objClient, '');
 }
 
 method handleSummonClient($objClient, $strName) {
        return if ($objClient->{rank} < 4 && uc($objClient->{username}) eq uc($strName));
        my $objPlayer = $objClient->getClientByName($strName);
        $objPlayer->joinRoom($objClient->{room});
+       $self->{child}->{plugins}->{Bot}->handleReloadBot($objClient, '');
 }
 
 method handleSummonAllClients($objClient, $nullVar) {
@@ -296,6 +311,7 @@ method handleSummonAllClients($objClient, $nullVar) {
 	   foreach (values %{$self->{child}->{clients}}) {
 		        if (uc($_->{username}) ne uc($objClient->{username})) {
 					$_->joinRoom($objClient->{room});
+					$self->{child}->{plugins}->{Bot}->handleReloadBot($objClient, '');
 			    }
 	   }
 }
