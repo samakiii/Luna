@@ -50,7 +50,7 @@ method handleGetIglooDetails($strData, $objClient) {
        my $intMusic = $arrInfo->{music};
        my $intFloor = $arrInfo->{floor};
        my $strFurn = $arrInfo->{furniture};
-       $objClient->write('%xt%gm%-1%' . $intPID . '%' . $intIgloo . '%' . $intMusic . '%' . $intFloor . '%' .  ($strFurn ? $strFurn : '') . '%');
+       $objClient->write('%xt%gm%-1%' . $intPID . '%' . ($intIgloo ? $intIgloo : 1) . '%' . ($intMusic ? $intMusic : 0) . '%' . ($intFloor ? $intFloor : 0) . '%' .  ($strFurn ? $strFurn : '') . '%');
 }
 
 method handleGetOwnedIgloos($strData, $objClient) {
