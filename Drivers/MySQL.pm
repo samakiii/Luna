@@ -12,7 +12,7 @@ method new {
 }
 
 method createMysql($strHost, $strDB, $strName, $strPass) {
-       $self->{mysql} = DBI->connect("DBI:mysql:database=$strDB;host=$strHost", $strName, $strPass);
+       $self->{mysql} = DBI->connect("DBI:mysql:database=$strDB;host=$strHost", $strName, $strPass, {AutoCommit => 1, mysql_auto_reconnect => 1});
 }
 
 method execQuery($strSQL) {
