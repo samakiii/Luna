@@ -74,6 +74,7 @@ echo "ServerName localhost" | sudo tee /etc/apache2/conf-available/fqdn.conf
 sudo a2enconf fqdn
 sudo apt-get install php5-mysql
 sudo apt-get install libmysqlclient-dev
+sudo apt-get install libxml-parser-perl
 sudo service apache2 restart
 ```
 
