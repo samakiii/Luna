@@ -147,7 +147,7 @@ CREATE TABLE `users` (
   `transformation` mediumtext NOT NULL,
   `title` mediumtext NOT NULL,
   `titleglow` mediumtext NOT NULL,
-  `titlecolor` mediumtext NOT NULL
+  `titlecolor` mediumtext NOT NULL,
   PRIMARY KEY (`ID`)
 ) ENGINE=MyISAM DEFAULT CHARSET=latin1;
 
