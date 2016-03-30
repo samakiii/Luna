@@ -32,7 +32,7 @@ CREATE TABLE `postcards` (
   `postcardType` int(5) NOT NULL,
   `isRead` int(1) NOT NULL DEFAULT '0',
   PRIMARY KEY (`postcardID`)
-) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+) ENGINE=InnoDB DEFAULT CHARSET=latin1 AUTO_INCREMENT=1;
 
 
 DROP TABLE IF EXISTS `products`;
@@ -42,7 +42,7 @@ CREATE TABLE `products` (
   `price` mediumblob NOT NULL,
   `currency` varchar(10) NOT NULL,
   PRIMARY KEY (`pid`)
-) ENGINE=MyISAM DEFAULT CHARSET=latin1;
+) ENGINE=MyISAM DEFAULT CHARSET=latin1 AUTO_INCREMENT=1;
 
 INSERT INTO `products` (`product`, `price`, `currency`) VALUES ('isVIP', '3.00', 'USD');
 
@@ -57,7 +57,7 @@ CREATE TABLE `puffles` (
   `puffleHealth` int(3) NOT NULL DEFAULT '100',
   `puffleRest` int(3) NOT NULL DEFAULT '100',
   PRIMARY KEY (`puffleID`)
-) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+) ENGINE=InnoDB DEFAULT CHARSET=latin1 AUTO_INCREMENT=1;
 
 
 DROP TABLE IF EXISTS `sales`;
@@ -70,7 +70,7 @@ CREATE TABLE `sales` (
   PRIMARY KEY (`sid`),
   KEY `uid` (`uid`),
   KEY `pid` (`pid`)
-) ENGINE=MyISAM DEFAULT CHARSET=latin1;
+) ENGINE=MyISAM DEFAULT CHARSET=latin1 AUTO_INCREMENT=1;
 
 
 DROP TABLE IF EXISTS `servers`;
