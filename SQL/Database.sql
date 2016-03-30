@@ -149,7 +149,7 @@ CREATE TABLE `users` (
   `titleglow` mediumtext NOT NULL,
   `titlecolor` mediumtext NOT NULL,
   PRIMARY KEY (`ID`)
-) ENGINE=MyISAM DEFAULT CHARSET=latin1;
+) ENGINE=MyISAM DEFAULT CHARSET=latin1 AUTO_INCREMENT=1;
 
 
 -- 2016-03-01 19:24:13
