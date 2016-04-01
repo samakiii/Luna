@@ -35,7 +35,7 @@ method serverLoop {
              }
              my @arrData = split(chr(0), $strBuffer);
              foreach (@arrData) {                         
-				                 $self->handleData($_, $objClient);    
+				      $self->handleData($_, $objClient);    
              }
           };
           if ($@) {
@@ -47,7 +47,7 @@ method serverLoop {
 
 method runCrons {
        my $intTime = time;
-       my $intStamp = $intTime + 30;
+       my $intStamp = $intTime + 20;
        if (!$self->{jobStamp}) {
            $self->{jobStamp} = $intStamp;
        } elsif ($intTime > $self->{jobStamp}) {
