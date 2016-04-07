@@ -68,7 +68,7 @@ if (isset($_POST['submit'])) {
         sendError('Invalid email address! Please recheck your email');
     } elseif (!domain_exists($strEmail)) {
         sendError('Invalid domain for email address! Please use a valid domain');
-    } elseif (!ctype_alnum($strUsername) && strlen($strUsername) > 10 && strlen($strUsername) <= 3) {
+    } elseif (!preg_match('/[^A-Za-z0-9]/', $strUsername) && strlen($strUsername) > 10 && strlen($strUsername) <= 3) {
         sendError('Invalid username! Please make sure the username is alphanumeric and not too long or short');
     } elseif (strlen($strColor) > 6) {
         sendError('Invalid color! Please use a valid color');
