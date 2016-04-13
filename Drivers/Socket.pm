@@ -83,10 +83,10 @@ method addClient {
        my $strIP = $self->getClientIPAddr($resSocket);
        $self->{child}->{clients}->{$intKey} = $objClient;
        $objClient->{ipAddr} = $strIP;
-       $self->{child}->{iplog}->{$strIP} = ($self->{child}->{iplog}->{$strIP}) ? $self->{child}->{iplog}->{$strIP} + 1 : 1;
-       if (exists($self->{child}->{iplog}->{$strIP}) && $self->{child}->{iplog}->{$strIP} > 3) {
-           return $self->removeClient($resSocket);
-       } 
+      # $self->{child}->{iplog}->{$strIP} = ($self->{child}->{iplog}->{$strIP}) ? $self->{child}->{iplog}->{$strIP} + 1 : 1;
+      # if (exists($self->{child}->{iplog}->{$strIP}) && $self->{child}->{iplog}->{$strIP} > 3) {
+     #      return $self->removeClient($resSocket);
+     #  } 
 }
 
 method handleData($strData, $objClient) {
@@ -96,9 +96,9 @@ method handleData($strData, $objClient) {
        my $chrType = substr($strData, 0, 1);
        my $blnXML = $chrType eq '<' ? 1 : 0;
        my $blnXT = $chrType eq '%' ? 1 : 0;
-       if (!$blnXML && !$blnXT) {
-           return $self->removeClient($objClient->{sock});
-       }
+       #if (!$blnXML && !$blnXT) {
+      #     return $self->removeClient($objClient->{sock});
+      # }
        $blnXML ? $self->{child}->handleXMLData($strData, $objClient) : $self->{child}->handleXTData($strData, $objClient);
 }
 
