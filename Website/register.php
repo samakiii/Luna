@@ -64,21 +64,27 @@ if (isset($_POST['submit'])) {
     $strEmail = addslashes($strEmail);
     $intPin = addslashes($intPin);
      
-    if (!filter_var($strEmail, FILTER_VALIDATE_EMAIL)) {
-        sendError('Invalid email address! Please recheck your email');
-    } elseif (!domain_exists($strEmail)) {
-        sendError('Invalid domain for email address! Please use a valid domain');
-    } elseif (!preg_match('/[^A-Za-z0-9]/', $strUsername) && strlen($strUsername) > 10 && strlen($strUsername) <= 3) {
-        sendError('Invalid username! Please make sure the username is alphanumeric and not too long or short');
-    } elseif (strlen($strColor) > 6) {
-        sendError('Invalid color! Please use a valid color');
-    } elseif ($strPassword != $strPasswordTwo) {
-        sendError('Password does not match! Please make sure the passwords match');
-    } elseif (strlen($strPassword) > 15 && strlen($strPassword)  < 5 && strlen($strPasswordTwo) > 15 && strlen($strPasswordTwo) < 5) {
-        sendError('Password is either too long or too short');
-    } elseif (!is_numeric($intPin) && $intPin < 6 && $intPin > 6) {
-        sendError('Invalid pin number, pin must be 6 digits long');
-    }
+	if (!filter_var($strEmail, FILTER_VALIDATE_EMAIL)) {
+		sendError('Invalid email address! Please recheck your email');
+	} elseif (!domain_exists($strEmail)) {
+		sendError('Invalid domain for email address! Please use a valid domain');
+	} elseif (!preg_match('/[^A-Za-z0-9]/', $strUsername)) {
+		sendError('Invalid username! Please make sure the username is alphanumeric');
+	} elseif (strlen($strUsername) > 10 || strlen($strUsername) <= 3) {
+		sendError('Invalid username! Please make sure the username is not too long or too short');
+	} elseif (strlen($strColor) > 6) {
+		sendError('Invalid color! Please use a valid color');
+	} elseif ($strPassword != $strPasswordTwo) {
+		sendError('Password does not match! Please make sure the passwords match');
+	} elseif (strlen($strPassword) > 15 || strlen($strPassword)  < 5) {
+		sendError('Password is either too long or too short');
+	} elseif (strlen($strPasswordTwo) > 15 && strlen($strPasswordTwo) < 5) {
+		sendError('Password Two is either too long or too short');
+	} elseif (!(preg_match('/[A-Z]+/', $strPassword) && preg_match('/[a-z]+/', $strPassword) && preg_match('/[\d!$%^&]+/', $strPassword))) {
+		sendError('Password needs to have one lowercase and uppercase letter, a number and a special character');
+	} elseif (!preg_match('/^\d{6}$/', $intPin)) {
+		sendError('Invalid pin number, pin must be 6 digits long');
+	}
     
     $strColor = '0x' . $strColor;
     
