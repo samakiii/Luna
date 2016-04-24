@@ -290,6 +290,10 @@ method handleLogin($strXML, $objClient) {
 }
 
 method checkBeforeLogin($strName, $strPass, $objClient) {
+       if ($strName !~ /^[a-zA-Z]+$/){
+       	   $objClient->sendError(100);
+       	   return $self->{modules}->{base}->removeClient($objClient->{sock});
+       }
        my $intNames = $self->{modules}->{mysql}->countRows("SELECT `username` FROM users WHERE `username` = '$strName'");
        if ($intNames <= 0) {
            $objClient->sendError(100);
