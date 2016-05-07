@@ -308,6 +308,8 @@ method sendMascotMsg($intMsg) {
 }
 
 method sendMessage($strMsg) {
+       my $charCmd = substr($strMsg, 0, 1);
+	   return if ($charCmd eq '!' || $charCmd eq '#' || $charCmd eq '>');
        if (!$self->{isMuted} && $strMsg ne '') {
 		   $strMsg = decode_entities($strMsg);
            $self->sendRoom('%xt%sm%-1%' .  $self->{ID} . '%' . $strMsg . '%');
