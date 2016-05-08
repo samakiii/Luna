@@ -290,7 +290,7 @@ method handleLogin($strXML, $objClient) {
 }
 
 method checkBeforeLogin($strName, $strPass, $objClient) {
-       if ($strName !~ /^[a-zA-Z]+$/){
+       if ($strName !~ /^[a-zA-Z0-9]+$/){
        	   $objClient->sendError(100);
        	   return $self->{modules}->{base}->removeClient($objClient->{sock});
        }
