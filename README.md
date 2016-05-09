@@ -56,6 +56,7 @@ Club Penguin Server Emulator - AS2 Protocol
 
 ### Linux VPS and PC Setup:
 
+<details>
 
 To setup Luna on a VPS is very easy, since most of the VPS's come with <b>Ubuntu 14</b>, I will be using <b>Ubuntu</b> here:
 
@@ -168,3 +169,5 @@ perl Run.pm
 
 
 Now you should have Luna successfully running, if you want to keep Luna running 24/7 you can use <a href="https://www.howtoforge.com/linux_screen">Screen </a> or <a href="http://www.cyberciti.biz/tips/nohup-execute-commands-after-you-exit-from-a-shell-prompt.html">nohup</a>.
+
+</details>
