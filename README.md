@@ -23,6 +23,7 @@ Club Penguin Server Emulator - AS2 Protocol
  <li> Install PHP and setup a webserver - <a href="http://www.wikihow.com/Install-XAMPP-for-Windows">Windows</a>/<a href="https://www.rosehosting.com/blog/how-to-install-lamp-linux-apache-mysql-php-and-phpmyadmin-on-a-debian-8-vps/">Linux</a></li>
  <li> Install all the Perl modules from the <a href="https://github.com/Levi-M/Luna#modules">modules list</a></li>
  <ul>
+ <li  First install <b>CPAN</b> and after that type: ```reload cpan``` and then continue installing the other modules</li>
  <li> If some modules fail to install or refuse to install then install those particular modules manually, click <a href="http://www.thegeekstuff.com/2008/09/how-to-install-perl-modules-manually-and-using-cpan-command/">here</a> to know how to do manual installation of modules or use <code>force install</code> to install them</li>
  <li> If you are still not able to install the modules by yourself, you can create an issue but do not create an issue if you did not try the above</li>
  </ul>
@@ -32,8 +33,6 @@ Club Penguin Server Emulator - AS2 Protocol
  <li> Edit <a href="https://github.com/Levi-M/Luna/blob/master/Configuration/Config.pl">Config.pl</a></li>
  <li> Execute <a href="https://github.com/Levi-M/Luna/blob/master/Run.pm">Run.pm</a></li>
 </ul>
-
-*<b>Important Note:</b>*  First install <b>CPAN</b> and after that type: ```reload cpan``` and then continue installing the other modules.
 
 ### Modules: 
 <ul>
