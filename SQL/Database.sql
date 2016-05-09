@@ -35,18 +35,6 @@ CREATE TABLE `postcards` (
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1 AUTO_INCREMENT=1;
 
 
-DROP TABLE IF EXISTS `products`;
-CREATE TABLE `products` (
-  `pid` int(11) NOT NULL AUTO_INCREMENT,
-  `product` varchar(255) NOT NULL,
-  `price` mediumblob NOT NULL,
-  `currency` varchar(10) NOT NULL,
-  PRIMARY KEY (`pid`)
-) ENGINE=MyISAM DEFAULT CHARSET=latin1 AUTO_INCREMENT=1;
-
-INSERT INTO `products` (`product`, `price`, `currency`) VALUES ('isVIP', '3.00', 'USD');
-
-
 DROP TABLE IF EXISTS `puffles`;
 CREATE TABLE `puffles` (
   `puffleID` int(11) NOT NULL AUTO_INCREMENT,
@@ -58,20 +46,6 @@ CREATE TABLE `puffles` (
   `puffleRest` int(3) NOT NULL DEFAULT '100',
   PRIMARY KEY (`puffleID`)
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1 AUTO_INCREMENT=1;
-
-
-DROP TABLE IF EXISTS `sales`;
-CREATE TABLE `sales` (
-  `sid` int(11) NOT NULL AUTO_INCREMENT,
-  `pid` int(11) DEFAULT NULL,
-  `uid` int(11) DEFAULT NULL,
-  `saledate` date DEFAULT NULL,
-  `transactionid` varchar(125) DEFAULT NULL,
-  PRIMARY KEY (`sid`),
-  KEY `uid` (`uid`),
-  KEY `pid` (`pid`)
-) ENGINE=MyISAM DEFAULT CHARSET=latin1 AUTO_INCREMENT=1;
-
 
 DROP TABLE IF EXISTS `servers`;
 CREATE TABLE `servers` (
