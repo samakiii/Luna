@@ -29,7 +29,7 @@ Club Penguin Server Emulator - AS2 Protocol
  </ul>
  <li> Setup an AS2 Media Server</li>
  <li> Import the <a href="https://github.com/Levi-M/Luna/blob/master/SQL/Database.sql">SQL</a> using <b>Phpmyadmin/Adminer</b></li>
- <li> Edit <a href="https://github.com/Levi-M/Luna/blob/master/Website/config.php">Config.php</a> and create an account using the register</li>
+ <li> Create an account through the database</li>
  <li> Edit <a href="https://github.com/Levi-M/Luna/blob/master/Configuration/Config.pl">Config.pl</a></li>
  <li> Execute <a href="https://github.com/Levi-M/Luna/blob/master/Run.pm">Run.pm</a></li>
 </ul>
@@ -56,12 +56,7 @@ Club Penguin Server Emulator - AS2 Protocol
  <li> File::Fetch</li>
 </ul>
 
-
-### Tutorials:
-
-### VPS Setup:
-
-*<b>Note:</b>* This tutorial works for people who use Linux as your OS - localhosted.
+### Linux VPS and PC Setup:
 
 To setup Luna on a VPS is very easy, since most of the VPS's come with <b>Ubuntu 14</b>, I will be using <b>Ubuntu</b> here:
 
@@ -139,20 +134,7 @@ Now lets import the SQL onto Phpmyadmin:
   <li>Click <b>Browse</b>, locate Luna's SQL file, click <b>Open</b>, and then click <b>Go</b></li>
 </ul>
 
-Make sure you follow these tutorials too:
-
-<ul>
-  <li><a href="https://github.com/Levi-M/Luna#paypal">Paypal</a></li>
-  <li><a href="https://github.com/Levi-M/Luna#contact-page-setup">Contact Page Setup</a></li>
-</ul>
-
-and setup a <a href="https://www.google.com/recaptcha">reCaptcha</a> account and get your keys.
-
-Now go back to Luna's directory and open <b>/Configuration/Config.pl</b> and <b>/Website/config.php</b>
-
-Edit your information in those files and save it.
-
-One more thing, move the content from the <b>Website</b> folder from Luna to <b>/var/www/html/</b> and make sure to edit <b>play.php</b> too.
+Now go back to Luna's directory and open <b>/Configuration/Config.pl</b> and edit your information and save it.
 
 Last but not the least, pull up your terminal and using the ```cd``` command, navigate to Luna's directory and execute this command:
 
@@ -161,88 +143,3 @@ perl Run.pm
 ```
 
 Now you should have Luna successfully running, if you want to keep Luna running 24/7 you can use <a href="https://www.howtoforge.com/linux_screen">Screen </a> or <a href="http://www.cyberciti.biz/tips/nohup-execute-commands-after-you-exit-from-a-shell-prompt.html">nohup</a>.
-
- 
-
-### Paypal:
-*<b>Note:</b>* Click the <b>return to the merchant site</b> button after you have paid in order for the payment to go through successfully.
-
-Follow these steps to configure your paypal account for PDT:
-    
-<ul>
-  <li> Log in to your PayPal account</li>
-  <li> Click the <b>Profile</b> subtab</li>
-  <li> Click <b>Website Payment Preferences</b> in the <b>Seller Preferences</b> column</li>
-  <li> Under <b>Auto Return</b> for <b>Website Payments</b>, click the <b>On</b> radio button</li>
-  <li> For the <b>Return URL</b>, enter the URL on your site that will receive the transaction ID posted by PayPal after a customer payment</li>
-  <li> Under <b>Payment Data Transfer</b>, click the <b>On</b> radio button</li>
-  <li> Click <b>Save</b></li>
-  <li> Click <b>Website Payment Preferences</b> in the <b>Seller Preferences</b> column</li>
-  <li> Scroll down to the <b>Payment Data Transfer</b> section of the page to view your PDT identity token</li>
-  <li> Copy and paste the token in <b>Website/config.php</b> where it says <code>$identity_token</code></li>
-</ul>
-
-### Contact Page Setup:
-Make sure to setup a mail server, you can do so by following these instructions below.
-
-Open your terminal and run this command:
-
-```
-sudo apt-get install ssmtp
-```
-
-Then open <b>/etc/ssmtp/ssmtp.conf</b> file and find and replace these lines:
-
-```
-# The place where the mail goes. The actual machine name is required no 
-# MX records are consulted. Commonly mailhosts are named mail.domain.com
-mailhub=
-```
-
-With this:
-
-```
-# The place where the mail goes. The actual machine name is required no 
-# MX records are consulted. Commonly mailhosts are named mail.domain.com
-mailhub=smtp.gmail.com:587
-UseSTARTTLS=YES
-UseTLS=YES
-AuthUser=youremailgoeshere@gmail.com
-AuthPass=yourpasswordgoeshere
-```
-
-We are going to be using gmail here as an example. If you want to change the domain, feel free to. Also dont forget to edit the <code>AuthUser</code> and <code>AuthPass</code> in the ssmtp config.
-
-Now open your <b>php.ini</b> file which usually can be located at: <b>/etc/php5/apache2/</b>
-
-Search for this line: 
-
-```
-;sendmail_path = 
-```
-
-Replace it with: 
-
-```
-sendmail_path = /usr/sbin/ssmtp -t
-```
-
-Next go back to the source and open <b>/Website/config.php</b>
-
-Find this line: 
-
-```
-$strContactEmail = "you@yourdomain.com";
-```
-
-Edit that to match the one in the ssmtp config file and save it all.
-
-Open your terminal once again and reload the apache configuration by typing the following command:
-
-```
-sudo /etc/init.d/apache2 reload
-```
-
-Last but not the least, login to your gmail account and once you're done, click this link: https://www.google.com/settings/security/lesssecureapps
-
-Once you're at that page, turn ON the <b>lesssecureapps</b> settings and go back to the contact page and voila!
