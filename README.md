@@ -115,7 +115,7 @@ cpan
 
 If you get any prompts, type <b>y</b>(yes) and hit the <b>enter</b> key on your keyboard.
 
-Now lets first update <a>CPAN</b> by executing these commands:
+Now lets first update <b>CPAN</b> by executing these commands:
 
 ```
 install CPAN
