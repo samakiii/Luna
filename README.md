@@ -58,11 +58,15 @@ Club Penguin Server Emulator - AS2 Protocol
 
 ### Linux VPS and PC Setup:
 
+
 To setup Luna on a VPS is very easy, since most of the VPS's come with <b>Ubuntu 14</b>, I will be using <b>Ubuntu</b> here:
+
 
 First you got to setup <a href="http://howtoubuntu.org/how-to-install-lamp-on-ubuntu">LAMP</a>
 
+
 Please also execute these commands after installing LAMP:
+
 
 ```
 echo "ServerName localhost" | sudo tee /etc/apache2/conf-available/fqdn.conf
@@ -73,29 +77,38 @@ sudo apt-get install libxml-parser-perl
 sudo service apache2 restart
 ```
 
+
 Then after you have done that, check the version of Perl your server comes bundled with, so open up your terminal and execute this command:
+
 
 ```
 perl -v
 ```
 
+
 These days your servers comes bundled with <b>Perl 5.20+</b> which is not compatible with Luna yet. So what do you got to do? Simple! Use <b>perlbrew</b>!
 
+
 So open up your terminal again and run these commands:
+
 
 ```
 sudo cpan App::perlbrew
 perlbrew init
 ```
 
+
 There we go, <b>perlbrew</b> is installed! Now lets install <b>Perl 5.14</b> and use that as the default version of Perl by running these commands:
+
 
 ```
 perlbrew install perl-5.14.4
 perlbrew switch perl-5.14.4
 ```
 
+
 and you're done. Now before we proceed any further, lets make sure you have an updated server. So run these commands:
+
 
 ```
 sudo apt-get update
@@ -105,28 +118,38 @@ sudo apt-get install build-essential
 sudo apt-get install patch
 ```
 
+
 Now lets start installing the required modules for Luna, please note that some modules in the list are already pre-installed so watch what you do.
 
+
 First lets initiate <b>CPAN</b>, run this command:
+
 
 ```
 cpan
 ```
 
+
 If you get any prompts, type <b>y</b>(yes) and hit the <b>enter</b> key on your keyboard.
 
+
 Now lets first update <b>CPAN</b> by executing these commands:
+
 
 ```
 install CPAN
 reload CPAN
 ```
 
+
 Now using the <a href="https://github.com/Levi-M/Luna#modules">modules list</a> go ahead and install each of those modules except <b>CPAN</b> since we already updated it. Usually after installing a module, it will display a status to let you know if it is installed or not so please be aware of it.
+
 
 After you have done that, download <a href="https://github.com/Levi-M/Luna/archive/master.zip">Luna</a> and unzip it and store it somewhere in your server.
 
+
 Now lets import the SQL onto Phpmyadmin:
+
 
 <ul>
   <li>Go to <b>http://yourserverip/phpmyadmin</b> and login using your MySQL username and password</li>
@@ -134,12 +157,16 @@ Now lets import the SQL onto Phpmyadmin:
   <li>Click <b>Browse</b>, locate Luna's SQL file, click <b>Open</b>, and then click <b>Go</b></li>
 </ul>
 
+
 Now go back to Luna's directory and open <b>/Configuration/Config.pl</b> and edit your information and save it.
 
+
 Last but not the least, pull up your terminal and using the ```cd``` command, navigate to Luna's directory and execute this command:
+
 
 ```
 perl Run.pm
 ```
+
 
 Now you should have Luna successfully running, if you want to keep Luna running 24/7 you can use <a href="https://www.howtoforge.com/linux_screen">Screen </a> or <a href="http://www.cyberciti.biz/tips/nohup-execute-commands-after-you-exit-from-a-shell-prompt.html">nohup</a>.
