@@ -33,7 +33,7 @@ Club Penguin Server Emulator - AS2 Protocol
  <li> Execute <a href="https://github.com/Levi-M/Luna/blob/master/Run.pm">Run.pm</a></li>
 </ul>
 
-*<b>Important Note:</b>* First install <b>CPAN</b> and after that type: ```reload cpan``` and then continue installing the other modules.
+*<b>Important Note:</b>*  First install <b>CPAN</b> and after that type: ```reload cpan``` and then continue installing the other modules.
 
 ### Modules: 
 <ul>
