@@ -94,13 +94,13 @@ method handleData($strData, $objClient) {
         if ($self->{child}->{servConfig}->{debugging}) {
              $self->{child}->{modules}->{logger}->output('Packet Received: ' . $strData, Logger::LEVELS->{dbg});
         }
-        my $chrType = substr($_, 0, 1);
+        my $chrType = substr($strData, 0, 1);
         switch ($chrType) {                    
         		case ('<') {
-        			$self->{child}->handleXMLData($_, $objClient);
+        			$self->{child}->handleXMLData($strData, $objClient);
         		}
         		case ('%') {
-        			$self->{child}->handleXTData($_, $objClient);
+        			$self->{child}->handleXTData($strData, $objClient);
         		}
         		else {
         			$self->removeClient($objClient->{sock});
