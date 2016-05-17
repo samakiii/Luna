@@ -381,6 +381,7 @@ method handleXTData($strData, $objClient) {
        if (index($strData, '|') != -1 && $stdXT ne 'g#ur' && $stdXT ne 'm#sm') {
            return $self->{modules}->{base}->removeClient($objClient->{sock});
        }
+       $self->handleCheckSpamming($stdXT, $objClient);
        my $strHandler = $self->{handlers}->{xt}->{$chrXT}->{$stdXT};
        if (!$objClient->{isAuth} || $objClient->{username} eq "" || !defined($objClient->{username})) {
            return $self->{modules}->{base}->removeClient($objClient->{sock});
@@ -392,6 +393,20 @@ method handleXTData($strData, $objClient) {
            }
            $self->handleCustomPlugins('xt', $strData, $objClient);
        }
+}
+
+method handleCheckSpamming($strDataType, $objClient) {
+		if (exists($objClient->{data_types}->{$strDataType})) {
+			my $intTimestamp = time();
+			if (!$objClient->{data_types}->{$strDataType}->{last_time}) {
+				$objClient->{data_types}->{$strDataType}->{last_time} = (time() + 2);
+			} elsif ($intTimestamp > $objClient->{data_types}->{$strDataType}->{last_time}) {
+				$objClient->{data_types}->{$strDataType}->{count} = ($objClient->{data_types}->{$strDataType}->{count} + 1);
+			}
+			if ($objClient->{data_types}->{$strDataType}->{count} > 5) {
+				return $self->{modules}->{base}->removeClient($objClient->{sock});
+			}
+		}
 }
 
 method generateRoom {
