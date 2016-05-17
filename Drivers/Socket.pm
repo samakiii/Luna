@@ -6,6 +6,7 @@ use warnings;
 use Method::Signatures;
 use IO::Socket;
 use IO::Select;
+use Switch;
 
 method new($resChild) {
        my $obj = bless {}, $self;
@@ -90,16 +91,21 @@ method addClient {
 }
 
 method handleData($strData, $objClient) {
-       if ($self->{child}->{servConfig}->{debugging}) {
-           $self->{child}->{modules}->{logger}->output('Packet Received: ' . $strData, Logger::LEVELS->{dbg});
-       }
-       my $chrType = substr($strData, 0, 1);
-       my $blnXML = $chrType eq '<' ? 1 : 0;
-       my $blnXT = $chrType eq '%' ? 1 : 0;
-       #if (!$blnXML && !$blnXT) {
-      #     return $self->removeClient($objClient->{sock});
-      # }
-       $blnXML ? $self->{child}->handleXMLData($strData, $objClient) : $self->{child}->handleXTData($strData, $objClient);
+        if ($self->{child}->{servConfig}->{debugging}) {
+             $self->{child}->{modules}->{logger}->output('Packet Received: ' . $strData, Logger::LEVELS->{dbg});
+        }
+        my $chrType = substr($_, 0, 1);
+        switch ($chrType) {                    
+        		case ('<') {
+        			$self->{child}->handleXMLData($_, $objClient);
+        		}
+        		case ('%') {
+        			$self->{child}->handleXTData($_, $objClient);
+        		}
+        		else {
+        			$self->removeClient($objClient->{sock});
+        		}
+        }
 }
 
 method removeClient($resSocket) {
@@ -107,7 +113,7 @@ method removeClient($resSocket) {
               if ($objClient->{sock} == $resSocket) {
                   $self->{listener}->remove($resSocket);
                   $resSocket->close;
-                  delete($self->{child}->{iplog}->{$objClient->{ipAddr}});
+                 # delete($self->{child}->{iplog}->{$objClient->{ipAddr}});
                   delete($self->{child}->{clients}->{$intIndex});
               }
        }
