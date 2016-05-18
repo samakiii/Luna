@@ -172,7 +172,7 @@ method handleClearPenguinClothing($objClient, $nullVar) {
 }
 
 method handleSetPenguinSpeed($objClient, $intSpeed) {
-       return if (!int($intSpeed) && $intSpeed < 4);
+       return if (!int($intSpeed) || $intSpeed < 4);
        $objClient->updateOpenGlow('speed', $intSpeed);
 }
 
