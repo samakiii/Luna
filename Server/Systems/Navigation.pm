@@ -32,7 +32,7 @@ method handleJoinRoom($strData, $objClient) {
 method handleJoinServer($strData, $objClient) {
        my @arrData = split('%', $strData);
        my $loginKey = $arrData[6];
-       my $dbInfo = $self->{child}->{modules}->{mysql}->fetchColumns("SELECT `loginKey`, `invalidLogins` FROM users WHERE `ID` = '$objClient->{ID}'");
+       my $dbInfo = $self->{modules}->{mysql}->getLoginDetailsByID($objClient->{ID});
        if ($loginKey eq '' || $loginKey ne $dbInfo->{loginKey}) {
            $objClient->sendError(101);
            $objClient->updateInvalidLogins($dbInfo->{invalidLogins} + 1, $objClient->{username});
@@ -42,7 +42,7 @@ method handleJoinServer($strData, $objClient) {
        $objClient->sendXT(['js', '-1', 0, 1, $objClient->{isStaff}, 0]);
        $objClient->write('%xt%lp%-1%' . $objClient->buildClientString . '%' . $objClient->{coins} . '%0%1440%100%' . $objClient->{age} . '%4%' . $objClient->{age} . '%%7%');
        $objClient->sendXT(['gps', '-1', $objClient->{ID}, join('|', @{$objClient->{stamps}})]);
-       $objClient->joinRoom($self->{child}->generateRoom);  
+       $objClient->joinRoom(100);  
        $objClient->updatePuffleStatistics; 
        $objClient->setLastLogin;
 }
