@@ -132,7 +132,7 @@ method sendRoom($strData) {
 }
 
 method loadDetails {
-       my $arrInfo = $self->{parent}->{modules}->{mysql}->fetchColumns("SELECT * FROM users WHERE `ID` = '$self->{ID}'"); 
+       my $arrInfo = $self->{parent}->{modules}->{mysql}->getDetailsByID($self->{ID});  
        while (my ($key, $value) = each(%{$arrInfo})) {
               switch ($key) {
                       case ('age') {
@@ -174,7 +174,7 @@ method loadDetails {
                       }
               }
        }   
-       my $arrIglooInfo = $self->{parent}->{modules}->{mysql}->fetchColumns("SELECT * FROM igloos WHERE `ID` = '$self->{ID}'"); 
+       my $arrIglooInfo = $self->{parent}->{modules}->{mysql}->getIglooDetailsByID($self->{ID});
        while (my ($key, $value) = each(%{$arrIglooInfo})) {
               switch ($key) {
                       case ('ownedIgloos') {
@@ -346,7 +346,7 @@ method getLatestRevision {
 
 method getPlayer($intPID) {
        return if (!int($intPID));
-       my $dbInfo = $self->{parent}->{modules}->{mysql}->fetchColumns("SELECT * FROM users WHERE `ID` = '$intPID'");
+       my $dbInfo = $self->{parent}->{modules}->{mysql}->getDetailsByID($intPID);
        my @arrDetails = (
 			$dbInfo->{ID}, 
 			$dbInfo->{nickname}, 
@@ -598,7 +598,7 @@ method addPuffle($puffleType, $puffleName) {
 
 method getPuffles($userID) {
        my $puffles = '';
-       my $arrInfo = $self->{parent}->{modules}->{mysql}->fetchAll("SELECT * FROM puffles WHERE `ownerID` = '$userID'");
+       my $arrInfo = $self->{parent}->{modules}->{mysql}->getPufflesByOwner($userID);
        foreach (values @{$arrInfo}) {
                 $puffles .= $_->{puffleID} . '|' . $_->{puffleName} . '|' . $_->{puffleType} . '|' . $_->{puffleEnergy} . '|' . $_->{puffleHealth} . '|' . $_->{puffleRest} . '%';
        }
@@ -606,7 +606,7 @@ method getPuffles($userID) {
 }
 
 method getPuffle($intPuffle) {
-       my $petDetails = $self->{parent}->{modules}->{mysql}->fetchColumns("SELECT * FROM puffles WHERE `puffleID` = '$intPuffle' AND `ownerID` = '$self->{ID}'");
+       my $petDetails = $self->{parent}->{modules}->{mysql}->getPuffleByOwner($intPuffle, $self->{ID});
        my $petString = '';
        $petString .= $petDetails->{puffleID} . '|';
        $petString .= $petDetails->{puffleName} . '|';
@@ -620,7 +620,7 @@ method getPuffle($intPuffle) {
 method getPostcards($intPID) {
        return if (!int($intPID));
        my $strCards = '';
-       my $arrCards = $self->{parent}->{modules}->{mysql}->fetchAll("SELECT * FROM postcards WHERE `recepient` = '$intPID'");
+       my $arrCards = $self->{parent}->{modules}->{mysql}->getPostcardsByID($intPID);
        my $intCount = 0;
        foreach (values @{$arrCards}) {
                 $intCount++;
@@ -631,13 +631,13 @@ method getPostcards($intPID) {
 
 method getUnreadPostcards($intPID) {
        return if (!int($intPID));
-       my $unreadCount = $self->{parent}->{modules}->{mysql}->countRows("SELECT `isRead` FROM postcards WHERE `recepient` = '$intPID' AND `isRead` = '0'");
+       my $unreadCount = $self->{parent}->{modules}->{mysql}->getIgnoredPostcards($intPID);
        return $unreadCount;
 }
 
 method getPostcardCount($intPID) {
        return if (!int($intPID));
-       my $intCount = $self->{parent}->{modules}->{mysql}->countRows("SELECT `recepient` FROM postcards WHERE `recepient` = '$intPID'");
+       my $intCount = $self->{parent}->{modules}->{mysql}->getReceivedPostcards($intPID);
        return $intCount;
 }
 
@@ -663,13 +663,13 @@ method updateBanCount($objClient, $intCount) {
        $objClient->{banCount} = $intCount;
 }
 
-method setLastLogin($time = time) {
+method setLastLogin($time = localtime) {
        return if (!int($time));
-       $self->{parent}->{modules}->{mysql}->execQuery("UPDATE users SET `LastLogin` = FROM_UNIXTIME($time) WHERE `ID` = '$self->{ID}'");
+       $self->{parent}->{modules}->{mysql}->updateTable('users', 'LastLogin', $time,  'ID', $self->{ID});
 }
 
 method changePuffleStats($intPuffle, $strType, $intCount, $blnInc = 1) {
-       my $arrInfo = $self->{parent}->{modules}->{mysql}->fetchColumns("SELECT $strType FROM puffles WHERE `puffleID` = '$intPuffle' AND `ownerID` = '$self->{ID}'");
+       my $arrInfo = $self->{parent}->{modules}->{mysql}->getPuffleStatByType($strType, $intPuffle, $self->{ID});
        my $intStat = $arrInfo->{$strType};
        $blnInc ? ($intStat += $intCount) : ($intStat -= $intCount);
        if ($intStat > 100) {
@@ -677,24 +677,24 @@ method changePuffleStats($intPuffle, $strType, $intCount, $blnInc = 1) {
 	   } else {
 		   $intStat = $intStat;
 	   }
-       $self->{parent}->{modules}->{mysql}->execQuery("UPDATE puffles SET `$strType` = '$intStat' WHERE `puffleID` = '$intPuffle' AND `ownerID` = '$self->{ID}'");
+       $self->{parent}->{modules}->{mysql}->updatePuffleStatByType($strType, $intStat, $intPuffle, $self->{ID});
 }
 
 method changeRandPuffStat($intPuffle) {
-       my $arrInfo = $self->{parent}->{modules}->{mysql}->fetchColumns("SELECT * FROM puffles WHERE `puffleID` = '$intPuffle' AND `ownerID` = '$self->{ID}'");
+       my $arrInfo = $self->{parent}->{modules}->{mysql}->getPuffleByOwner($intPuffle, $self->{ID});
        my $intRandHealth = $self->{parent}->{modules}->{crypt}->generateInt(1, 10);
        my $intRandEnergy = $self->{parent}->{modules}->{crypt}->generateInt(1, 10);
        my $intRandRest = $self->{parent}->{modules}->{crypt}->generateInt(1, 10);
        my $intNewHealth = $arrInfo->{puffleHealth} - $intRandHealth;
        my $intNewEnergy = $arrInfo->{puffleEnergy} - $intRandEnergy;
        my $intNewRest = $arrInfo->{puffleRest} - $intRandRest;
-       $self->{parent}->{modules}->{mysql}->execQuery("UPDATE puffles SET `puffleHealth` = '$intNewHealth' WHERE `puffleID` = '$intPuffle' AND `ownerID` = '$self->{ID}'");
-       $self->{parent}->{modules}->{mysql}->execQuery("UPDATE puffles SET `puffleEnergy` = '$intNewEnergy' WHERE `puffleID` = '$intPuffle' AND `ownerID` = '$self->{ID}'");
-       $self->{parent}->{modules}->{mysql}->execQuery("UPDATE puffles SET `puffleRest` = '$intNewRest' WHERE `puffleID` = '$intPuffle' AND `ownerID` = '$self->{ID}'");
+       $self->{parent}->{modules}->{mysql}->updatePuffleStatByType('puffleHealth', $intNewHealth, $intPuffle, $self->{ID});
+       $self->{parent}->{modules}->{mysql}->updatePuffleStatByType('puffleEnergy', $intNewEnergy, $intPuffle, $self->{ID});
+       $self->{parent}->{modules}->{mysql}->updatePuffleStatByType('puffleRest', $intNewRest, $intPuffle, $self->{ID});
 }
 
 method updatePuffleStatistics {
-       my $intLastLogin = $self->{parent}->{modules}->{mysql}->fetchColumns("SELECT UNIX_TIMESTAMP(LastLogin) FROM users WHERE `ID` = '$self->{ID}'")->{'UNIX_TIMESTAMP(LastLogin)'};
+       my $intLastLogin = $self->{parent}->{modules}->{mysql}->getLastLoginByID($self->{ID});
        my $intTime = time - 432000;
        my $intRand = $self->{parent}->{modules}->{crypt}->generateInt(0, 4);
        my $blnMajor = 0;
@@ -702,14 +702,14 @@ method updatePuffleStatistics {
            my $intSubtract = $intLastLogin - $intTime;
            $blnMajor = $intSubtract < 0;
        }
-       my $puffles = $self->{parent}->{modules}->{mysql}->fetchAll("SELECT * FROM puffles WHERE `ownerID` = '$self->{ID}'");
+       my $puffles = $self->{parent}->{modules}->{mysql}->getPufflesByOwner($self->{ID});
        foreach (values @{$puffles}) {
                 my $intPuffle = $_->{puffleID};
                 my $intMin = $blnMajor ? 25 : 0;
                 my $intMax = $blnMajor ? 45 : 15;
                 my $intHealth = $_->{puffleHealth} - $self->{parent}->{modules}->{crypt}->generateInt($intMin, $intMax);
                 if ($intHealth <= 5) {
-                    $self->{parent}->{modules}->{mysql}->execQuery("DELETE FROM puffles WHERE `puffleID` = '$intPuffle' AND `ownerID` = '$self->{ID}'");
+                    $self->{parent}->{modules}->{mysql}->deleteData('puffles', 'puffleID', $intPuffle, 1, 'ownerID',  $self->{ID});
                     my $postcardID = $self->sendPostcard($self->{ID}, 'sys', 0, $_->{puffleName}, 10 . $_->{puffleType});
                     $self->sendXT(['mr', '-1', 'sys', 0, 10 . $_->{puffleType}, $_->{puffleName}, time, $postcardID]);
                 } else {
@@ -719,7 +719,7 @@ method updatePuffleStatistics {
                         $self->sendXT(['mr', '-1', 'sys', 0, 110, $_->{puffleName}, time, $postcardID]);
                     }
                     my $intRest = $_->{puffleRest} - $self->{parent}->{modules}->{crypt}->generateInt($intMin, $intMax);
-                    $self->{parent}->{modules}->{mysql}->execQuery("UPDATE puffles SET `puffleHealth` = '$intHealth', `puffleEnergy` = '$intHunger', `puffleRest` = '$intRest' WHERE `puffleID` = '$intPuffle' AND `ownerID` = '$self->{ID}'");
+                    $self->{parent}->{modules}->{mysql}->updatePuffleStats($intHealth, $intHunger, $intRest, $intPuffle, $self->{ID});
                 }
        }
 }
