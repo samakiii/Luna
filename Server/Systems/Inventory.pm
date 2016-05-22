@@ -1,3 +1,5 @@
+package Inventory;
+
 use strict;
 use warnings;
 
