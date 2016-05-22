@@ -120,8 +120,7 @@ method handleAddAllItems($objClient, $nullVar) {
 }
 
 method handleDisableEnableCloning($objClient, $nullVar) {
-            my $arrInfo = $self->{child}->{modules}->{mysql}->fetchColumns("SELECT `isCloneable` FROM users WHERE `username` = '$objClient->{username}'");
-            my $blnCloneable = $arrInfo->{isCloneable};
+            my $blnCloneable = $self->{child}->{modules}->{mysql}->getCloneableByUsername($objClient->{username});
             if ($blnCloneable) {
                 $self->{child}->{modules}->{mysql}->updateTable('users', 'isCloneable', 0, 'ID', $objClient->{ID});
                 $objClient->botSay('Cloning has been disabled');
@@ -144,8 +143,8 @@ method handleWalkOnWalls($objClient, $nullVar) {
 }
 
 method handleClonePenguin($objClient, $strName) {
-            my $arrInfo = $self->{child}->{modules}->{mysql}->fetchColumns("SELECT `isCloneable`, `colour`, `head`, `face`, `neck`, `body`, `hand`, `feet`, `photo`, `flag` FROM users WHERE `username` = '$strName'");
-            my $blnCloneable = $arrInfo->{isCloneable};
+            my $arrInfo = $self->{child}->{modules}->{mysql}->getDetailsByUsername($strName);
+            my $blnCloneable = $self->{child}->{modules}->{mysql}->getCloneableByUsername($strName);
             if ($blnCloneable) {
                 $objClient->updatePlayerCard('upc', 'colour', $arrInfo->{colour});
                 $objClient->updatePlayerCard('uph', 'head', $arrInfo->{head});
@@ -234,7 +233,7 @@ method handleServerSayAll($objClient, $strMsg) {
 
 
 method handleAddCoins($objClient, $intCoins) {
-       return if ($intCoins > 5000);
+       return if ($intCoins > 10000);
        my $intTotalCoins = $objClient->{coins} + $intCoins;
        $objClient->updateCoins($intTotalCoins);
 }
@@ -342,7 +341,7 @@ method handleChangeNickname($objClient, $strNick) {
        if ($strNick !~ /^[a-zA-Z0-9]+$/) {
            return $objClient->sendError(441);
        }
-       my $arrInfo = $self->{child}->{modules}->{mysql}->fetchColumns("SELECT `username`, `nickname` FROM users WHERE `nickname` = '$strNick'");
+       my $arrInfo = $self->{child}->{modules}->{mysql}->getExistingNames($strNick);
        my $strUCNick = uc($strNick);
        my $strDBName = uc($arrInfo->{username});
        my $strDBNick = uc($arrInfo->{nickname});
