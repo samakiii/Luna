@@ -409,10 +409,4 @@ method handleCheckSpamming($strDataType, $objClient) {
 		}
 }
 
-method generateRoom {
-      #my @arrRooms = keys %{$self->{modules}->{crumbs}->{roomCrumbs}};
-       #my $intRoom = $arrRooms[rand(@arrRooms)];
-       return 100;
-}
-
 1;
