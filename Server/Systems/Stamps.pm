@@ -21,15 +21,13 @@ method handleGetPlayersStamps($strData, $objClient) {
        my @arrData = split('%', $strData);
        my $intPID = $arrData[5];
        return if (!int($intPID));
-       my $arrInfo = $self->{child}->{modules}->{mysql}->fetchColumns("SELECT `stamps` FROM users WHERE `ID` = '$intPID'");
-       my $strStamps = $arrInfo->{stamps};
+       my $strStamps = $self->{modules}->{mysql}->getStampsByID($intPID);
        $objClient->sendXT(['gps', '-1', $intPID, $strStamps]);
 }
 
 method handleGetMyRecentlyEarnedStamps($strData, $objClient) {
        my $intID = $objClient->{ID};
-       my $arrInfo = $self->{child}->{modules}->{mysql}->fetchColumns("SELECT `restamps` FROM users WHERE `ID` = '$intID'");
-       my $strREStamps = $arrInfo->{restamps};
+       my $strREStamps = $self->{modules}->{mysql}->getRestampsByID($intID);
        $objClient->sendXT(['gmres', '-1', $intID, $strREStamps]);
        $self->{child}->{modules}->{mysql}->updateTable('users', 'restamps', '', 'ID', $intID);
 }
@@ -38,8 +36,7 @@ method handleGetStampBookCoverDetails($strData, $objClient) {
        my @arrData = split('%', $strData);
        my $intPID = $arrData[5];
        return if (!int($intPID));
-       my $arrInfo = $self->{child}->{modules}->{mysql}->fetchColumns("SELECT `cover` FROM users WHERE `ID` = '$intPID'");
-       my $strCover = $arrInfo->{cover};
+       my $strCover = $self->{modules}->{mysql}->getStampbookCoverByID($intPID);
        $objClient->write('%xt%gsbcd%-1%' . ($strCover ? $strCover : '1%1%1%1%'));     
 }
 
