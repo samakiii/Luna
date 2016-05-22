@@ -236,8 +236,8 @@ method initiateMysql {
 }
 
 method createServer {
-       my $intExist = $self->{modules}->{mysql}->countRows("SELECT `servPort` FROM servers WHERE `servPort` = '$self->{servConfig}->{servPort}'");
-       if ($intExist <= 0) {
+       my $blnExist = $self->{modules}->{mysql}->serverExists($self->{servConfig}->{servPort});
+       if ($blnExist <= 0) {
            $self->{modules}->{mysql}->insertData('servers', ['servPort', 'servName', 'servIP'], [$self->{servConfig}->{servPort}, $self->{servConfig}->{servName}, $self->{servConfig}->{servHost}]);       
        }
 }
@@ -294,12 +294,12 @@ method checkBeforeLogin($strName, $strPass, $objClient) {
        	   $objClient->sendError(100);
        	   return $self->{modules}->{base}->removeClient($objClient->{sock});
        }
-       my $intNames = $self->{modules}->{mysql}->countRows("SELECT `username` FROM users WHERE `username` = '$strName'");
+       my $intNames = $self->{modules}->{mysql}->usernameExists($strName);
        if ($intNames <= 0) {
            $objClient->sendError(100);
            return $self->{modules}->{base}->removeClient($objClient->{sock});
        }
-       my $arrInfo = $self->{modules}->{mysql}->fetchColumns("SELECT * FROM users WHERE `username` = '$strName'");
+       my $arrInfo = $self->{modules}->{mysql}->getDetailsByUsername($strName);
        my $strHash = $self->generateHash($arrInfo, $objClient);             
        if ($strPass ne $strHash) {
            $objClient->sendError(101);	
@@ -351,7 +351,7 @@ method continueLogin($strName, $arrInfo, $objClient) {
 
 method generateServerList {
        my $strServer = '';
-       my $arrInfo = $self->{modules}->{mysql}->fetchAll("SELECT * FROM servers WHERE `servType` = 'game'");
+       my $arrInfo = $self->{modules}->{mysql}->getServerDetailsByType('game');
        foreach (values @{$arrInfo}) {
                 my $intPopulation = $_->{curPop};
                 my $intBars = 0;
