@@ -32,7 +32,7 @@ method handleJoinRoom($strData, $objClient) {
 method handleJoinServer($strData, $objClient) {
        my @arrData = split('%', $strData);
        my $loginKey = $arrData[6];
-       my $dbInfo = $self->{modules}->{mysql}->getLoginDetailsByID($objClient->{ID});
+       my $dbInfo = $self->{child}->{modules}->{mysql}->getLoginDetailsByID($objClient->{ID});
        if ($loginKey eq '' || $loginKey ne $dbInfo->{loginKey}) {
            $objClient->sendError(101);
            $objClient->updateInvalidLogins($dbInfo->{invalidLogins} + 1, $objClient->{username});
