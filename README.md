@@ -54,6 +54,10 @@ Club Penguin Server Emulator - AS2 Protocol
  <li> File::Fetch</li>
 </ul>
 
+### Windows Setup: 
+
+https://solero.me/topic/39002-how-to-setup-lunawindows/
+
 ### Linux VPS and PC Setup:
 
 <details>
