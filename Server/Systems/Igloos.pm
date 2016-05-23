@@ -45,7 +45,7 @@ method handleGetIglooDetails($strData, $objClient) {
        my @arrData = split('%', $strData);
        my $intPID = $arrData[5];
        return if (!int($intPID));
-       my $arrInfo = $self->{modules}->{mysql}->getIglooDetailsByID($intPID);
+       my $arrInfo = $self->{child}->{modules}->{mysql}->getIglooDetailsByID($intPID);
        my $intIgloo = $arrInfo->{igloo};
        my $intMusic = $arrInfo->{music};
        my $intFloor = $arrInfo->{floor};
