@@ -421,7 +421,7 @@ method addItem($intItem) {
        }    
        push(@{$self->{inventory}}, $intItem);
        $self->{parent}->{modules}->{mysql}->updateTable('users', 'inventory', join('%', @{$self->{inventory}}) , 'ID', $self->{ID});
-       $self->updateCoins($self->{coins} - $self->{parent}->{modules}->{crumbs}->{itemCrumbs}->{$intItem}->{cost});
+       $self->setCoins($self->{coins} - $self->{parent}->{modules}->{crumbs}->{itemCrumbs}->{$intItem}->{cost});
        $self->sendXT(['ai', '-1', $intItem, $self->{coins}]);
 }
 
@@ -513,7 +513,7 @@ method addIgloo($intIgloo) {
        }   
        push(@{$self->{ownedIgloos}}, $intIgloo); 
        $self->updateIglooInventory(join('|', @{$self->{ownedIgloos}}));
-       $self->updateCoins($self->{coins} - $self->{parent}->{modules}->{crumbs}->{iglooCrumbs}->{$intIgloo}->{cost});
+       $self->setCoins($self->{coins} - $self->{parent}->{modules}->{crumbs}->{iglooCrumbs}->{$intIgloo}->{cost});
        $self->sendXT(['au', '-1', $intIgloo, $self->{coins}]);
 }
 
@@ -531,7 +531,7 @@ method addFurniture($intFurn) {
        $self->{ownedFurns}->{$intFurn} = $quantity;  
        my $strFurns = join(',', map { $_ . '|' . $self->{ownedFurns}->{$_}; } keys %{$self->{ownedFurns}});
        $self->updateFurnInventory($strFurns);
-       $self->updateCoins($self->{coins} - $self->{parent}->{modules}->{crumbs}->{furnitureCrumbs}->{$intFurn}->{cost});
+       $self->setCoins($self->{coins} - $self->{parent}->{modules}->{crumbs}->{furnitureCrumbs}->{$intFurn}->{cost});
        $self->sendXT(['af', '-1', $intFurn, $self->{coins}]);
 }
 
@@ -571,7 +571,7 @@ method updateFloor($intFloor) {
        }
        $self->{floor} = $intFloor;
        $self->{parent}->{modules}->{mysql}->updateTable('igloos', 'floor', $intFloor, 'ID', $self->{ID});
-       $self->updateCoins($self->{coins} - $self->{parent}->{modules}->{crumbs}->{floorCrumbs}->{$intFloor}->{cost});
+       $self->setCoins($self->{coins} - $self->{parent}->{modules}->{crumbs}->{floorCrumbs}->{$intFloor}->{cost});
        $self->sendXT(['ag', '-1', $intFloor, $self->{coins}]);
 }
 
@@ -591,7 +591,7 @@ method botSay($strMsg) {
 method addPuffle($puffleType, $puffleName) {
        return if (!int($puffleType) && !$puffleName);
        my $puffleID = $self->{parent}->{modules}->{mysql}->insertData('puffles', ['ownerID', 'puffleName', 'puffleType'], [$self->{ID}, $puffleName, $puffleType]);
-       $self->updateCoins($self->{coins} - 800);
+       $self->setCoins($self->{coins} - 800);
        my $petString = $puffleID . '|' . $puffleName . '|' . $puffleType . '|100|100|100';
        return $petString;
 }
