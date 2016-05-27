@@ -48,7 +48,7 @@ method deleteWithAnd($table, $whereKey, $whereValue, $andKey, $andValue) {
 		$resQuery->execute($whereValue, $andValue);
 }
 
-method deleteWithoutAnd($table, $whereKey, $whereValue, $andKey, $andValue) {
+method deleteWithoutAnd($table, $whereKey, $whereValue) {
 		my $resQuery = $self->{connection}->prepare("DELETE FROM $table WHERE `$whereKey` = ?");
 		$resQuery->execute($whereValue);
 }
