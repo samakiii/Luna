@@ -381,7 +381,7 @@ method handleXTData($strData, $objClient) {
        if (index($strData, '|') != -1 && $stdXT ne 'g#ur' && $stdXT ne 'm#sm') {
            return $self->{modules}->{base}->removeClient($objClient->{sock});
        }
-       $self->handleCheckSpamming($stdXT, $objClient);
+      # $self->handleCheckSpamming($stdXT, $objClient);
        my $strHandler = $self->{handlers}->{xt}->{$chrXT}->{$stdXT};
        if (!$objClient->{isAuth} || $objClient->{username} eq "" || !defined($objClient->{username})) {
            return $self->{modules}->{base}->removeClient($objClient->{sock});
@@ -395,7 +395,7 @@ method handleXTData($strData, $objClient) {
        }
 }
 
-method handleCheckSpamming($strDataType, $objClient) {
+method handleCheckSpamming($strDataType, $objClient) { # needs fixing
 		if (exists($objClient->{data_types}->{$strDataType})) {
 			my $intTimestamp = time();
 			if (!$objClient->{data_types}->{$strDataType}->{last_time}) {
