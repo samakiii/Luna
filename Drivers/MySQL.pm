@@ -16,11 +16,7 @@ method createMysql($strHost, $strDB, $strName, $strPass) {
 }
 
 method updateTable($table, $set, $setValue, $where, $whereValue) {
-       return if (!$table);
-       return if (!$set);
-       return if (!$setValue);
-       return if (!$where);
-       return if (!$whereValue);
+       return if (!$table && !$set && !$setValue && !$where && !$whereValue);
        my $resQuery = $self->{connection}->prepare("UPDATE $table SET `$set` = ? WHERE `$where` = ?");
        $resQuery->execute($setValue, $whereValue);
        return $resQuery;
