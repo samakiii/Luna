@@ -43,7 +43,7 @@ method handleMailSend($strData, $objClient) {
            } else {
 			   $objClient->sendXT(['ms', '-1', $objClient->{coins}, 1]);
 		   }
-		   $objClient->updateCoins($objClient->{coins} - 10);
+		   $objClient->setCoins($objClient->{coins} - 10);
        }
 }
 
