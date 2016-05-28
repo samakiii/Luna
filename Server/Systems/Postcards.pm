@@ -37,7 +37,7 @@ method handleMailSend($strData, $objClient) {
            my $objPlayer = $objClient->getClientByID($recepientID);
            my $timestamp = time;
            my $postcardID = $objClient->sendPostcard($recepientID, $objClient->{username}, $objClient->{ID}, $postcardNotes, $postcardType, $timestamp);
-           if ($objClient->getOnline($objPlayer->{ID})) {
+           if ($objClient->getOnline($recepientID)) {
                $objPlayer->write('%xt%mr%-1%' . $objClient->{username} . '%' . $objClient->{ID} . '%' . $postcardType . '%%' . $timestamp . '%' . $postcardID . '%');
                $objClient->sendXT(['ms', '-1', $objClient->{coins}, 1]);
            } else {
