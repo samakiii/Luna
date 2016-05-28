@@ -621,10 +621,9 @@ method getPostcards($intPID) {
        return if (!int($intPID));
        my $strCards = '';
        my $arrCards = $self->{parent}->{modules}->{mysql}->getPostcardsByID($intPID);
-       my $intCount = 0;
-       foreach (values @{$arrCards}) {
-                $intCount++;
-                $strCards .= $_->{mailerName} . '|' . $_->{mailerID} . '|' . $_->{postcardType} . '|' . $_->{notes} . '|' . $_->{timestamp} . '|' . $intCount . '%';
+       my @arrPostcards = reverse @$arrCards;
+       foreach (values @arrPostcards) {
+                $strCards .=  $_->{mailerName} . '|' . $_->{mailerID} . '|' . $_->{postcardType} . '|' . $_->{notes} . '|' . $_->{timestamp} . '|' . $_->{postcardID} . '%';
        }
        return $strCards;
 }
