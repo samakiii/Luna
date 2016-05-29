@@ -87,7 +87,11 @@ method handleGetFurnitureRevision($strData, $objClient) {
 
 method handleGetOpenedIgloos($strData, $objClient) {
        my $strIgloos = $self->loadIglooMap;
-       $objClient->write('%xt%gr%-1%' . ($strIgloos ? $strIgloos : '')); 	 
+       if ($strIgloos eq '') {
+		   $objClient->write('%xt%gr%-1%'); 
+	   } else {
+		   $objClient->write('%xt%gr%-1%' . $strIgloos . '%'); 
+	   }
 }
 
 method loadIglooMap {
