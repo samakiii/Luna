@@ -67,8 +67,11 @@ method handleCloseIgloo($strData, $objClient) {
 }
 
 method handleGetOwnedFurniture($strData, $objClient) {
-       my $strFurns = join('%', map { $_ . '|' . $objClient->{ownedFurns}->{$_}; } keys %{$objClient->{ownedFurns}});
-       $objClient->write('%xt%gf%-1%' . ($strFurns ? $strFurns : '%'));
+	   my $strFurns = '';
+	   while (my ($intFurnID, $intCount) = each(%{$objClient->{ownedFurns}})) {
+			  $strFurns .= $intFurnID . '|' . $intCount . '%';
+	   }
+	   $objClient->write('%xt%gf%-1%' . $strFurns);
 }
 
 method handleGetFurnitureRevision($strData, $objClient) {
