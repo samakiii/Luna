@@ -20,8 +20,8 @@ method handleUpdatePlayerClothing($strData, $objClient) {
        my %arrTypes = (upc => 'colour', uph => 'head', upf => 'face', upn => 'neck', upb => 'body', upa => 'hand', upe => 'feet', upp => 'photo', upl => 'flag');
        return if (!exists($arrTypes{$strType}));   
        if ($strType eq 'upa' && $intItem == 0) {
-		   my $arrWalkingPuffle = $self->{modules}->{mysql}->getWalkingPuffle($objClient->{ID});
-		   $self->{modules}->{mysql}->updateWalkingPuffle(0, $arrWalkingPuffle->{puffleID}, $objClient->{ID});
+		   my $arrWalkingPuffle = $self->{child}->{modules}->{mysql}->getWalkingPuffle($objClient->{ID});
+		   $self->{child}->{modules}->{mysql}->updateWalkingPuffle(0, $arrWalkingPuffle->{puffleID}, $objClient->{ID});
 		   $objClient->getPuffles($objClient->{ID});
 	   }
        $objClient->updatePlayerCard($strType, $arrTypes{$strType}, $intItem);
