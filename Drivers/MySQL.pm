@@ -245,5 +245,9 @@ method getIgnoredPostcards($intID) {
 		return $intUnread;
 }
 
+method updateWalkingPuffle($blnWalking, $intPuffle, $intOwner) {
+		my $resQuery = $self->{connection}->prepare("UPDATE puffles SET `puffleWalking` = ? WHERE `puffleID` = ? AND `ownerID` = ?");
+		$resQuery->execute($blnWalking, $intPuffle, $intOwner);
+}
 
 1;
