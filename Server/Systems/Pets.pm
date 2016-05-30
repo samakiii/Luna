@@ -168,9 +168,11 @@ method handlePuffleWalk($strData, $objClient) {
            my $walkStr = $petDetails->{puffleID} . '|' . $petDetails->{puffleName} . '|' . $petDetails->{puffleType} . '|' . $petDetails->{puffleHealth} . '|' . $petDetails->{puffleEnergy} . '|' . $petDetails->{puffleRest} . '|0|0|0|0|0|0'; # Dont know what the rest are
            if ($blnWalk eq 1) {
                $objClient->updatePlayerCard('upa', 'hand', 75 . $petDetails->{puffleType});
+               $self->{child}->{modules}->{mysql}->updateWalkingPuffle(1, $petDetails->{puffleID}, $objClient->{ID});
                $objClient->sendRoom('%xt%pw%-1%' . $objClient->{ID} . '%' . $walkStr . '|1%');
            } else {
                $objClient->updatePlayerCard('upa', 'hand', 0);
+               $self->{child}->{modules}->{mysql}->updateWalkingPuffle(1, $petDetails->{puffleID}, $objClient->{ID});
                $objClient->sendRoom('%xt%pw%-1%' . $objClient->{ID} . '%' . $walkStr . '|0%');
            }
        }
