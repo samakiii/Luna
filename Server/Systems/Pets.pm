@@ -31,7 +31,7 @@ method handleGetPuffle($strData, $objClient) {
        my @arrData = split('%', $strData);
        my $playerID = $arrData[5];
        return if (!int($playerID));
-       $objClient->sendXT(['pg', '-1', $objClient->getPuffles($playerID)]);
+       $objClient->getPufflesByID($playerID);
 }
 
 method handlePuffleBath($strData, $objClient) { 
