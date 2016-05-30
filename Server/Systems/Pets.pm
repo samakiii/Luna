@@ -167,7 +167,7 @@ method handlePuffleWalk($strData, $objClient) {
        if ($petDetails) {
            my $strWalkingPuffle = $objClient->getWalkingPuffle;
 		   if ($strWalkingPuffle ne '') {
-			   my @arrInfo = split('|', $strWalkingPuffle);
+			   my @arrInfo = split('\\|', $strWalkingPuffle);
 			   my $intPuffle = $arrInfo[0];
 			   $self->{child}->{modules}->{mysql}->updateWalkingPuffle(0, $intPuffle, $objClient->{ID});
 		   }
