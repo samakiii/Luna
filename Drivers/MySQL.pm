@@ -26,8 +26,7 @@ method insertData($table, \@columns, \@values) {
        return if (!$table);
        return if (!scalar(@columns));
        return if (!scalar(@values));
-       my $fields = join(', ', @columns);
-       my $statement = $self->{connection}->prepare("INSERT INTO $table ($fields) VALUES (" . join(', ', ('?') x @columns) . ")");
+       my $statement = $self->{connection}->prepare("INSERT INTO $table (" . join(',', @columns) . ") VALUES (" . join(',', ('?') x @columns). ")");
        $statement->execute(@values);
        return $statement->{mysql_insertid};
 }
