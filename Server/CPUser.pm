@@ -708,20 +708,20 @@ method changeRandPuffStat($intPuffle) {
 }
 
 method updatePuffleStatistics {
+      my $intRandHealth = '';
+	   my $intRandEnergy = '';
+	   my $intRandRest = '';
        my $intLastLogin = $self->{parent}->{modules}->{mysql}->getLastLoginByID($self->{ID});
-       my $intTime = time - 432000;
-       my $intRand = $self->{parent}->{modules}->{crypt}->generateInt(0, 4);
-       my $blnMajor = 0;
-       if ($intLastLogin ne 0) {
-           my $intSubtract = $intLastLogin - $intTime;
-           $blnMajor = $intSubtract < 0;
-       }
+       my $intHoursLater = $intLastLogin + 18000;
+       if ($intLastLogin > $intHoursLater) {
+		   $intRandHealth = $self->{parent}->{modules}->{crypt}->generateInt(1, 10);
+		   $intRandEnergy = $self->{parent}->{modules}->{crypt}->generateInt(1, 10);
+		   $intRandRest = $self->{parent}->{modules}->{crypt}->generateInt(1, 10);
+	   }
        my $puffles = $self->{parent}->{modules}->{mysql}->getPufflesByOwner($self->{ID});
        foreach (values @{$puffles}) {
                 my $intPuffle = $_->{puffleID};
-                my $intMin = $blnMajor ? 25 : 0;
-                my $intMax = $blnMajor ? 45 : 15;
-                my $intHealth = $_->{puffleHealth} - $self->{parent}->{modules}->{crypt}->generateInt($intMin, $intMax);
+                my $intHealth = $_->{puffleHealth} - $intRandHealth;
                 if ($intHealth <= 5) {
                     my $intPuffleType = 75 . $_->{puffleType};
                     $self->{parent}->{modules}->{mysql}->deleteData('puffles', 'puffleID', $intPuffle, 1, 'ownerID',  $self->{ID});
@@ -731,12 +731,12 @@ method updatePuffleStatistics {
 						$self->updatePlayerCard('upa', 'hand', 0);
 					}
                 } else {
-                    my $intHunger = $_->{puffleEnergy} - $self->{parent}->{modules}->{crypt}->generateInt($intMin, $intMax);
+                    my $intHunger = $_->{puffleEnergy} - $intRandEnergy;
                     if ($intHunger <= 45) {
                         my $postcardID = $self->sendPostcard($self->{ID}, 'sys', 0, $_->{puffleName}, 110);
                         $self->sendXT(['mr', '-1', 'sys', 0, 110, $_->{puffleName}, time, $postcardID]);
                     }
-                    my $intRest = $_->{puffleRest} - $self->{parent}->{modules}->{crypt}->generateInt($intMin, $intMax);
+                    my $intRest = $_->{puffleRest} - $intRandRest;
                     $self->{parent}->{modules}->{mysql}->updatePuffleStats($intHealth, $intHunger, $intRest, $intPuffle, $self->{ID});
                 }
        }
