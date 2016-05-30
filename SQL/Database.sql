@@ -44,6 +44,7 @@ CREATE TABLE `puffles` (
   `puffleEnergy` int(3) NOT NULL DEFAULT '100',
   `puffleHealth` int(3) NOT NULL DEFAULT '100',
   `puffleRest` int(3) NOT NULL DEFAULT '100',
+  `puffleWalking` tinyint(1) NOT NULL DEFAULT '0',
   PRIMARY KEY (`puffleID`)
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1 AUTO_INCREMENT=1;
 
