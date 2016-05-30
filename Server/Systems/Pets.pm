@@ -165,14 +165,10 @@ method handlePuffleWalk($strData, $objClient) {
        my $blnWalk = $arrData[6];
        return if (!int($puffleID));
        return if (!int($blnWalk));
+       my $arrWalkingPuffle = $self->{child}->{modules}->{mysql}->getWalkingPuffle($objClient->{ID});
+	   $self->{child}->{modules}->{mysql}->updateWalkingPuffle(0, $arrWalkingPuffle->{puffleID}, $objClient->{ID});
        my $petDetails = $self->{child}->{modules}->{mysql}->getPuffleByOwner($puffleID, $objClient->{ID});
        if ($petDetails) {
-           my $strWalkingPuffle = $objClient->getWalkingPuffle;
-		   if ($strWalkingPuffle ne '') {
-			   my @arrInfo = split('|', $strWalkingPuffle);
-			   my $intPuffle = $arrInfo[0];
-			   $self->{child}->{modules}->{mysql}->updateWalkingPuffle(0, $intPuffle, $objClient->{ID});
-		   }
            my $walkStr = $petDetails->{puffleID} . '|' . $petDetails->{puffleName} . '|' . $petDetails->{puffleType} . '|' . $petDetails->{puffleHealth} . '|' . $petDetails->{puffleEnergy} . '|' . $petDetails->{puffleRest} . '|0|0|0|0|0|0'; # Dont know what the rest are
            if ($blnWalk eq 1) {
                $objClient->updatePlayerCard('upa', 'hand', 75 . $petDetails->{puffleType});
@@ -184,6 +180,7 @@ method handlePuffleWalk($strData, $objClient) {
                $objClient->sendRoom('%xt%pw%-1%' . $objClient->{ID} . '%' . $walkStr . '|0%');
            }
        }
+       $objClient->getPuffles($objClient->{ID});
 }
 
 1;
