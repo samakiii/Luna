@@ -695,9 +695,9 @@ method changeRandPuffStat($intPuffle) {
 }
 
 method updatePuffleStatistics {
-      my $intRandHealth = '';
-	   my $intRandEnergy = '';
-	   my $intRandRest = '';
+      my $intRandHealth = 0;
+	   my $intRandEnergy = 0;
+	   my $intRandRest = 0;
        my $intLastLogin = $self->{parent}->{modules}->{mysql}->getLastLoginByID($self->{ID});
        my $intHoursLater = $intLastLogin + 18000;
        if ($intLastLogin > $intHoursLater) {
