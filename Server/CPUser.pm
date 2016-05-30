@@ -723,9 +723,13 @@ method updatePuffleStatistics {
                 my $intMax = $blnMajor ? 45 : 15;
                 my $intHealth = $_->{puffleHealth} - $self->{parent}->{modules}->{crypt}->generateInt($intMin, $intMax);
                 if ($intHealth <= 5) {
+                    my $intPuffleType = 75 . $_->{puffleType};
                     $self->{parent}->{modules}->{mysql}->deleteData('puffles', 'puffleID', $intPuffle, 1, 'ownerID',  $self->{ID});
                     my $postcardID = $self->sendPostcard($self->{ID}, 'sys', 0, $_->{puffleName}, 10 . $_->{puffleType});
                     $self->sendXT(['mr', '-1', 'sys', 0, 10 . $_->{puffleType}, $_->{puffleName}, time, $postcardID]);
+                    if ($self->{hand} eq $intPuffleType) {
+						$self->updatePlayerCard('upa', 'hand', 0);
+					}
                 } else {
                     my $intHunger = $_->{puffleEnergy} - $self->{parent}->{modules}->{crypt}->generateInt($intMin, $intMax);
                     if ($intHunger <= 45) {
