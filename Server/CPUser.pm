@@ -588,19 +588,6 @@ method botSay($strMsg) {
        }
 }
 
-method getWalkingPuffle {
-		my $strWalkingPuffle = '';
-		my $puffles = $self->{parent}->{modules}->{mysql}->getPufflesByOwner($self->{ID});
-		foreach (values @{$puffles}) {
-			if ($_->{puffleWalking}) {
-				$strWalkingPuffle = $_->{puffleID} . '|' . $_->{puffleName} . '|' . $_->{puffleType} . '|' . $_->{puffleHealth} . '|' . $_->{puffleEnergy} . '|' . $_->{puffleRest} . '|0|0|0|0|0|0';
-			} else {
-				$strWalkingPuffle = '';
-			}
-		}
-		return $strWalkingPuffle;
-}
-
 method addPuffle($puffleType, $puffleName) {
        return if (!int($puffleType) && !$puffleName);
        my $puffleID = $self->{parent}->{modules}->{mysql}->insertData('puffles', ['ownerID', 'puffleName', 'puffleType'], [$self->{ID}, $puffleName, $puffleType]);
@@ -613,7 +600,7 @@ method getPuffles($userID) {
        my $puffles = '';
        my $arrInfo = $self->{parent}->{modules}->{mysql}->getPufflesByOwner($userID);
        foreach (values @{$arrInfo}) {
-                if (!$_->{puffleWalking}) {
+                if ($_->{puffleWalking} != 1) {
                     $puffles .= $_->{puffleID} . '|' . $_->{puffleName} . '|' . $_->{puffleType} . '|' . $_->{puffleEnergy} . '|' . $_->{puffleHealth} . '|' . $_->{puffleRest} . '%';
                 }
        }
@@ -740,6 +727,11 @@ method updatePuffleStatistics {
                     $self->{parent}->{modules}->{mysql}->updatePuffleStats($intHealth, $intHunger, $intRest, $intPuffle, $self->{ID});
                 }
        }
+}
+
+method getPufflesByID($intID) {
+		my $strPuffles = $self->getPuffles($intID);
+		$self->sendXT(['pg', '-1', $strPuffles]);
 }
 
 method DESTROY {
