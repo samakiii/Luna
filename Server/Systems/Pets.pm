@@ -59,9 +59,9 @@ method handlePuffleFeed($strData, $objClient) {
            return $objClient->sendError(401);
        }
        $objClient->changeRandPuffStat($puffleID);
-       $objClient->changePuffleStats($puffleID, 'puffleHealth', $self->{modules}->{crypt}->generateInt(3, 10), 1);
-       $objClient->changePuffleStats($puffleID, 'puffleEnergy', $self->{modules}->{crypt}->generateInt(7, 12), 1);
-       $objClient->changePuffleStats($puffleID, 'puffleRest', $self->{modules}->{crypt}->generateInt(1, 7), 1);
+       $objClient->changePuffleStats($puffleID, 'puffleHealth', $self->{child}->{modules}->{crypt}->generateInt(3, 10), 1);
+       $objClient->changePuffleStats($puffleID, 'puffleEnergy', $self->{child}->{modules}->{crypt}->generateInt(7, 12), 1);
+       $objClient->changePuffleStats($puffleID, 'puffleRest', $self->{child}->{modules}->{crypt}->generateInt(1, 7), 1);
        $objClient->setCoins($objClient->{coins} - 5);
        $objClient->sendRoom('%xt%pt%-1%' . $objClient->{coins} . '%' . $puffleID . '%' . $intAction . '%');
        $objClient->getPuffle($puffleID);
