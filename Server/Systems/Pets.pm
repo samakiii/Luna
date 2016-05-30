@@ -52,18 +52,19 @@ method handlePuffleBath($strData, $objClient) {
 method handlePuffleFeed($strData, $objClient) { 
        my @arrData = split('%', $strData);
        my $puffleID = $arrData[5];
-       my $puffleTreat = $arrData[6];
-       return if (!int($puffleID) || !int($puffleTreat));
+       my $intAction = $arrData[6];
+       return if (!int($puffleID));
+       return if (!int($intAction));
        if ($objClient->{coins} < 5) {
            return $objClient->sendError(401);
        }
        $objClient->changeRandPuffStat($puffleID);
-       $objClient->changePuffleStats($puffleID, 'puffleHealth', $self->{child}->{modules}->{crypt}->generateInt(3, 10), 1);
-       $objClient->changePuffleStats($puffleID, 'puffleEnergy', $self->{child}->{modules}->{crypt}->generateInt(7, 12), 1);
-       $objClient->changePuffleStats($puffleID, 'puffleRest', $self->{child}->{modules}->{crypt}->generateInt(1, 7), 1);
+       $objClient->changePuffleStats($puffleID, 'puffleHealth', $self->{modules}->{crypt}->generateInt(3, 10), 1);
+       $objClient->changePuffleStats($puffleID, 'puffleEnergy', $self->{modules}->{crypt}->generateInt(7, 12), 1);
+       $objClient->changePuffleStats($puffleID, 'puffleRest', $self->{modules}->{crypt}->generateInt(1, 7), 1);
        $objClient->setCoins($objClient->{coins} - 5);
-       my $petDetails = $objClient->getPuffle($puffleID);
-       $objClient->sendRoom('%xt%pt%-1%' . $objClient->{coins} . '%' . ($petDetails ? $petDetails : '%'));
+       $objClient->sendRoom('%xt%pt%-1%' . $objClient->{coins} . '%' . $puffleID . '%' . $intAction . '%');
+       $objClient->getPuffle($puffleID);
 }
 
 method handlePuffleRest($strData, $objClient) {
