@@ -163,7 +163,8 @@ method handlePuffleWalk($strData, $objClient) {
        my @arrData = split('%', $strData);
        my $puffleID = $arrData[5];
        my $blnWalk = $arrData[6];
-       return if (!int($puffleID) || !int($blnWalk));
+       return if (!int($puffleID));
+       return if (!int($blnWalk));
        my $petDetails = $self->{child}->{modules}->{mysql}->getPuffleByOwner($puffleID, $objClient->{ID});
        if ($petDetails) {
            my $strWalkingPuffle = $objClient->getWalkingPuffle;
