@@ -173,6 +173,15 @@ method getCloneableByUsername($strName) {
 		}
 }
 
+method getWalkingPuffle($intID) {
+       my $resQuery = $self->{connection}->prepare("SELECT * FROM puffles WHERE `ownerID` = ? AND `puffleWalking` = ?");
+       $resQuery->execute($intID, 1);
+       my $arrResult = $resQuery->fetchrow_hashref;
+       if ($arrResult) {
+           return $arrResult;
+       }
+}
+
 method getPufflesByOwner($intID) {
        my $resQuery = $self->{connection}->prepare("SELECT * FROM puffles WHERE `ownerID` = ?");
        $resQuery->execute($intID);
