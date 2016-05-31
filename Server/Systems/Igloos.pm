@@ -69,9 +69,10 @@ method handleCloseIgloo($strData, $objClient) {
 method handleGetOwnedFurniture($strData, $objClient) {
 	   my $strFurns = '';
 	   while (my ($intFurnID, $intCount) = each(%{$objClient->{ownedFurns}})) {
-			  $strFurns .= $intFurnID . '|' . $intCount . '%';
+			  $strFurns .= '%' . $intFurnID . '|' . $intCount;
 	   }
-	   $objClient->write('%xt%gf%-1%' . $strFurns);
+	   $strFurns = substr($strFurns, 1);
+	   $objClient->sendXT(['gf', '-1', $strFurns]);
 }
 
 method handleGetFurnitureRevision($strData, $objClient) {
@@ -79,7 +80,7 @@ method handleGetFurnitureRevision($strData, $objClient) {
        my $strFurns = "";
        while (my ($intKey, $strValue) = each(@arrData)) {
               if ($intKey > 4) {
-                  $strFurns .= $strValue . ',';
+                  $strFurns .= ',' . $strValue;
               }
        }
        $objClient->updateFurniture($strFurns);
