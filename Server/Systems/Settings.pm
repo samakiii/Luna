@@ -22,7 +22,10 @@ method handleUpdatePlayerClothing($strData, $objClient) {
        if ($strType eq 'upa' && $intItem == 0) {
 		   my $arrWalkingPuffle = $self->{child}->{modules}->{mysql}->getWalkingPuffle($objClient->{ID});
 		   $self->{child}->{modules}->{mysql}->updateWalkingPuffle(0, $arrWalkingPuffle->{puffleID}, $objClient->{ID});
-		   $objClient->getPuffles($objClient->{ID});
+		   if ($objClient->{room} > 1000) {
+				   $objClient->getPufflesByID($objClient->{ID});
+				   $objClient->joinRoom($objClient->{room});
+		   }
 	   }
        $objClient->updatePlayerCard($strType, $arrTypes{$strType}, $intItem);
 }
