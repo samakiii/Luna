@@ -81,30 +81,6 @@ method new($resParent, $resSock) {
        $obj->{title} = '';
        $obj->{titleglow} = '';
        $obj->{titlecolor} = '';
-       $obj->{data_types} = {
-			"m#sm" => {count => 0, last_time => 0}, 
-			"u#se" => {count => 0, last_time => 0}, 
-			"u#sa" => {count => 0, last_time => 0}, 
-			"u#sb" => {count => 0, last_time => 0}, 
-			"u#ss" => {count => 0, last_time => 0}, 
-			"u#sj" => {count => 0, last_time => 0}, 
-			"u#sl" => {count => 0, last_time => 0}, 
-			"u#sf" => {count => 0, last_time => 0},
-			"u#sp" => {count => 0, last_time => 0},
-			"u#sg" => {count => 0, last_time => 0}, 
-			"j#jr" => {count => 0, last_time => 0},
-			"b#br" => {count => 0, last_time => 0},
-			"s#upc" => {count => 0, last_time => 0},
-			"s#uph" => {count => 0, last_time => 0},
-			"s#upf" => {count => 0, last_time => 0},
-			"s#upn" => {count => 0, last_time => 0},
-			"s#upb" => {count => 0, last_time => 0},
-			"s#upa" => {count => 0, last_time => 0},
-			"s#upe" => {count => 0, last_time => 0},
-			"s#upp" => {count => 0, last_time => 0},
-			"s#upl" => {count => 0, last_time => 0},		
-			"l#ms" => {count => 0, last_time => 0}
-		};
        return $obj;
 }
 
