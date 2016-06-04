@@ -90,9 +90,9 @@ method handlePufflePlay($strData, $objClient) {
        my @arrData = split('%', $strData);
        my $puffleID = $arrData[5];
        return if (!int($puffleID));
-       $objClient->changePuffleStats($puffleID, 'puffleEnergy', $self->{child}->{modules}->{crypt}->generateInt(0, 4), 0);
-       $objClient->changePuffleStats($puffleID, 'puffleRest', $self->{child}->{modules}->{crypt}->generateInt(5, 12), 0);
-       $objClient->changePuffleStats($puffleID, 'puffleHealth', $self->{child}->{modules}->{crypt}->generateInt(4, 10), 0);
+       $objClient->changePuffleStats($puffleID, 'puffleEnergy', $self->{modules}->{crypt}->generateInt(5, 10), 0);
+       $objClient->changePuffleStats($puffleID, 'puffleRest', $self->{modules}->{crypt}->generateInt(5, 12), 0);
+       $objClient->changePuffleStats($puffleID, 'puffleHealth', $self->{modules}->{crypt}->generateInt(4, 10), 1);
        my $petDetails = $objClient->getPuffle($puffleID);
        $objClient->sendRoom('%xt%pp%-1%' . ($petDetails ? $petDetails : '%') . int(rand(2)) . '%');
 }
