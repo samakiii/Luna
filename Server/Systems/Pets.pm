@@ -63,7 +63,7 @@ method handlePuffleFeed($strData, $objClient) {
        $objClient->changePuffleStats($puffleID, 'puffleEnergy', $self->{child}->{modules}->{crypt}->generateInt(7, 12), 1);
        $objClient->changePuffleStats($puffleID, 'puffleRest', $self->{child}->{modules}->{crypt}->generateInt(1, 7), 1);
        $objClient->setCoins($objClient->{coins} - 5);
-       my $petDetails = $objClient->getPuffle($puffleID, $objClient->{ID});
+       my $petDetails = $objClient->getPuffle($puffleID);
        $objClient->sendRoom('%xt%pt%-1%' . $objClient->{coins} . '%' . ($petDetails ? $petDetails : '%') . $intAction . '%');
 }
 
