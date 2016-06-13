@@ -6,6 +6,12 @@ use warnings;
 use Method::Signatures;
 use feature qw(say);
 
+method new($resChild) {
+       my $obj = bless {}, $self;
+       $obj->{child} = $resChild;
+       return $obj;
+}
+
 method handleSignIglooContest($strData, $objClient) {
 		my $strInfo = $objClient->{username} . ':' . $objClient->{ID};
 		$self->appendToFile('IglooContests.txt', $strInfo);
