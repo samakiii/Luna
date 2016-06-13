@@ -123,7 +123,9 @@ method new($resConfig, $resDBConfig) {
                     'a#ut' => 'handleUpdateTable',
                     'a#lt' => 'handleLeaveTable',
                     'w#jx' => 'handleSendWaddle',
-                    'iCP#umo' => 'handleUpdateMood'
+                    'iCP#umo' => 'handleUpdateMood',
+	     	    'e#sig' => 'handleSignIglooContest',
+		    'e#dc' => 'handleDonateCoins'
                   },
                   z => {
                      zo => 'handleGameOver',
