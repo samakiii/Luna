@@ -7,9 +7,9 @@ use Method::Signatures;
 use feature qw(say);
 
 method new($resChild) {
-       my $obj = bless {}, $self;
-       $obj->{child} = $resChild;
-       return $obj;
+		my $obj = bless {}, $self;
+		$obj->{child} = $resChild;
+		return $obj;
 }
 
 method handleSignIglooContest($strData, $objClient) {
