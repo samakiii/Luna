@@ -50,18 +50,18 @@ CREATE TABLE `puffles` (
 
 DROP TABLE IF EXISTS `donations`;
 CREATE TABLE `donations` (
-  `ID` int(11) unsigned NOT NULL,
+  `ID` int(11) NOT NULL,
   `username` longtext NOT NULL,
   `donation` int(11) NOT NULL,
-  `donate_time` timestamp NOT NULL DEFAULT '0000-00-00 00:00:00' ON UPDATE CURRENT_TIMESTAMP,
+  `donate_time` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP,
   PRIMARY KEY (`ID`)
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
 DROP TABLE IF EXISTS `igloo_contest`;
 CREATE TABLE `igloo_contest` (
-  `ID` int(11) unsigned NOT NULL,
-  `username` longblob NOT NULL,
-  `signup_time` timestamp NOT NULL DEFAULT '0000-00-00 00:00:00' ON UPDATE CURRENT_TIMESTAMP,
+  `ID` int(11) NOT NULL,
+  `username` longtext NOT NULL,
+  `signup_time` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP,
   PRIMARY KEY (`ID`)
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
