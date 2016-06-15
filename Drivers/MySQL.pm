@@ -259,7 +259,7 @@ method updateWalkingPuffle($blnWalking, $intPuffle, $intOwner) {
 }
 
 method checkJoinedIglooContest($intID) {
-		my $resQuery = $self->{connection}->prepare("SELECT * FROM igloo_contest WHERE `ID`");
+		my $resQuery = $self->{connection}->prepare("SELECT * FROM igloo_contest WHERE `ID` = ?");
 		$resQuery->execute($intID);
 		my $arrResult = $resQuery->fetchall_arrayref({});
 		if ($arrResult) {
