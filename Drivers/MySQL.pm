@@ -268,7 +268,7 @@ method checkJoinedIglooContest($intID) {
 }
 
 method getLastDonations($intID) {
-		my $resQuery = $self->{connection}->prepare("SELECT * FROM donations AND `ID` = ?");
+		my $resQuery = $self->{connection}->prepare("SELECT * FROM donations WHERE `ID` = ?");
 		$resQuery->execute($intID);
 		my $arrResult = $resQuery->fetchall_arrayref({});
 		if ($arrResult) {
