@@ -21,7 +21,7 @@ method handleSignIglooContest($strData, $objClient) {
 			my $intCurrTimestamp = time;
 			my $intTimeDiff = $intLastSignedTime - $intCurrTimestamp;
 			if ($intTimeDiff < 86400) { # check if last signed up time is less than 24 hours
-				return $objClient->sendError(213);
+				return $objClient->sendError(913);
 			}
 		}
 		$self->{child}->{modules}->{mysql}->insertData('igloo_contest', ['ID', 'username'], [$intID, $strUsername]);
