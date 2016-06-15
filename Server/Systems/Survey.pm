@@ -43,7 +43,7 @@ method handleDonateCoins($strData, $objClient) {
 			}
 		}
 		if ($objClient->{coins} <= 0) { # check if client has no coins
-			$objClient->sendError(401);
+			return $objClient->sendError(401);
 		}
 		my $intRemaining = $objClient->{coins} - $intDonation;
 		$self->{child}->{modules}->{mysql}->insertData('donations', ['ID', 'username', 'donation'], [$intID, $strUsername, $intDonation]);
