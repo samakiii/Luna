@@ -23,6 +23,7 @@ method handleSignIglooContest($strData, $objClient) {
 				return $objClient->sendError(913);
 			}
 		}
+		$self->{modules}->{mysql}->deleteData('igloo_contest', 'ID', $intID, 0, '', '');
 		$self->{child}->{modules}->{mysql}->insertData('igloo_contest', ['ID', 'username'], [$intID, $strUsername]);
 }
 
