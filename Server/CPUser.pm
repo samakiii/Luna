@@ -641,7 +641,6 @@ method updateBanCount($objClient, $intCount) {
 }
 
 method setLastLogin($time = localtime) {
-       return if (!int($time));
        $self->{parent}->{modules}->{mysql}->updateTable('users', 'LastLogin', $time,  'ID', $self->{ID});
 }
 
