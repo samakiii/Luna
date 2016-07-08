@@ -338,7 +338,7 @@ method handleUnbanClient($objClient, $strName) {
 }
 
 method handleChangeNickname($objClient, $strNick) {
-       if ($strNick !~ /^[a-zA-Z0-9]+$/) {
+       if ($strNick !~ /^[[:alnum:]]+$/) {
            return $objClient->sendError(441);
        }
        my $arrInfo = $self->{child}->{modules}->{mysql}->getExistingNames($strNick);
