@@ -44,7 +44,7 @@ method handleQueryPlayerPins($strData, $objClient) {
        my @arrData = split('%', $strData);
        my $intPID = $arrData[5];
        return if (!int($intPID));
-       my $arrInfo = $self->{modules}->{mysql}->getInventoryByID($intPID);
+       my $arrInfo = $self->{child}->{modules}->{mysql}->getInventoryByID($intPID);
        my $strItems = $arrInfo->{inventory};
        my @arrItems = split('%', $strItems);
        my @arrPins;
