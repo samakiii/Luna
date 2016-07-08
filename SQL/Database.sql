@@ -87,7 +87,7 @@ CREATE TABLE `users` (
   `ipAddr` mediumblob NOT NULL,
   `email` mediumblob NOT NULL,
   `age` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP,
-  `LastLogin` timestamp NOT NULL DEFAULT '0000-00-00 00:00:00',
+  `LastLogin` mediumtext NOT NULL,
   `active` int(1) NOT NULL DEFAULT '1',
   `bitMask` int(1) NOT NULL DEFAULT '1',
   `isBanned` varchar(10) NOT NULL DEFAULT '0',
