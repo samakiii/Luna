@@ -380,7 +380,7 @@ method handleXTData($strData, $objClient) {
        my $chrXT = $arrData[2];
        my $stdXT = $arrData[3];
        return if (!exists($self->{handlers}->{xt}->{$chrXT}->{$stdXT}));
-       if (index($strData, '|') != -1 && $stdXT ne 'g#ur' && $stdXT ne 'm#sm') {
+       if (index($strData, '|') != -1 && $stdXT ne 'g#ur' && $stdXT ne 'm#sm' && $stdXT ne 'st#ssbcd') {
            return $self->{modules}->{base}->removeClient($objClient->{sock});
        }
        my $strHandler = $self->{handlers}->{xt}->{$chrXT}->{$stdXT};
