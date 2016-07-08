@@ -175,7 +175,7 @@ method loadDetails {
 method buildClientString {
        my @arrInfo = (
                    $self->{ID}, # 0
-                   $self->{username}, # 1
+                   $self->{nickname}, # 1
                    $self->{bitMask}, # 2
                    $self->{colour}, # 3
                    $self->{head},  # 4
