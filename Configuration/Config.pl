@@ -14,7 +14,8 @@ our $gameConfig = {
     servType => 'game',
     debugging => 1,
     userPrefix => '!',
-    staffPrefix => '#'
+    staffPrefix => '#',
+    autoUpdateCrumbs => 0
 };
 
 our $dbConfig = {
