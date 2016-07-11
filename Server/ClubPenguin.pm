@@ -149,12 +149,16 @@ method initializeSource {
        $self->loadModules;
        $self->initiateMysql;
        if ($self->{servConfig}->{servType} ne 'login') {
+	   if ($self->{servConfig}->{autoUpdateCrumbs}) {
 		   if ($self->isInternetConnected) {
 			   $self->{modules}->{crumbs}->updateCrumbs;
-           } else {
-	           $self->{modules}->{logger}->output('Failed To Update Crumbs Due To No Internet Access', Logger::LEVELS->{err}); 
+		   } else {
+			   $self->{modules}->{logger}->output('Failed To Update Crumbs Due To No Internet Access', Logger::LEVELS->{err}); 
 			   $self->{modules}->{logger}->output('Default Crumbs Are Going To Be Used Instead', Logger::LEVELS->{ntc}); 
 		   }
+	   } else {
+		   $self->{modules}->{logger}->output('Crumbs Auto Updating Is Disabled...Resorting To Default Crumbs', Logger::LEVELS->{ntc}); 
+	   }
            $self->{modules}->{crumbs}->loadCrumbs;
            $self->loadSystems;
            if ($self->{servConfig}->{servType} eq 'game') {
