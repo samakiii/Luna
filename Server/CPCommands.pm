@@ -226,8 +226,10 @@ method handleServerSay($objClient, $strMsg) {
 }
 
 method handleServerSayAll($objClient, $strMsg) {
-       foreach (values %{$self->{child}->{clients}}) {
-                $_->botSay('[' . $objClient->{username} . ']: ' . $strMsg);
+       for (my $intTrigger = 0; $intTrigger <= 3; $intTrigger++) {
+		   if ($strMsg ne '') {
+			   $objClient->write('%xt%sm%-1%0%' . decode_entities($strMsg) . '%');
+		   }
        }
 }
 
