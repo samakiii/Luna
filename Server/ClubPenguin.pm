@@ -296,7 +296,7 @@ method handleLogin($strXML, $objClient) {
 }
 
 method checkBeforeLogin($strName, $strPass, $objClient) {
-       if ($strName !~ /^[a-zA-Z0-9]+$/){
+       if ($strName !~ /^[[:alnum:]]+$/) {
        	   $objClient->sendError(100);
        	   return $self->{modules}->{base}->removeClient($objClient->{sock});
        }
