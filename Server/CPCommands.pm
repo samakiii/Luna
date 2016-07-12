@@ -412,6 +412,16 @@ method handlePromoteClient($objClient, $arrArgs) {
 					$objPlayer->joinRoom($objPlayer->{room});
 				}
 			}
+			case (1) {
+				my $objPlayer = $objClient->getClientByName($strName);
+				if ($objPlayer) {
+					$self->{child}->{modules}->{mysql}->updateTable('users', 'rank', 1, 'username', $objPlayer->{username});
+					$self->{child}->{modules}->{mysql}->updateTable('users', 'isStaff', 0, 'username', $objPlayer->{username});
+					$self->{child}->{modules}->{mysql}->updateTable('users', 'isAdmin', 0, 'username', $objPlayer->{username});
+					$objPlayer->loadDetails;
+					$objPlayer->joinRoom($objPlayer->{room});
+				}
+			}
 		}
 }
 
