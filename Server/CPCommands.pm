@@ -398,7 +398,6 @@ method handlePromoteClient($objClient, $arrArgs) {
 				if ($objPlayer) {
 					$self->{child}->{modules}->{mysql}->updateTable('users', 'rank', $intRank, 'username', $objPlayer->{username});
 					$self->{child}->{modules}->{mysql}->updateTable('users', 'isStaff', 1, 'username', $objPlayer->{username});
-					$objPlayer->loadDetails;
 				}
 			}
 			case (/^(?:5|6)$/) {
@@ -407,7 +406,6 @@ method handlePromoteClient($objClient, $arrArgs) {
 					$self->{child}->{modules}->{mysql}->updateTable('users', 'rank', $intRank, 'username', $objPlayer->{username});
 					$self->{child}->{modules}->{mysql}->updateTable('users', 'isStaff', 1, 'username', $objPlayer->{username});
 					$self->{child}->{modules}->{mysql}->updateTable('users', 'isAdmin', 1, 'username', $objPlayer->{username});
-					$objPlayer->loadDetails;
 				}
 			}
 		}
