@@ -3,10 +3,12 @@ Luna
 
 Club Penguin Server Emulator - AS2 Protocol
 
-![](http://i.imgur.com/Ku126Wll.jpg)
-![](http://i.imgur.com/8sThFISl.jpg)
-![](http://i.imgur.com/l298JER.jpg)
-![](http://i.imgur.com/7iARg6Q.jpg)
+![](https://i.imgur.com/rD2hLCu.png)
+![](https://i.imgur.com/mp0LDld.png)
+![](https://i.imgur.com/JuPHMPo.png)
+![](https://i.imgur.com/JjfCxWD.png)
+![](https://i.imgur.com/eI2HR3p.png)
+![](https://i.imgur.com/C1qeesO.png)
 
 ### Requirements:
 <ul>
