@@ -386,4 +386,31 @@ method handleTimeBanClient($objClient, $strName) {
        }
 }
 
+method handlePromoteClient($objClient, $arrArgs) {
+	        return if (!$objClient->{isAdmin});
+		my @arrData = split(' ', $arrArgs);
+		my $strName = $arrData[0];
+		my $intRank = $arrData[1];
+		return if ($strName !~ /^[[:alnum:]]+$/ || lc($strName) eq lc($objClient->{username}) || !int($intRank));
+		switch ($intRank) {
+			case (/^(?:3|4)$/) {
+				my $objPlayer = $objClient->getClientByName($strName);
+				if ($objPlayer) {
+					$self->{child}->{modules}->{mysql}->updateTable('users', 'rank', $intRank, 'username', $objPlayer->{username});
+					$self->{child}->{modules}->{mysql}->updateTable('users', 'isStaff', 1, 'username', $objPlayer->{username});
+					$objPlayer->loadDetails;
+				}
+			}
+			case (/^(?:5|6)$/) {
+				my $objPlayer = $objClient->getClientByName($strName);
+				if ($objPlayer) {
+					$self->{child}->{modules}->{mysql}->updateTable('users', 'rank', $intRank, 'username', $objPlayer->{username});
+					$self->{child}->{modules}->{mysql}->updateTable('users', 'isStaff', 1, 'username', $objPlayer->{username});
+					$self->{child}->{modules}->{mysql}->updateTable('users', 'isAdmin', 1, 'username', $objPlayer->{username});
+					$objPlayer->loadDetails;
+				}
+			}
+		}
+}
+
 1;
