@@ -3,7 +3,7 @@ Luna
 
 Club Penguin Server Emulator - AS2 Protocol
 
-Project has been discontinued, ShawnTD has now taken over Luna to get the latest updates go here https://github.com/ShawnTD/Luna
+Project has been discontinued, support will no longer be provided either.
 
 ![](https://i.imgur.com/rD2hLCu.png)
 ![](https://i.imgur.com/mp0LDld.png)
